@@ -44,13 +44,6 @@ export class LoginComponent implements OnInit {
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
   }
 
-  logEvent() {
-    this.analyticsService.logEvent('Login').subscribe((response) => {
-      console.log('logEvent : ', response);
-    }, (error) => {
-      console.log('logEvent : ', error);
-    });
-  }
   FormSubmit() {
     this.DisableSubmit = true;
     if (this.MyForm.valid) {
@@ -58,32 +51,20 @@ export class LoginComponent implements OnInit {
       this.loginservice.Login(this.MyForm.value)
         .subscribe(
           data => {
-            this.ResponseHelper.GetSuccessResponse(data)
             if (data.json().Data.Token != null) {
-
-
+              this.ResponseHelper.GetSuccessResponse(data);
               setTimeout(() => {
                 const response = data.json().Data;
                 console.log('response : ', response)
-                if (response.enableTFAuth && response.enableTFAuth.enable == true) {
-                  localStorage.setItem('token', data.json().Data.Token);
-                  sessionStorage.setItem("enableTFAuth", JSON.stringify(response.enableTFAuth));
-                  this.router.navigate(['/two-factor-auth']);
+
+                this.Token.SetLoginToken(data.json().Data.Token);
+                if (data.json().Data.First_Login == true) {
+                  this.router.navigate(['/change-password']);
                 }
                 else {
-                  // this.router.navigate(['/Login']);
-                  this.Token.SetLoginToken(data.json().Data.Token);
-                  if (data.json().Data.First_Login == true) {
-                    this.router.navigate(['/change-password']);
-                  }
-                  else {
-                    this.RedirectHelper.redirectByRole()
-                  }
+                  this.RedirectHelper.redirectByRole()
                 }
-                this.logEvent();
-                // this.Token.SetLoginToken(data.json().Data.Token);
-                // this.RedirectHelper.redirectByRole();
-              }, 2000);
+              }, 100);
 
             }
             else {
@@ -93,6 +74,7 @@ export class LoginComponent implements OnInit {
               this.notificationservice.ChangeNotification(notify);
               this.DisableSubmit = false;
             }
+
           }, err => {
             this.ResponseHelper.GetFaliureResponse(err)
             this.DisableSubmit = false;

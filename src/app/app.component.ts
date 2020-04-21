@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   }
   ResponseHelper: ResponseHelper;
   breakStatus;
-  title = 'GeBBS : iAR';
+  title = 'GeBBS : DMS';
   MenuName: string;
   DisplayMenu;
   ShowElement: boolean = false;
@@ -48,22 +48,22 @@ export class AppComponent implements OnInit {
     private notificationservice: NotificationService,
   ) {
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
-    this.breakAction();
+    // this.breakAction();
   }
   breakAction() {
-    this.breakStatus = sessionStorage.getItem('BreakStatus');
-    this.resumeBreak = sessionStorage.getItem('resumeBreak');
-    if (this.breakStatus == "true" && this.resumeBreak != null) {
-      let data = JSON.parse(this.resumeBreak)
-      this.agentService.endBreak(data).subscribe(res => {
-        this.ResponseHelper.GetSuccessResponse(res);
-        sessionStorage.setItem('BreakStatus', "false");
-        sessionStorage.setItem('resumeBreak', null);
-      }, err => {
-        this.ResponseHelper.GetFaliureResponse(err);
-        sessionStorage.setItem('BreakStatus', "true");
-      });
-    }
+    // this.breakStatus = sessionStorage.getItem('BreakStatus');
+    // this.resumeBreak = sessionStorage.getItem('resumeBreak');
+    // if (this.breakStatus == "true" && this.resumeBreak != null) {
+    //   let data = JSON.parse(this.resumeBreak)
+    //   this.agentService.endBreak(data).subscribe(res => {
+    //     this.ResponseHelper.GetSuccessResponse(res);
+    //     sessionStorage.setItem('BreakStatus', "false");
+    //     sessionStorage.setItem('resumeBreak', null);
+    //   }, err => {
+    //     this.ResponseHelper.GetFaliureResponse(err);
+    //     sessionStorage.setItem('BreakStatus', "true");
+    //   });
+    // }
   }
 
 
@@ -92,9 +92,9 @@ export class AppComponent implements OnInit {
         case '/login':
           this.ShowElement = false;
           break;
-        case '/two-factor-auth':
-          this.ShowElement = false;
-          break;
+        // case '/two-factor-auth':
+        //   this.ShowElement = false;
+        //   break;
         case '/forgot-password':
           this.ShowElement = false;
           break;
