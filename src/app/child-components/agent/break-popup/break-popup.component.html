@@ -1,0 +1,61 @@
+<div class="pop-bg  ">
+</div>
+<div class="pop-position ">
+  <div class="lg-grey ">
+    <div class="">
+      <div class="animate fadeIn text-center">
+        <form [formGroup]="Break" (ngSubmit)="submitFrom()">
+          <div class="col-md-12 p-0">
+            <div class="col-md-12 mb-10 p-0">
+              <span class="text-center w-logo-b">
+                <!-- <img class="w-logo-b" src="/src/assets/images/iAR.png"> -->
+                <img class="w-logo-b" src="./../../../../assets//images/iAR.png">
+              </span>
+            </div>
+          </div>
+          <div class="col-md-12 p-0 mt-10">
+            <label for="inputEmail3" class="label-std  control-label p-0 b-600">Select Break Type</label>
+            <select class="form-control" formControlName="Break_Type" [(ngModel)]="Break_Type" >
+              <option value="0"  disabled>Select</option>
+              <option value="Client call">Client call</option>
+              <option value="Emergency Aux">Emergency Aux</option>
+              <option value="Floor Support/Administrative">Floor Support/Administrative</option>
+              <option value="Lunch/Dinner Break">Lunch/Dinner Break</option>
+              <option value="QA Feedback">QA Feedback</option>
+              <option value="RnR">RnR</option>
+              <option value="System Downtime">System Downtime</option>
+              <option value="Tea break">Tea break</option>
+              <option value="Team Huddle">Team Huddle</option>
+              <option value="Town Hall">Town Hall</option>
+              <option value="Training">Training</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <label class=" error" *ngIf="validate && Break.get('Break_Type').hasError('required') "> Break Type is
+              required</label>
+              <label class=" error" *ngIf="validate && Break.get('Break_Type').hasError('pattern') "> Break Type is
+                  Required</label>
+          <div class="col-md-12 mt-10 p-0">
+            <div class="col-md-12 text-left p-0">
+              <!-- <button id="close-screen" class="btn blue square-btn blue-hover btn-txt">Resume</button> -->
+              <div data-toggle="buttons" class="pull-left" >
+                <label class="btn dark square-btn dark-hover btn-txt mr-10 active" id="close-screen" (click)="submitFrom()">
+                  <input type="radio" name="options" id="option1" autocomplete="off" checked=""> Resume
+                </label>
+                <label class="btn blue square-btn blue-hover btn-txt mr-10" (click)="submitFrom()">
+                  <input type="radio" name="options" id="option2" autocomplete="off" > Start
+                </label>
+              </div>
+              <label class="mb-0" (click)="closeModel()" *ngIf="!BreakStarted">
+                <a class="btn blue square-btn blue-hover btn-txt mr-10">Back</a>
+              </label>
+            </div>
+            <!-- <div class="col-md-8 text-right bi-back1 mt-8 p-0">
+                      <a href="#" class="lg-text mt-10">Back</a>
+                  </div> -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

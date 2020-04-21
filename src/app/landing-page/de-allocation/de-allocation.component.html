@@ -1,0 +1,64 @@
+<div class="container-fluid p-0 white">
+  <app-header [title]="title"></app-header>
+
+  <div class="col-md-12 col-sm-12 col-sm-12 p-0">
+    <div class="col-md-12 col-sm-12 p-0 super-deallocation">
+      <form class="form-horizontal" role="form">
+        <div class="deallocation-bucket text-center pv-10">
+          <div class="col-md-12 p-0">
+            <div class="form-group mb-0" (change)="ClientSelectDropdown($event)">
+              <form [formGroup]="deallocationForm" (ngSubmit)="submitFrom()">
+                <label class=" label-std control-label p-0 b-600 pl-0" for="">Client</label>
+                <select class="form-control" formControlName="ClientId" [(ngModel)]="ClientId" placeholder="d.ff">
+                  <option [selected]="ClientList[0].selected == false || !ClientList" value="" disabled >Select</option>
+                  <option *ngFor="let Client of ClientList" [selected]="Client.selected == true" [value]="Client.Client_Id"  >{{Client.Client_Name}} </option>
+                </select>
+              </form>
+            </div>
+
+            <div class="form-group">
+                <form [formGroup]="deallocationForm" (ngSubmit)="submitFrom()">
+              <span class="col-md-12 p-0 text-left">
+                <label class="custom-control client-conf pt-4">
+                  <input type="checkbox"  formControlName="isChecked" id="ac-active" (change)="function($event)" [(ngModel)]="isChecked"
+                    >
+                  <label for="ac-active" class="pt-4">All Deallocate Bucket</label>
+                </label>
+              </span>
+              </form>
+            </div>
+            <div class="border-t form-group pt-10  mb-0" (change)="AgentSelectDropdown($event)">
+              <form [formGroup]="deallocationForm" (ngSubmit)="submitFrom()">
+                <label class="label-std control-label p-0 b-600 pl-0" for="card-number">Agent</label>
+                <span class="col-md-12 p-0">
+                  <select class="form-control" formControlName="AgentId" [(ngModel)]="AgentId" placeholder="d.ff">
+                    <option  value="" [selected]="(!AgentList[0]) ||(AgentList[0] && AgentList[0].selected == false) " disabled>Select</option>
+                    <option *ngFor="let Agent of AgentList"  [selected]='AgentList[0].selected==true' [value]="Agent.Id">{{Agent.Agent_Name}} </option>
+                  </select>
+                </span>
+              </form>
+            </div>
+            <form [formGroup]="deallocationForm" (ngSubmit)="submitFrom()">
+              <div class="form-group">
+                <label class="label-std control-label p-0 b-600 pl-0" for="card-number">Select Bucket</label>
+                <div class="col-md-12 p-0 multiple-select">
+                  <select class="form-control" name="" multiple="" formControlName="BucketName" [(ngModel)]="BucketName"
+                    required (click)="BucketValid()">
+                    <option *ngFor="let Bucket of bucketList">{{Bucket.Bucket_Name}} </option>
+                  </select>
+                </div>
+              </div>
+            </form>
+            <label class="error mt-0" *ngIf="!validated && !validBucket">Please select a Bucket</label>
+            <div class="form-group col-md-12 p-0 mb-10 text-left">
+              <span>
+                <button [disabled]="!checkevent" (click)="Deallocate($event)"
+                  class="btn blue square-btn blue-hover btn-txt mr-10 mt-4">De-allocate</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

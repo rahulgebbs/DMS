@@ -1,0 +1,71 @@
+<app-header [title]="Title"></app-header>
+
+<div class="mar">
+    <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
+    <span class="pull-left mr-10 pt-3 wt-15"  [formGroup]="submit">
+        <select class="form-control" from [(ngModel)]="ClientId" placeholder="d.ff"
+            (change)="onClientChange($event)"  class="form-control"   formControlName="Client_Id">
+
+            <option  [selected]=" ClientList.length>1|| ClientList[0].selected== 'false'" disabled>Select</option>
+            <option *ngFor="let Client of ClientList" [selected]="Client.selected==true" [value]="Client.Client_Id"
+                >{{Client.Client_Name}}
+            </option>
+
+        </select>
+        <div class="error" *ngIf="clienterror ">
+            Please select client
+        </div>
+    </span>
+  <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">From Date</span>
+  <span class="wt-120 pull-left mr-10">
+
+    <div class="input-group date wt-120" id="datetimepicker1">
+      <input autocomplete="off" [min]="MinDate" [max]="maxDate" [(ngModel)]="FromDate" (dateTimeInput)=onChange($event) (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
+        [owlDateTimeTrigger]="dt1" class="owl-dp"
+        name="date" [owlDateTime]="dt1">
+      <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+      <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+    </div>
+    <div class="error" *ngIf="disableExport && !FromDate">
+      Please select From Date
+    </div>
+  </span>
+
+  <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">To Date</span>
+  <span class="wt-120 pull-left mr-10">
+
+    <div class="input-group date wt-120" id="datetimepicker2">
+      <input autocomplete="off" [min]="MinDate" [max]="maxDate" [(ngModel)]="ToDate" (dateTimeInput)=onChange($event) (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"  [owlDateTimeTrigger]="dt2" class="owl-dp"
+        name="date" [owlDateTime]="dt2">
+      <span class="input-group-addon" [owlDateTimeTrigger]="dt2">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+      <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+    </div>
+    <div class="error" *ngIf="disableExport && !ToDate">
+      Please select To Date
+    </div>
+  </span>
+
+  <button class="btn blue square-btn blue-hover btn-txt mr-10 mt-0 shift-right" (click)="Search()">Search</button>
+  <button class="btn blue square-btn blue-hover btn-txt mr-10 mt-0 shift-right" (click)="export()">Export To
+    Excel</button>
+   
+</div>
+<div class="col-md-12 col-sm-12 col-sm-12 p-0">
+  <div class="col-md-12 col-sm-12 mt-10">
+    <div class="table-responcive">
+      <div class="client-ins-rep sticky-table sticky-ltr-cells border-0 table-hight">
+        <ag-grid-angular class="ag-theme-balham grid-w" (firstDataRendered)="AutoSizeGrid($event)"
+          (gridReady)="OnGridReady($event)" [rowSelection]="RowSelection" [rowData]="RowData"
+          (columnResized)="onColumnResized($event)" [columnDefs]="ColumnDefs" [pagination]="true"
+          [paginationAutoPageSize]="true" [enableColResize]="true" [enableSorting]="true" [enableFilter]="true"
+          (rowData)="OnGridReady($event)" [suppressColumnVirtualisation]="true">
+
+        </ag-grid-angular>
+      </div>
+    </div>
+  </div>
+</div>

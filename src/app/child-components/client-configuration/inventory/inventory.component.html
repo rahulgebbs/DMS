@@ -1,0 +1,204 @@
+<!--<div class="tab-content nav-tab-content"> -->
+<form #f="ngForm" (ngSubmit)="f.form.valid && DisableNext == false &&  submitFrom(f.form)" novalidate>
+
+  <div role="tabpanel" class="tab-pane nav-tab-content" id="step-5">
+    <div class="col-md-12 p-0">
+      <div class="col-md-12 pr-0">
+        <div class="col-md-9 p-0">
+          <span class="form-group inventory-provider mt-10">
+            <!-- <form class="form"> -->
+            <div *ngIf="!InventoryData " class="file-upload-wrapper" [attr.data-text]="Filename">
+              <input (change)="GetFileData($event)" onclick="this.value = null" name="file-upload-field" type="file"
+                accept=".xlsx" class="file-upload-field" value="">
+            </div>
+            <div class="error" *ngIf="DisplayFileError">
+              Please select the file
+            </div>
+          </span>
+          <button *ngIf="  !InventoryData  " type="button" (click)="FileUpload()"
+            class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-10" style="border: none;">
+            <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</button>
+          <button type="button" (click)="DownloadTemplate()" [disabled]="downloadDisable"
+            class="btn mt-10 export-btn label grey lg-text label-info square-btn cursor mr-10">
+            <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
+          <span *ngIf="InventoryData  " class="mt-10 export-btn label grey lg-text label-info square-btn cursor mtb-10"
+            (click)="ToggleModal()">
+            <i class="fa fa-plus mr-5 lg-text" aria-hidden="true"></i>Add</span>
+        </div>
+        <div class="col-md-3 p-0">
+          <span class="pull-right pt-8  w-auto mt-5">
+
+            <b>Client Name :- {{ClientData.Client_Name}}</b>
+          </span>
+        </div>
+
+      </div>
+      <div class="right-most mr-5">Total Rows:- <b>{{InventoryData == null ? '0' : InventoryData.length}}</b></div>
+      <div class="col-md-12 p-0 client-inv-sticky">
+
+        <div class="sticky-table sticky-ltr-cells border-0 table-hight" style="padding-bottom:0px !important">
+          <table class="table">
+            <thead>
+              <tr class="sticky-header">
+                <th>Column Name</th>
+                <th>Display Header</th>
+                <th>Column Data Type</th>
+                <th width="90">Field Limit</th>
+                <th width="100">Dropdown?</th>
+                <th width="100">Agent Edit?</th>
+                <th width="100">Agent View?</th>
+                <th width="100">Column Order</th>
+                <th width="100">Standard Field</th>
+                <th width="100">Unique Field</th>
+                <th width="100">Set Formula</th>
+                <th width="100">Is Appeal</th>
+                <th width="100">Correspondence</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="InventoryData == null ; else elseTemplate">
+                <tr>
+                  <td colspan="13" style="text-align:center;">
+                    {{LoadingMsg}}
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <tr *ngFor="let item of InventoryData; let i=index">
+                  <td>
+                    <input class="form-control" maxlength="200" [disabled]="!item.Is_New" name="Column_Name-{{i}}"
+                      type="text" [(ngModel)]="item.Header_Name" #Header_Name="ngModel">
+                    <div class="error" *ngIf="CheckDuplicateHeaderName(Header_Name,i) == i && DisplayHeaderError">
+                      duplicate header
+                      {{f.form.setErrors({ 'invalid': true })}}
+                    </div>
+                  </td>
+                  <td>
+                    <input class="form-control" maxlength="200" required type="text"
+                      [disabled]="CheckMandatoryHeaders(Display_Header) && !item.Is_New" #Display_Header="ngModel"
+                      name="Display_Header-{{i}}" [(ngModel)]="item.Display_Name">
+                    <div class="error" *ngIf="CheckDuplicateDisplayName(Display_Header,i) == i && DisplayNameError ">
+                      duplicate name
+                      {{f.form.setErrors({ 'invalid': true })}}
+                    </div>
+                    <div class="error" *ngIf="CheckUnallowedHeaders(Display_Header,i) == i && DisplayUnallowedError">
+                      header not allowed
+                      {{f.form.setErrors({ 'invalid': true })}}
+                    </div>
+                    <div class="error" *ngIf="Display_Header.hasError('required')">
+                      required
+                    </div>
+                  </td>
+                  <td class="yes-w">
+                    <select class="form-control" [disabled]="!item.Is_New" #Column_Datatype="ngModel"
+                      name="Column_Datatype-{{i}}" type="text" [(ngModel)]="item.Column_Datatype">
+                      <option *ngFor="let it of DataTypeList" [value]="it.Name">{{it.Name}}</option>
+                    </select>
+                    <div class="error"
+                      *ngIf="Column_Datatype.value != 'Text' && Column_Datatype.value != 'Date' && Column_Datatype.value != 'Formula'">
+                      required
+                      {{f.form.setErrors({ 'invalid': true })}}
+                    </div>
+                  </td>
+                  <td>
+                    <input class="form-control" [disabled]="!item.Is_New" pattern="^[1-9][0-9]*$" type="text" required
+                      maxlength="4" #Field_Limit="ngModel" name="Field_Limit-{{i}}" [(ngModel)]="item.Field_Limit">
+                    <div class="error" *ngIf="Field_Limit.hasError('pattern')">
+                      Value should be grater than 0 and Numaric only
+                    </div>
+                    <div class="error" *ngIf="Field_Limit.hasError('required')">
+                      required
+                    </div>
+                  </td>
+                  <td class="yes-w">
+                    <select class="form-control" [disabled]="item.Column_Datatype =='Formula' && !item.Is_New"
+                      name="Is_Dropdown_Field-{{i}}" type="text" [(ngModel)]="item.Is_Dropdown_Field">
+                      <option *ngFor="let it of YesNoList" [value]="it.Name">{{it.Name}}</option>
+                    </select>
+                  </td>
+                  <td class="yes-w">
+                    <select class="form-control" name="Is_Edit_Allowed_Agent-{{i}}" type="text"
+                      [(ngModel)]="item.Is_Edit_Allowed_Agent">
+                      <!-- <option *ngFor="let it of YesNoList" [value]="it.Value">{{it.Name}}</option> -->
+                      <option value="Yes" [disabled]="item.Is_View_Allowed_Agent == 'No'">Yes</option>
+                      <option value="No">No</option>
+                    </select>
+                  </td>
+                  <td class="yes-w">
+                    <select class="form-control" name="Is_View_Allowed_Agent-{{i}}" type="text"
+                      [(ngModel)]="item.Is_View_Allowed_Agent">
+                      <option value="Yes">Yes</option>
+                      <option value="No" [disabled]="item.Is_Edit_Allowed_Agent == 'Yes'">No</option>
+                    </select>
+                  </td>
+
+                  <td class="yes-w">
+                    <input type="text" pattern="^[1-9][0-9]*$" maxlength="5" class="form-control"
+                      #Column_Display_Order="ngModel" required name="Column_Display_Order-{{i}}" type="text"
+                      [(ngModel)]="item.Column_Display_Order">
+                    <div class="error"
+                      *ngIf="CheckDuplicateDisplayOrder(Column_Display_Order,i) == i && DisplayColumnError">
+                      duplicate column order
+                      {{f.form.setErrors({ 'invalid': true })}}
+                    </div>
+                    <div class="error" *ngIf="Column_Display_Order.hasError('required')">
+                      required
+                    </div>
+                    <div class="error" *ngIf="Column_Display_Order.hasError('pattern')">
+                      Value should be grater than 0 and Numaric only
+                    </div>
+                  </td>
+                  <td class="yes-w">
+                    <select class="form-control" (change)="StandardDropdownChange(i)"
+                      [disabled]="item.Is_Standard_Field == 'Yes' && !item.Is_New && !item.Is_Standard_Changed"
+                      name="Is_Standard_Field-{{i}}" type="text" [(ngModel)]="item.Is_Standard_Field">
+                      <option *ngFor="let it of YesNoList" [value]="it.Name">{{it.Name}}</option>
+                    </select>
+                  </td>
+                  <td class="yes-w">
+                    <select class="form-control" name="Is_Unique_Field-{{i}}" type="text"
+                      [(ngModel)]="item.Is_Unique_Field">
+                      <option *ngFor="let it of YesNoList" [value]="it.Name">{{it.Name}}</option>
+                    </select>
+                  </td>
+                  <td class="yes-w">
+                    <select class="form-control"
+                      [disabled]="item.Column_Datatype == 'Formula' && !item.Is_New && !item.Is_Formula_Changed"
+                      name="Is_Formula_Computable-{{i}}" type="text" [(ngModel)]="item.Is_Formula_Computable">
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
+                    </select>
+                  </td>
+                  <td class="yes-w">
+                    <select class="form-control" (change)="AppealDropdownChange(i)" name="Is_Appeal-{{i}}" type="text"
+                      [(ngModel)]="item.Is_Appeal">
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
+                    </select>
+                  </td>
+                  <td class="yes-w">
+                    <select class="form-control" (change)=CorrespondenceDropdown(i) name="Is_Correspondence-{{i}}"
+                      type="text" [(ngModel)]="item.Is_Correspondence">
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
+                    </select>
+                  </td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-12 text-right p-0">
+        <button type="submit" id="step-5-save" [disabled]="DisableNext"
+          class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5">Save</button>
+        <button type="button" id="step-5-next" (click)="NextPage()" [disabled]="DisableNext"
+          class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5">Next</button>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- </div> -->
+<app-inventory-modal *ngIf="DisplayModal" (AddRow)="AddInventoryRow($event)" (Close)="ToggleModal()">
+</app-inventory-modal>

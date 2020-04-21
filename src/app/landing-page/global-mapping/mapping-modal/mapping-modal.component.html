@@ -1,0 +1,554 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position insurance-map-pop ins-map-pop">
+        <div class="col-md-12 p-0 grey">
+            <span class="col-md-10 col-sm-10 p-0">
+                <div class="heading-panel pl-10">
+                    <span class="text-sm text-ellipsis heading-txt flex">Insurance Mapping</span>
+                </div>
+            </span>
+            <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="ToggleModal()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </span>
+        </div>
+        <div class="col-md-12 p-0 insurance-map-field">
+            <div class="col-md-12 p-0">
+                <div class="col-md-6">
+                    <div class="col-md-12 p-0">
+                        <div class="heading-panel sT-hight pl-0">
+                            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Client Insurance</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-6 p-0">
+                        <div class="heading-panel sT-hight pl-0">
+                            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Global Insurance</span>
+                        </div>
+                    </div>
+                    <div *ngIf="ShowCheckbox" class="col-md-6">
+                        <label class="custom-control client-conf pt-7">
+                            <input type="checkbox" id="ac-active" (change)="checkValue($event)">
+                            <label for="ac-active">Copy From Client</label>
+
+
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 p-0 box-heightLG mb-0 border-t">
+                <div class="col-md-6 pt-10">
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Practice Name </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Practice_Name"></div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Payer Name </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Payer_Name">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Timely Filing Limits in Days
+                        </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Timely_Filing_Limits_in_Days">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Contact Number </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Contact_Number">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Website </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Website">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Start Time </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Start_Time">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Claim Mailing Address </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Claim_Mailing_Address">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Appeal Mailing Address </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Appeal_Mailing_Address">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">End Time </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.End_Time">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Appeal Filing Limit In Days
+                        </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Appeal_Filing_Limit_In_Days">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Financial Class </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Financial_Class">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Appeal Mailing Address1 </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Appeal_Mailing_Address1">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Appeal Mailing Address2 </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Appeal_Mailing_Address2">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Appeal Mailing City </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Appeal_Mailing_City">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Appeal Mailing State </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Appeal_Mailing_State">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Appeal Mailing Zipcode </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Appeal_Mailing_Zipcode">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Claim Mailing Address1 </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Claim_Mailing_Address1">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Claim Mailing Address2 </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Claim_Mailing_Address2">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Claim Mailing City </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Claim_Mailing_City">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Claim Mailing State </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Claim_Mailing_State">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Claim Mailing Zipcode </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Claim_Mailing_Zipcode">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Fax No </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Fax_No">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Insurance Name Gebbs </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Insurance_Name_Gebbs">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Appeal Mailing FaxNo </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Appeal_Mailing_FaxNo">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Claim Mailing FaxNo </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Claim_Mailing_FaxNo">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Appeal Mailing ContactNo </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Appeal_Mailing_ContactNo">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Claim Mailing ContactNo </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Claim_Mailing_ContactNo">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Insurance Name for Appeal </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Insurance_Name_for_Appeal">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Insurance Name for Mail </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Insurance_Name_for_Mail">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Insurance Code </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Insurance_Code">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Insurance State </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Insurance_State">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Is IVR </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Is_IVR">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Is Voice </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Is_Voice">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Email Id </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Email_Id">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">CSR Fax </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.CSR_Fax">
+                        </div>
+                    </div>
+                    <div class="col-md-12 p-0  mb-10">
+                        <div class="col-md-6 p-0 label-global">Attention To </div>
+                        <div class="col-md-6 pr-0">
+                            <input class="form-control" disabled type="text" [(ngModel)]="SelectedClient.Attention_To">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 pt-10 blue-seprator-l">
+                    <form name="form" #f="ngForm" novalidate>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Practice Name </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" #Practice_Name="ngModel" name="Practice_Name" type="text"
+                                   maxlength="100" [(ngModel)]="SelectedGlobal.Practice_Name"></div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Payer Name </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" required name="Payer_Name" #Payer_Name="ngModel" type="text"
+                                    maxlength="100" [(ngModel)]="SelectedGlobal.Payer_Name">
+                                <div class="error" *ngIf="f.submitted && Payer_Name.hasError('required') ">
+                                    Payer Name is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Timely Filing Limits in Days
+                            </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" #Timely_Filing_Limit_In_Days="ngModel" required pattern="^(?:36[0-5]|3[0-5]\d|[12]\d{2}|[1-9]\d?)$"
+                                    maxlength="3" name="Timely_Filing_Limits_in_Days" type="text"
+                                    [(ngModel)]="SelectedGlobal.Timely_Filing_Limits_in_Days">
+                                <div class="error" *ngIf="Timely_Filing_Limit_In_Days.hasError('pattern')">
+                                    Numbers only upto 365
+                                </div>
+                                <div class="error" *ngIf="Timely_Filing_Limit_In_Days.hasError('required')">
+                                    required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Contact Number </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="50" type="text" [(ngModel)]="SelectedGlobal.Contact_Number"
+                                    name="Contact_Number">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Website </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="100" type="text" [(ngModel)]="SelectedGlobal.Website"
+                                    name="Website">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Start Time </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" pattern="^((([0]?[1-9]|1[0-2])(:|\.)[0-5][0-9]((:|\.)[0-5][0-9])?( )?)|(([0]?[0-9]|1[0-9]|2[0-3])(:|\.)[0-5][0-9]((:|\.)[0-5][0-9])?))$"
+                                    maxlength="8" type="text" #Start_Time="ngModel" [(ngModel)]="SelectedGlobal.Start_Time"
+                                    name="Start_Time">
+                                <div class="error" *ngIf="Start_Time.hasError('pattern')">
+                                    Time format: HH:mm:ss
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Claim Mailing Address </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="200" type="text" [(ngModel)]="SelectedGlobal.Claim_Mailing_Address"
+                                    name="Claim_Mailing_Address">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Appeal Mailing Address </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="200" type="text" [(ngModel)]="SelectedGlobal.Appeal_Mailing_Address"
+                                    name="Appeal_Mailing_Address">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">End Time </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control"
+                                pattern="^((([0]?[1-9]|1[0-2])(:|\.)[0-5][0-9]((:|\.)[0-5][0-9])?( )?)|(([0]?[0-9]|1[0-9]|2[0-3])(:|\.)[0-5][0-9]((:|\.)[0-5][0-9])?))$"
+                                 maxlength="8" type="text" #End_Time="ngModel" [(ngModel)]="SelectedGlobal.End_Time"
+                                    name="End_Time">
+                                <div class="error" *ngIf="End_Time.hasError('pattern')">
+                                    Time format: HH:mm:ss
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Appeal Filing Limit In Days
+                            </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" #Appeal_Filing_Limit_In_Days="ngModel" required maxlength="3"
+                                    pattern="^(?:36[0-5]|3[0-5]\d|[12]\d{2}|[1-9]\d?)$" type="text"
+                                    [(ngModel)]="SelectedGlobal.Appeal_Filing_Limit_In_Days" name="Appeal_Filing_Limit_In_Days">
+                                <div class="error" *ngIf="Appeal_Filing_Limit_In_Days.hasError('pattern')">
+                                    Numbers only upto 365
+                                </div>
+                                <div class="error" *ngIf="Appeal_Filing_Limit_In_Days.hasError('required')">
+                                    required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Financial Class </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="200" type="text" [(ngModel)]="SelectedGlobal.Financial_Class"
+                                    name="Financial_Class">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Appeal Mailing Address1 </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="200" type="text" [(ngModel)]="SelectedGlobal.Appeal_Mailing_Address1"
+                                    name="Appeal_Mailing_Address1">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Appeal Mailing Address2 </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="200" type="text" [(ngModel)]="SelectedGlobal.Appeal_Mailing_Address2"
+                                    name="Appeal_Mailing_Address2">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Appeal Mailing City </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="50" type="text" [(ngModel)]="SelectedGlobal.Appeal_Mailing_City"
+                                    name="Appeal_Mailing_City">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Appeal Mailing State </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="50" type="text" [(ngModel)]="SelectedGlobal.Appeal_Mailing_State"
+                                    name="Appeal_Mailing_State">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Appeal Mailing Zipcode </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="50" type="text" [(ngModel)]="SelectedGlobal.Appeal_Mailing_Zipcode"
+                                    name="Appeal_Mailing_Zipcode">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Claim Mailing Address1 </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="200" type="text"  [(ngModel)]="SelectedGlobal.Claim_Mailing_Address1"
+                                    name="Claim_Mailing_Address1">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Claim Mailing Address2 </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="200" type="text" [(ngModel)]="SelectedGlobal.Claim_Mailing_Address2"
+                                    name="Claim_Mailing_Address2">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Claim Mailing City </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="50" type="text" [(ngModel)]="SelectedGlobal.Claim_Mailing_City"
+                                    name="Claim_Mailing_City">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Claim Mailing State </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="50" type="text" [(ngModel)]="SelectedGlobal.Claim_Mailing_State"
+                                    name="Claim_Mailing_State">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Claim Mailing Zipcode </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="50" type="text" [(ngModel)]="SelectedGlobal.Claim_Mailing_Zipcode"
+                                    name="Claim_Mailing_Zipcode">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Fax No </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="50" type="text" [(ngModel)]="SelectedGlobal.Fax_No"
+                                    name="Fax_No">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Insurance Name Gebbs </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" type="text" maxlength="100" [(ngModel)]="SelectedGlobal.Insurance_Name_Gebbs"
+                                    name="Insurance_Name_Gebbs">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Appeal Mailing FaxNo </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" type="text" maxlength="20" [(ngModel)]="SelectedGlobal.Appeal_Mailing_FaxNo"
+                                    name="Appeal_Mailing_FaxNo">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Claim Mailing FaxNo </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" type="text" maxlength="20" [(ngModel)]="SelectedGlobal.Claim_Mailing_FaxNo"
+                                    name="Claim_Mailing_FaxNo">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Appeal Mailing ContactNo </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" type="text" maxlength="50" [(ngModel)]="SelectedGlobal.Appeal_Mailing_ContactNo"
+                                    name="Appeal_Mailing_ContactNo">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Claim Mailing ContactNo </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" type="text" maxlength="50" [(ngModel)]="SelectedGlobal.Claim_Mailing_ContactNo"
+                                    name="Claim_Mailing_ContactNo">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Insurance Name for Appeal </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" type="text" maxlength="100" [(ngModel)]="SelectedGlobal.Insurance_Name_for_Appeal"
+                                    name="Insurance_Name_for_Appeal">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Insurance Name for Mail </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" type="text" maxlength="100" [(ngModel)]="SelectedGlobal.Insurance_Name_for_Mail"
+                                    name="Insurance_Name_for_Mail">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Insurance Code </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="50" type="text" [(ngModel)]="SelectedGlobal.Insurance_Code"
+                                    name="Insurance_Code">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Insurance State </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="50" type="text" [(ngModel)]="SelectedGlobal.Insurance_State"
+                                    name="Insurance_State">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Is IVR </div>
+                            <div class="col-md-6 pr-0">
+                                <select class="form-control" type="text" [(ngModel)]="SelectedGlobal.Is_IVR" name="Is_IVR">
+                                    <option value="true">True</option>
+                                    <option value="false">False</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Is Voice </div>
+                            <div class="col-md-6 pr-0">
+                                <select class="form-control" name="Is_Voice" type="text" [(ngModel)]="SelectedGlobal.Is_Voice">
+                                    <option value="true">True</option>
+                                    <option value="false">False</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">Email Id </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="100" type="text" [(ngModel)]="SelectedGlobal.Email_Id"
+                                    name="Email_Id">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-10">
+                            <div class="col-md-6 p-0 label-global">CSR Fax </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="50" type="text" [(ngModel)]="SelectedGlobal.CSR_Fax"
+                                    name="CSR_Fax">
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0  mb-40">
+                            <div class="col-md-6 p-0 label-global">Attention To </div>
+                            <div class="col-md-6 pr-0">
+                                <input class="form-control" maxlength="100" type="text" [(ngModel)]="SelectedGlobal.Attention_To"
+                                    name="Attention_To">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+            <div class="col-md-12 text-right p-0  border-t">
+                    <div class="">
+                        <button (click)="f.form.valid && MapInsurance()" [disabled]="DisableSubmit" class="btn blue square-btn blue-hover btn-txt  mb-5 mt-5 mr-5">Map</button>
+                    </div>
+                </div>
+</div>

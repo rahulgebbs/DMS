@@ -1,0 +1,93 @@
+<div class="pop-bg">
+</div>
+
+<div class="pop-position">
+
+    <!-- <div class="modal fade add-denial-code in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+
+                        <div class="modal-dialog modal-sm  modal-bottom dark popup-width-globle drnial-code-p" role="document">
+                            <div class="modal-content white" style="width: 100%;"> -->
+
+    <div class="col-md-12 p-0 grey">
+        <span class="col-md-10 col-sm-10 p-0">
+            <div class="heading-panel" *ngIf="onAdd">
+                <span class="text-sm text-ellipsis heading-txt flex"> Add Denial Code</span>
+            </div>
+            <div class="heading-panel" *ngIf="onEdit">
+                <span class="text-sm text-ellipsis heading-txt flex"> Edit Denial Code</span>
+            </div>
+        </span>
+        <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" #closeBtn data-dismiss="modal">
+            <i class="fa fa-times" aria-hidden="true" (click)="ToggleModal()"></i>
+            <!-- (click)="ToggleModal()"              -->
+        </span>
+    </div>
+    <div class="col-md-12 p-0 mt-10">
+        <form [formGroup]="DenialCodeForm" (ngSubmit)="SubmitDenialCodeForm() && UpdateDenialCode()">
+            <div class="col-md-12 ">
+                <div class="form-group">
+                    <label for="inputEmail3" class="label-std  control-label p-0 b-600">Client</label>
+                    <select class="form-control" formControlName="ClientId" [(ngModel)]="SelectedDenialCode.Client_Id" (change)="onChange()">
+                        <option [selected]="(ClientList.length>1 && !SelectedDenialCode.Client_Id)" value="0" disabled>Select</option>
+                        <option *ngFor="let c of ClientList" [selected]="c.selected" [value]="c.Client_Id" >{{c.Client_Name}}
+                        </option>
+                    </select>
+                    <div class="error" *ngIf="DenialCodeForm.get('ClientId').hasError('required') && Validated">
+                        Client is required.
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="label-std  control-label p-0 b-600">Denial Code</label>
+                    <input type="text" formControlName="DenialCode" [(ngModel)]="SelectedDenialCode.Denial_Code"
+                        class="form-control" placeholder="" value="">
+                    <div class="error" *ngIf="DenialCodeForm.get('DenialCode').hasError('required') && Validated">
+                        Denial Code is required.
+                    </div>
+                    <div class="error" *ngIf="DenialCodeForm.get('DenialCode').hasError('maxlength')">
+                           Maximum 10 Charcter Allowed
+                        </div>
+                    <!-- <label class="error  mt-0" *ngIf="addUser.get('Employee_Code').hasError('max') ">Maximum 20
+                            Charcter allowed </label> -->
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="label-std  control-label p-0 b-600">Denial Description</label>
+                    <input type="text" maxlength="500" [(ngModel)]="SelectedDenialCode.Denial_Description"
+                        formControlName="DenialDescirption" class="form-control" id="DenialDescirption" placeholder=""
+                        value="">
+                    <div class="error"
+                        *ngIf="DenialCodeForm.get('DenialDescirption').hasError('required') && Validated">
+                        Denial Descirption is required.
+                    </div>
+                    <div class="error" *ngIf="DenialCodeForm.get('DenialDescirption').hasError('maxlength')">
+                            Maximum 500 Charcter Allowed
+                         </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="label-std  control-label p-0 b-600">AM Comments</label>
+                    <textarea maxlength="500" formControlName="AMComments" [(ngModel)]="SelectedDenialCode.AM_Comments"
+                        class="form-control textarea-resize" rows="4" placeholder="Write Comments.."></textarea>
+                    <div class="error" *ngIf="DenialCodeForm.get('AMComments').hasError('required') && Validated">
+                            AM Comments is required.
+                    </div>
+                    <div class="error" *ngIf="DenialCodeForm.get('AMComments').hasError('maxlength')">
+                            Maximum 500 Charcter Allowed
+                         </div>
+                </div>
+
+                <input class="form-control" type="hidden" formControlName="DenialCodeId"
+                    [(ngModel)]="SelectedDenialCode.Denial_Code_Id" placeholder="" value="">
+            </div>
+
+            <div class="col-md-12 mb-10 text-left">
+                <button type="submit" [disabled]="saveDisabled"
+                    class="btn blue square-btn blue-hover btn-txt mr-10">Save</button>
+            </div>
+        </form>
+    </div>
+    <!-- </div>
+                        </div>
+                        </div> -->
+
+</div>

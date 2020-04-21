@@ -1,0 +1,39 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position">
+  <div class="col-md-12 p-0 grey">
+    <span class="col-md-10 col-sm-10 p-0">
+      <div class="heading-panel pl-10">
+        <span class="text-sm text-ellipsis heading-txt flex">Employee Code
+        </span>
+      </div>
+    </span>
+    <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div class="col-md-12 p-0">
+    <div class="col-md-12 p-0 mt-10 border-b">
+      <div class="col-md-3">
+        <label class="custom-control">
+          <input type="checkbox" id="selectall" [(ngModel)]="SelectAll" (change)="SelectAllToggle($event)" />
+          <label for="selectall">Select All Employee Code</label>
+        </label>
+      </div>
+      <div class="col-md-2 p-0">
+          <button class="btn blue square-btn blue-hover btn-txt mb-9" (click)="SendSelectedEmployees()">Save</button>
+        </div>
+    </div>
+    <div class="col-md-12 code-auto-scroll p-0">
+      <div class="col-md-12 p-0 mt-10">
+        <div class="col-md-4 mt-10" *ngFor="let emp of AllEmployees;let k = index;">
+          <label class="custom-control">
+              <!-- CheckSelectAll(emp.Employee_Code) -->
+            <input type="checkbox" id="{{emp.Id}}"  [checked]="(emp.Is_Selected)" (change)="checkSelect(k)"  />
+            <label for="{{emp.Id}}">{{emp.Employee_Code + " " +emp.Full_Name}}  </label>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

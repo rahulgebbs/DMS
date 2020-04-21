@@ -1,0 +1,136 @@
+<div class="pop-bg"></div>
+<div class="pop-position">
+  <form #f="ngForm" (ngSubmit)="f.form.valid && Submit()">
+    <div class="col-md-12 p-0 grey">
+      <span class="col-md-10 col-sm-10 p-0">
+        <div class="heading-panel pl-10">
+          <span class="text-sm text-ellipsis heading-txt flex">{{HeaderStatus}}
+            <span class="buckets-list-cl">
+              <b class="badge circle-buget  badge-sm badge-pill baget-p">{{InventoryCount}}</b>
+            </span></span>
+        </div>
+      </span>
+      <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
+        <i class="fa fa-times"></i>
+      </span>
+    </div>
+
+    <div class="col-md-12 p-0">
+      <div class="sticky-table sticky-ltr-cells border-0 table-hight popup-table-height">
+        <table class="table">
+          <thead>
+            <tr class="sticky-header">
+              <th>
+                <div class="mt-0">
+                  <label class="custom-control">
+                    <input type="checkbox" id="check-all" [disabled]="TLAction != 'Hold' && TLAction != 'To Internal'"
+                      name="check-all" (click)="ToggleCheckAll($event)" [(ngModel)]="AllChecked" />
+                    <label for="check-all"></label>
+                  </label>
+
+                </div>
+              </th>
+              <th>Action</th>
+              <th>Comment History</th>
+              <th>Comments</th>
+              <th>Attach File</th>
+              <th>Status</th>
+              <th>Sub Status</th>
+              <th>Action Code</th>
+              <th [ngClass]="[HideList.indexOf(h.Header_Name) > -1 ? 'hidden' : '']" *ngFor="let h of Inventories[0]">
+                {{h.Header_Name}}
+              </th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of Inventories; let int=index">
+              <td [ngClass]="[i.Repeat_Count > 1 ? 'bg-yellow' : '']">
+                <div class="form-check text-center">
+                  <label class="custom-control">
+                    <input type="checkbox" id="check-{{int}}" name="check-{{int}}"
+                      (change)="OnInventoryCheckboxChange(int)" #check="ngModel"
+                      [disabled]="TLAction != 'Hold' && TLAction != 'To Internal'" [(ngModel)]="i.IsChecked" />
+                    <label for="check-{{int}}"></label>
+                  </label>
+                </div>
+              </td>
+              <td [ngClass]="[i.Repeat_Count > 1 ? 'bg-yellow' : '']">
+                <ng-container *ngIf="TLAction == 'Hold' || TLAction == 'To Internal'; else readOnlyAction">
+                  <select [(ngModel)]="i.Action" #Action="ngModel" name="action" class="form-control w-120">
+                    <option [value]="''">Select</option>
+                    <option *ngFor="let a of ActionList" [disabled]="TLAction == a.Value" [value]="a.Value">{{a.Key}}
+                    </option>
+                  </select>
+                  <div class="error" *ngIf="f.submitted && Action.value == '' && check.value == true">
+                    {{f.form.setErrors({ 'invalid': true })}}
+                    required
+                  </div>
+                </ng-container>
+                <ng-template #readOnlyAction>
+                  <label>{{i.Action}}</label>
+                </ng-template>
+              </td>
+              <td [ngClass]="[i.Repeat_Count > 1 ? 'bg-yellow' : '']">
+                <button type="button" class="btn grey" (click)="ViewHistory(int)">View History</button>
+              </td>
+              <td [ngClass]="[i.Repeat_Count > 1 ? 'bg-yellow' : '']">
+                <textarea [disabled]="TLAction != 'Hold' && TLAction != 'To Internal'"
+                  class="form-control textarea-resize w-120" name="comments" [(ngModel)]="i.Comments" rows=""
+                  placeholder="Write Comments.."></textarea>
+              </td>
+              <td [ngClass]="[i.Repeat_Count > 1 ? 'bg-yellow' : '']">
+                <ng-container *ngIf="TLAction == 'Hold' || TLAction == 'To Internal'; else downloadFile">
+                  <span class="form-group upload-signature">
+                    <form class="form w-120">
+                      <div class="upload-provider-signature" [attr.data-text]="i.FileName">
+                        <input name="file-upload-signature" type="file"
+                          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                          class="file-upload-field" (change)="OnFileChange($event,int)">
+                      </div>
+                    </form>
+                  </span>
+                </ng-container>
+                <ng-template #downloadFile>
+                  <ng-container *ngIf="i.FileName == 'No File Uploaded'; else downloadFile">
+                    <label>{{i.FileName}}</label>
+                  </ng-container>
+                  <ng-template #downloadFile>
+                    <button type="button" class="btn grey" [disabled]="DisableDownload"
+                      (click)="GetReferenceFile(i.FileName)">Download</button>
+                  </ng-template>
+
+
+                </ng-template>
+              </td>
+              <td [ngClass]="[i.Repeat_Count > 1 ? 'bg-yellow' : '']">
+                {{i.Status}}
+              </td>
+              <td [ngClass]="[i.Repeat_Count > 1 ? 'bg-yellow' : '']">
+                {{i.Sub_Status}}
+              </td>
+              <td [ngClass]="[i.Repeat_Count > 1 ? 'bg-yellow' : '']">
+                {{i.Action_Code}}
+              </td>
+              <td [ngClass]="[HideList.indexOf(iv.Header_Name) > -1 ? 'hidden' : i.Repeat_Count > 1 ? 'bg-yellow' : '']"
+                *ngFor="let iv of i">
+                {{iv.Field_Value}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    <div class="col-md-12">
+      <span class="pull-right">
+        <button class="btn blue square-btn blue-hover btn-txt mr-0 mt-10 mb-10 w-51" [disabled]="DisableSubmit"
+          *ngIf="TLAction == 'Hold' || TLAction == 'To Internal'">Save</button>
+      </span>
+    </div>
+  </form>
+</div>
+
+<app-comment-history-modal *ngIf="ToggleCommentHistory" (ClosePopup)="ToggleCommentHistoryPopup()"
+  [HistoryData]="CommentHistory">
+</app-comment-history-modal>

@@ -1,0 +1,179 @@
+<div class="tab-content nav-tab-content">
+  <div role="tabpanel" class="tab-pane active" id="step-1">
+    <form [formGroup]="addClient" (ngSubmit)="submitFrom()">
+      <div class="middle-box lg-midd">
+
+        <div class="col-md-6 pt-10 blue-seprator">
+          <div class="col-md-12 col-lg-12">
+            <div class="right-most">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
+          </div>
+
+
+          <div class="client-sticky-tbl sticky-table sticky-ltr-cells border-0 table-hight">
+
+            <ag-grid-angular [enableSorting]="true" [enableFilter]="true" [pagination]="true" [paginationPageSize]="15"
+              class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
+              (rowClicked)='onCellClicked($event)' [suppressDragLeaveHidesColumns]="true"
+              [suppressDragLeaveHidesColumns]="true" [rowSelection]="rowSelection" (gridReady)="onGridReady($event)"
+              [suppressColumnVirtualisation]="true">
+            </ag-grid-angular>
+          </div>
+        </div>
+        <div class="col-md-6 p-0">
+
+          <div class="col-md-12 p-0">
+            <div class="col-md-12 col-sm-12">
+              <div class="heading-panel sT-hight pl-0">
+                <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Create Client</span>
+              </div>
+            </div>
+            <div class="col-md-12 p-0">
+              <div class="form-group col-md-6">
+                <input type="hidden" class="form-control" placeholder="Id" formControlName="Id"
+                  [(ngModel)]="clientData.Id">
+                <label for="Client_Name" class="label-std control-label p-0 b-600">Client Name</label>
+                <input type="text" class="form-control" placeholder="" formControlName="Client_Name"
+                  [(ngModel)]="clientData.Client_Name" (focusout)="setDBName($event)">
+                <label class=" error" *ngIf="addClient.get('Client_Name').hasError('required') && validated">Client
+                  Name is Required</label>
+                <label class=" error" *ngIf="addClient.get('Client_Name').hasError('maxlength') && validated">Client
+                  Maximum 50 character allowed</label>
+                <label class=" error" *ngIf="addClient.get('Client_Name').hasError('pattern') && validated">
+                  Special character not allowed</label>
+                <label class=" error" *ngIf="spaceValidation && validated">Space not allowed in Client Name</label>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="DB_Server_Name" class="label-std control-label p-0 b-600">DB Server Name</label>
+                <input type="text" class="form-control" id="DB_Server_Name" placeholder=""
+                  formControlName="DB_Server_Name" [(ngModel)]="clientData.DB_Server_Name">
+                <label class=" error"
+                  *ngIf="addClient.get('DB_Server_Name').hasError('required') && validated">DB_Server_Name
+                  is Required</label>
+                <label class=" error" *ngIf="addClient.get('DB_Server_Name').hasError('maxlength') && validated">Maximum
+                  100 character allowed</label>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="DB_Name" class="label-std control-label p-0 b-600">DB Name</label>
+                <input type="text" class="form-control" formControlName="DB_Name" [(ngModel)]="DB_Name">
+                <label class=" error" *ngIf="addClient.get('DB_Name').hasError('required') && validated">DB_Name
+                  is Required</label>
+                <label class=" error" *ngIf="addClient.get('DB_Name').hasError('maxlength') && validated">Maximum
+                  100 character allowed</label>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="DB_Username" class="label-std control-label p-0 b-600">DB User Name</label>
+                <input type="text" class="form-control" placeholder="" formControlName="DB_Username"
+                  [(ngModel)]="clientData.DB_Username">
+                <label class=" error" *ngIf="addClient.get('DB_Username').hasError('required') && validated">DB_Username
+                  is Required</label>
+                <label class=" error" *ngIf="addClient.get('DB_Username').hasError('maxlength') && validated">Maximum
+                  50 character allowed</label>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="DB_Password" class="label-std control-label p-0 b-600">DB Password</label>
+                <input type="password" class="form-control" formControlName="DB_Password"
+                  [(ngModel)]="clientData.DB_Password">
+                <label class=" error" *ngIf="addClient.get('DB_Password').hasError('required') && validated">DB_Password
+                  is Required</label>
+                <label class=" error" *ngIf="addClient.get('DB_Password').hasError('maxlength') && validated">Maximum
+                  30 character allowed</label>
+              </div>
+
+              <!-- Original_Client_Name -->
+              <div class="form-group col-md-6">
+                <label for="DB_Password" class="label-std control-label p-0 b-600">Original Client Name</label>
+                <input type="text" class="form-control" formControlName="Original_Client_Name"
+                  [(ngModel)]="clientData.Original_Client_Name">
+                <label class=" error"
+                  *ngIf="addClient.get('Original_Client_Name').hasError('required') && validated">Original Client Name
+                  is Required</label>
+                <!-- <label class=" error" *ngIf="addClient.get('Original_Client_Name').hasError('maxlength') && validated">Maximum
+         30 character allowed</label> -->
+              </div>
+              <!-- SubClient_Name -->
+              <div class="form-group col-md-6">
+                <label for="DB_Password" class="label-std control-label p-0 b-600">SubClient Name</label>
+                <input type="text" class="form-control" formControlName="SubClient_Name"
+                  [(ngModel)]="clientData.SubClient_Name">
+                <!-- <label class=" error" *ngIf="addClient.get('DB_Password').hasError('required') && validated">DB_Password
+         is Required</label>
+        <label class=" error" *ngIf="addClient.get('DB_Password').hasError('maxlength') && validated">Maximum
+         30 character allowed</label> -->
+              </div>
+
+            </div>
+            <div class="col-md-12">
+              <hr class="mt-10 mb-10">
+              <div class="form-group">
+                <div class="col-md-12 p-0">
+                  <span class="p-0 text-left mr-10">
+                    <input type="hidden" formControlName="Updated_Date" [(ngModel)]="clientData.Updated_Date">
+                    <label class="custom-control client-conf">
+                      <input type="checkbox" id="ac-active" [checked]="clientData.Is_Active" formControlName="Is_Active"
+                        [(ngModel)]="Is_Active" class="mr-5 mt-0" (click)="check()">
+                      <label for="ac-active" class="label-status">Is Active</label>
+                    </label>
+                  </span>
+
+                  <span class="mr-10 p-0 text-left">
+                    <label class="custom-control client-conf">
+                      <input type="checkbox" id="ag-report" [checked]="clientData.Is_Aging_Report"
+                        formControlName="Is_Aging_Report" [(ngModel)]="Is_Aging_Report" class="mr-5 mt-0">
+                      <label for="ag-report" class="label-status">Aging Report</label>
+                    </label>
+                  </span>
+                  <span class="mr-10 text-left" *ngIf="show_Is_Appeal_Processed">
+                    <label class="custom-control client-conf">
+                      <input type="checkbox" id="ac-active1" [checked]="clientData.Is_Appeal_Processed"
+                        formControlName="Is_Appeal_Processed" [(ngModel)]="clientData.Is_Appeal_Processed"
+                        class="mr-5 mt-0">
+                      <label for="ac-active1" class="label-status">Activate Appeal Process</label>
+                    </label>
+                  </span>
+                </div>
+              </div>
+              <!-- <div class="form-group">
+              <label for="inputEmail3" class="label-std control-label p-0 b-600">Client Alias</label>
+              <input type="text" class="form-control" id="lastname" placeholder="" value="db-Jitendrasing">
+            </div> -->
+              <!-- <div class="form-group">
+        <label for="inputEmail3" class="label-std control-label p-0 b-600">Client Appeal File Path</label>
+        <input type="text" class="form-control" id="lastname" formControlName="File_Location"
+         [(ngModel)]="clientData.File_Location">
+        <label class=" error" *ngIf="addClient.get('File_Location').hasError('maxlength') && validated">Maximum
+         1000 character allowed</label>
+        <label class=" error" *ngIf="addClient.get('File_Location').hasError('required') && validated">Client
+         Appeal File Path
+         is Required</label>
+       </div> -->
+              <!-- <div class="form-group" *ngIf="show_Is_Appeal_Processed">
+        <div class="col-md-12 p-0">
+         <span class="col-md-6 p-0 text-left">
+          
+          <label class="custom-control client-conf pt-4">
+           <input type="checkbox" id="ac-active1" [checked]="clientData.Is_Appeal_Processed" formControlName="Is_Appeal_Processed"
+            [(ngModel)]="clientData.Is_Appeal_Processed">
+           <label for="ac-active1">Activate Appeal Process</label>
+          </label>
+         </span>
+        </div>
+       </div> -->
+
+            </div>
+
+          </div>
+          <div class="col-md-12">
+            <label class="error" *ngIf=" selectClient">Please Select Client.</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 text-right p-0 border-t">
+        <button type="button" [disabled]="clearBtnDisable"
+          class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5" (click)="clearForm()">Clear</button>
+        <button type="submit" class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5">Save</button>
+        <button type="button" [disabled]="nextBtnDisable"
+          class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5" (click)="nextPage()">Next</button>
+      </div>
+    </form>
+  </div>
+</div>

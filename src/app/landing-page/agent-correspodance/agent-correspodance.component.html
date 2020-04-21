@@ -1,0 +1,320 @@
+<app-header [title]="Title"></app-header>
+
+<div class="container-fluid p-0 white">
+
+  <div class="col-md-12 pt-8">
+    <div class="search-grid">
+      <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client</span>
+      <span class="pull-left mr-10 pt-3 wt-15">
+        <select (change)="ClientOnChange($event)" class="form-control">
+          <option value="0">Select</option>
+          <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">{{c.Client_Name}}</option>
+        </select>
+      </span>
+    </div>
+    <div class="search-grid">
+      <button class="btn blue square-btn blue-hover btn-txt mr-10 mt-3" [disabled]="searchBtnDisable"
+        (click)="ToggleAccountsModal()">Search</button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="DisplayMain">
+    <div class="col-md-12 col-sm-12 col-sm-12 p-0">
+      <div class="col-md-12 p-0 border-t">
+        <div class="col-md-3 p-0 blue-seprator serpartion-lht">
+          <div class="col-md-12 col-sm-12 p-0">
+            <div class="heading-panel sT-hight">
+              <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Standard Fields</span>
+            </div>
+          </div>
+
+
+          <div class="col-md-12 p-0  auto-scroll-section">
+            <div class="col-md-12 p-0">
+              <ng-container *ngFor="let f of AllFields">
+                <div class="form-group mh-15" [ngClass]="[ f.Column_Datatype == 'Formula' ? 'border-b' : '']"
+                  *ngIf="f.Is_Standard_Field && !f.Is_Appeal && !f.Is_Correspondence_Entry && f.Display_Name != 'Notes'">
+                  <div class="form-group">
+                    <label for="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
+                    <div [ngSwitch]="f.Column_Datatype">
+                      <div *ngSwitchCase="'Date'">
+                        <div class="input-group date col-md-12" id="datetimepicker-{{f.Id}}">
+                          <input [min]="MinDate" [(ngModel)]="f.FieldValue" (keydown)="BlockInput($event)"
+                            (keypress)="BlockInput($event)" [owlDateTime]="dt" class="form-control"
+                            [owlDateTimeTrigger]="dt">
+
+                          <span class="input-group-addon" [owlDateTimeTrigger]="dt">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                          <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                        </div>
+                        <div class="error" *ngIf="f.FieldValue==null && submitted">
+                          This Field is required
+                        </div>
+                      </div>
+                      <div *ngSwitchDefault>
+                        <ng-container *ngIf="f.Is_Dropdown_Field; else textinput">
+                          <select class="form-control" [(ngModel)]="f.FieldValue" name="{{f.Header_Name}}">
+                            <option *ngFor="let item of f.DropdownList" value="{{item.Dropdown_Value}}">
+                              {{item.Dropdown_Value}}</option>
+                          </select>
+                        </ng-container>
+                        <ng-template #textinput>
+                          <ng-container *ngIf="f.SetFormula; else elseTemplate">
+                            <label for="f.Id" class="control-label label-s text-color p-0">{{f.Display_Name}}</label>
+                          </ng-container>
+                          <ng-template #elseTemplate>
+                            <input type="text" class="form-control" id="f.Id" [maxlength]="f.Field_Limit" placeholder=""
+                              [(ngModel)]="f.FieldValue">
+                            <div class="error" *ngIf="(f.FieldValue==null || f.FieldValue=='') && submitted">
+                              This Field is required
+                            </div>
+
+                          </ng-template>
+
+
+                        </ng-template>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 p-0 blue-seprator serpartion-lht">
+          <div class="col-md-12 col-sm-12 p-0">
+            <div class="heading-panel sT-hight">
+              <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Appeal Fields</span>
+            </div>
+          </div>
+          <div class="col-md-12 p-0  auto-scroll-section">
+            <div class="col-md-12 p-0">
+              <ng-container *ngFor="let f of AllFields">
+                <div class="form-group mh-15 " [ngClass]="[f.Column_Datatype == 'Formula' ? 'border-b' : '']"
+                  *ngIf="!f.Is_Standard_Field && f.Is_Appeal && !f.Is_Correspondence_Entry">
+                  <div class="form-group">
+                    <label for="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
+                    <ng-container [ngSwitch]="f.Column_Datatype">
+                      <ng-container *ngSwitchCase="'Text'">
+                        <ng-container *ngIf="f.Is_Dropdown_Field; else textinput">
+                          <select class="form-control" [(ngModel)]="f.FieldValue" name="{{f.Header_Name}}">
+                            <option *ngFor="let item of f.DropdownList" value="{{item.Dropdown_Value}}">
+                              {{item.Dropdown_Value}}</option>
+                          </select>
+                          <div class="error" *ngIf="(f.FieldValue==null || f.FieldValue=='') && submitted">
+                            This Field is required
+                          </div>
+                        </ng-container>
+                        <ng-template #textinput>
+                          <ng-container *ngIf="f.SetFormula; else elseTemplate">
+                            <label for="f.Id" class="control-label label-s text-color p-0">{{f.Display_Name}}</label>
+                          </ng-container>
+                          <ng-template #elseTemplate>
+                            <input type="text" class="form-control" id="f.Id" [maxlength]="f.Field_Limit" placeholder=""
+                              [(ngModel)]="f.FieldValue">
+                            <div class="error" *ngIf="(f.FieldValue==null || f.FieldValue=='') && submitted">
+                              This Field is required
+                            </div>
+                          </ng-template>
+
+
+                        </ng-template>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'Date'">
+                        <div class="input-group date col-md-12" id="datetimepicker1">
+                          <input type="" [min]="MinDate" [(ngModel)]="f.FieldValue" (keydown)="BlockInput($event)"
+                            (keypress)="BlockInput($event)" [owlDateTime]="dt" class="form-control"
+                            [owlDateTimeTrigger]="dt">
+                          <span class="input-group-addon" [owlDateTimeTrigger]="dt" value="">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                          <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+
+                        </div>
+                        <div class="error" *ngIf="f.FieldValue==null && submitted">
+                          This Field is required
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'Formula'">
+                        <label for="f.Id" class="control-label label-s text-color p-0">{{f.Display_Name}}</label>
+                      </ng-container>
+                    </ng-container>
+
+
+
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 p-0 blue-seprator serpartion-lht">
+          <div class="col-md-12 col-sm-12 p-0">
+            <div class="heading-panel sT-hight">
+              <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Correspondence Fields</span>
+            </div>
+          </div>
+          <div class="col-md-12 p-0  auto-scroll-section">
+            <div class="col-md-12 p-0">
+              <ng-container *ngFor="let f of AllFields">
+                <div class="form-group mh-15 " [ngClass]="[f.Column_Datatype == 'Formula' ? 'border-b' : '']"
+                  *ngIf="!f.Is_Standard_Field && !f.Is_Appeal && f.Is_Correspondence_Entry">
+                  <div class="form-group">
+                    <label for="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
+                    <ng-container [ngSwitch]="f.Column_Datatype">
+                      <ng-container *ngSwitchCase="'Text'">
+                        <ng-container *ngIf="f.Is_Dropdown_Field; else textinput">
+                          <select class="form-control" [(ngModel)]="f.FieldValue" name="{{f.FieldValue}}">
+                            <option *ngFor="let item of f.DropdownList" value="{{item.Dropdown_Value}}">
+                              {{item.Dropdown_Value}}</option>
+                          </select>
+                          <div class="error" *ngIf="(f.FieldValue==null || f.FieldValue=='') && submitted">
+                            This Field is required
+                          </div>
+                        </ng-container>
+                        <ng-template #textinput>
+                          <ng-container *ngIf="f.SetFormula; else elseTemplate">
+                            <label for="f.Id" class="control-label label-s text-color p-0">{{f.Display_Name}}</label>
+                          </ng-container>
+                          <ng-template #elseTemplate>
+                            <input type="text" class="form-control" id="f.Id" [maxlength]="f.Field_Limit" placeholder=""
+                              [(ngModel)]="f.FieldValue">
+                            <div class="error" *ngIf="(f.FieldValue==null || f.FieldValue=='') && submitted">
+                              This Field is required
+                            </div>
+                          </ng-template>
+
+
+                        </ng-template>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'Date'">
+                        <div class="input-group date col-md-12" id="datetimepicker1">
+                          <input type="" [min]="MinDate" [(ngModel)]="f.FieldValue" (keydown)="BlockInput($event)"
+                            (keypress)="BlockInput($event)" [owlDateTime]="dt" class="form-control"
+                            [owlDateTimeTrigger]="dt">
+                          <span class="input-group-addon" [owlDateTimeTrigger]="dt" value="">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                          <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+
+                        </div>
+                        <div class="error" *ngIf="f.FieldValue==null && submitted">
+                          This Field is required
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'Formula'">
+                        <label for="f.Id" class="control-label label-s text-color p-0">{{f.Display_Name}}</label>
+                      </ng-container>
+                    </ng-container>
+
+
+
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="col-md-12 p-0">
+            <div class="col-md-12 col-sm-12 p-0">
+              <div class="heading-panel sT-hight">
+                <span class="text-sm text-ellipsis heading-txt flex t-uppercase blue-text">ACTION</span>
+              </div>
+            </div>
+            <form [formGroup]="ActionForm" (ngSubmit)="SubmitForm()">
+              <div class="col-md-12 col-sm-12 p-0 lbl-txt box-height-super">
+
+                <div class="form-group mh-15">
+                  <label for="inputEmail3" class="label-std  control-label p-0 b-600">Status
+                    <span class="asteric">*</span>
+                    <!-- <span class="pull-right text-right cursor" title="iDecision Tree" data-toggle="modal" data-target=".iDecision-tree">
+                                                    <i class="mr-5 fa fa-pagelines" aria-hidden="true"></i>iDecision Tree</span> -->
+                  </label>
+                  <select class="form-control" formControlName="Status" (change)="OnStatusChange($event)">
+                    <option value=""   [selected]="(!Status) || Status.length>1" disabled>Select</option>
+                    <option value="{{item}}" *ngFor="let item of Status" [selected]="(Status.length==1)">{{item}}</option>
+                  </select>
+                  <div class="error" *ngIf="ActionForm.get('Status').hasError('required') && Validated">
+                    Status Required
+
+                  </div>
+                </div>
+                <div class="form-group mh-15">
+                  <label for="inputEmail3" class="label-std  control-label p-0 b-600">Sub Status
+                    <span class="asteric">*</span>
+                  </label>
+                  <select class="form-control" formControlName="Sub-Status" (change)="OnSubStatusChange($event)">
+                    <option value=""  [selected]="SubStatus.length == 0 || SubStatus.length>1" disabled>Select</option>
+                    <option value="{{item}}" *ngFor="let item of SubStatus"  [selected]="SubStatus.length==1">{{item}}</option>
+                  </select>
+                  <div class="error" *ngIf="ActionForm.get('Sub-Status').hasError('required') && Validated">
+                    Sub Status Required
+
+                  </div>
+                </div>
+                <div class="form-group mh-15">
+                  <label for="inputEmail3" class="label-std  control-label p-0 b-600">Action Code
+                    <span class="asteric">*</span>
+                  </label>
+                  <select class="form-control" formControlName="Action_Code">
+                    <option value="" [selected]=" ActionCode.length==0|| ActionCode.length>1" disabled>Select</option>
+                    <option value="{{item}}" *ngFor="let item of ActionCode"  [selected]="ActionCode.length==1" >{{item}}</option>
+                  </select>
+                  <div class="error" *ngIf="ActionForm.get('Action_Code').hasError('required') && Validated">
+                    Action Code Required
+
+                  </div>
+                </div>
+                <div class="form-group mh-15">
+                  <label for="inputEmail3" class="label-std  control-label p-0 b-600">Work Status
+                    <span class="asteric">*</span>
+                  </label>
+                  <select class="form-control" formControlName="Account_Status">
+                    <option value="" disabled>Select</option>
+                    <option value="To Call">To Call</option>
+                    <option value="Done">Done</option>
+                  </select>
+                  <div class="error" *ngIf="ActionForm.get('Account_Status').hasError('required') && Validated">
+                    Work Status Required
+
+                  </div>
+                </div>
+                <div class="form-group mh-15">
+                  <label for="inputEmail3" class="label-std  control-label p-0 b-600">Notes
+                    <span class="asteric">*</span>
+                    <span class="pull-right text-right cursor" (click)="ToggleNotesGenerator(false)">
+                      <i class="mr-5 fa fa-sticky-note-o" aria-hidden="true"></i>Notes Generator</span>
+                  </label>
+                  <textarea formControlName="Notes" rows="8" class="form-control textarea-resize"
+                    placeholder="Write Notes.."></textarea>
+                  <div class="error" *ngIf="ActionForm.get('Notes').hasError('required') && Validated">
+                    Notes is required
+                  </div>
+                </div>
+                <div class="form-group mh-15">
+                  <div class="col-md-12 text-center p-0">
+                    <button class="btn blue square-btn blue-hover btn-txt mr-10"
+                      [disabled]="DisableSubmit">Submit</button>
+                    <button class="btn blue square-btn blue-hover btn-txt" (click)="ClearForm()">Clear</button>
+                  </div>
+                </div>
+
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </ng-container>
+
+</div>
+
+
+<app-correspondance-notes-generator-modal (CloseNotesGen)="ToggleNotesGenerator($event)" *ngIf="OpenNotesGenerator">
+</app-correspondance-notes-generator-modal>

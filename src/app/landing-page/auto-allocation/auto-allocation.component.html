@@ -1,0 +1,215 @@
+<app-header [title]="Title"></app-header>
+<div class="col-md-12 col-sm-12 col-sm-12 p-0">
+  <div class="col-md-12 pt-8">
+    <form [formGroup]="testForm" novalidate>
+      <span class="col-md-12 pull-left pl-7">
+        <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
+        <span class="pull-left mr-10 pt-3 wt-15">
+          <select [disabled]="DisableClientList" (change)="ClientListOnChange($event)" formControlName="Client_Id"
+            #selectedelem class="form-control" [(ngModel)]="ClientId">
+            <option [selected]="ClientList.length > 1" disabled>Select Client</option>
+            <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">{{c.Client_Name}}
+            </option>
+          </select>
+        </span>
+        <span>
+          <button class="btn blue square-btn blue-hover btn-txt mr-10 mt-4" (click)="GetAutoAllocation()"
+            [disabled]="DisableSearch">Search</button>
+        </span>
+      </span>
+    </form>
+  </div>
+  <div class="col-md-12 p-0 border-t">
+    <div class="col-md-3 p-0 blue-seprator serpartion-h">
+      <form [formGroup]="SettingsForm" novalidate (ngSubmit)="SettingSubmit()">
+        <div class="col-md-12 col-sm-12 p-0">
+          <div class="heading-panel sT-hight">
+            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Setting</span>
+          </div>
+        </div>
+        <div class="col-md-12 p-0 setting-field-gp">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="Group_By" class="label-std  control-label p-0 b-600">Group By</label>
+              <select class="form-control" required formControlName="Group_By"  (change)="GroupbyChange($event)" [(ngModel)]="ClientSettings.Group_By">
+                <option [selected]="(!ClientSettings.Group_By) " disabled>Select</option>
+                <option *ngFor="let item of GroupByList" [selected]="item.GroupBy_Field==ClientSettings.Group_By" value="{{item.GroupBy_Field}}">{{item.GroupBy_Field}}</option>
+              </select>
+            </div>
+          </div>
+          <div *ngIf="SettingsForm && SettingsForm.get('DOS_Days')" class="col-md-12">
+            <div class="form-group">
+              <label for="DOS_Days" class="label-std  control-label p-0 b-600">DOS + Days</label>
+              <input type="text" class="form-control" required formControlName="DOS_Days" id="DOS_Days"
+                [(ngModel)]="ClientSettings.DOS_Days">
+              <div class="error" *ngIf="SettingsForm.get('DOS_Days').hasError('required') && Validated ">
+                DOS Days required
+              </div>
+              <div class="error" *ngIf="SettingsForm.get('DOS_Days').hasError('invalid')">Please Enter Valid DOS</div>
+              <div class="error" *ngIf="SettingsForm.get('DOS_Days').hasError('max')">
+                Maximum 365 days only
+              </div>
+              <div class="error" *ngIf="SettingsForm.get('DOS_Days').hasError('pattern')">
+                Please Enter Valid Numeric Value
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="Last_Work_Date_Days" class="label-std  control-label p-0 b-600">Last Work Date + Days</label>
+              <input type="text" class="form-control" required formControlName="Last_Work_Date_Days"
+                id="Last_Work_Date_Days" [(ngModel)]="ClientSettings.Last_Work_Date_Days">
+              <div class="error" *ngIf="SettingsForm.get('Last_Work_Date_Days').hasError('required') && Validated">
+                Last Work Date + Days required
+              </div>
+              <div class="error" *ngIf="SettingsForm.get('Last_Work_Date_Days').hasError('invalid')">Please Enter Valid
+                Last_Work_Date_Days</div>
+              <div class="error" *ngIf="SettingsForm.get('Last_Work_Date_Days').hasError('max')">
+                Maximum 365 days only
+              </div>
+              <div class="error" *ngIf="SettingsForm.get('Last_Work_Date_Days').hasError('pattern')">
+                Please Enter Valid Numeric Value
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="Last_Bill_Date_Days" class="label-std  control-label p-0 b-600">Last Claim Bill Date +
+                Days</label>
+              <input type="text" max="365" class="form-control" required formControlName="Last_Bill_Date_Days"
+                id="Last_Bill_Date_Days" [(ngModel)]="ClientSettings.Last_Bill_Date_Days">
+              <div class="error" *ngIf="SettingsForm.get('Last_Bill_Date_Days').hasError('required') && Validated">
+                Last Bill Date + Days required
+              </div>
+              <div class="error" *ngIf="SettingsForm.get('Last_Bill_Date_Days').hasError('invalid')">Please Enter Valid
+                Last_Bill_Date_Days</div>
+              <div class="error" *ngIf="SettingsForm.get('Last_Bill_Date_Days').hasError('max')">
+                Maximum 365 days only
+              </div>
+              <div class="error" *ngIf="SettingsForm.get('Last_Bill_Date_Days').hasError('pattern')">
+                Please Enter Valid Numeric Value
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="Allocated_Accounts_Count" class="label-std  control-label p-0 b-600">Display allocation of
+                records</label>
+              <input type="text" max="100" maxlength="3" class="form-control" required
+                formControlName="Allocated_Accounts_Count" id="Allocated_Accounts_Count"
+                [(ngModel)]="ClientSettings.Allocated_Accounts_Count">
+              <div class="error" *ngIf="SettingsForm.get('Allocated_Accounts_Count').hasError('required') && Validated">
+                Allocation of records required
+              </div>
+              <div class="error" *ngIf="SettingsForm.get('Allocated_Accounts_Count').hasError('invalid')">Please Enter
+                Valid Allocated_Accounts_Count</div>
+              <div class="error" *ngIf="SettingsForm.get('Allocated_Accounts_Count').hasError('max')">
+                Maximum 100 only
+              </div>
+              <div class="error" *ngIf="SettingsForm.get('Allocated_Accounts_Count').hasError('pattern')">
+                Please Enter Valid Numeric Value
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="Limit_Of_Private_To_Call" class="label-std  control-label p-0 b-600">Limit of private to
+                call</label>
+              <input type="text" max="100" maxlength="3" class="form-control" id="Limit_Of_Private_To_Call"
+                formControlName="Limit_Of_Private_To_Call" [(ngModel)]="ClientSettings.Limit_Of_Private_To_Call">
+              <div class="error" *ngIf="SettingsForm.get('Limit_Of_Private_To_Call').hasError('required') && Validated">
+                Limit Private To Call required
+              </div>
+              <div class="error" *ngIf="SettingsForm.get('Limit_Of_Private_To_Call').hasError('max')">
+                Maximum 100 only
+              </div>
+              <div class="error" *ngIf="SettingsForm.get('Limit_Of_Private_To_Call').hasError('invalid')">Please Enter
+                Valid Limit_Of_Private_To_Call</div>
+              <div class="error" *ngIf="SettingsForm.get('Limit_Of_Private_To_Call').hasError('pattern')">
+                Please Enter Valid Numeric Value
+              </div>
+            </div>
+
+          </div>
+          <div class="form-group mh-15">
+            <div class="col-md-12 p-0">
+              <button class="btn blue square-btn blue-hover btn-txt mr-10" [disabled]="DisableSettingSave">Save</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-9 p-0">
+      <form #f="ngForm" (ngSubmit)="f.form.valid && MatrixSubmit()" novalidate>
+        <div class="col-md-12 col-sm-12 p-0">
+          <div class="heading-panel sT-hight">
+            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Effective Matrix </span>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="table-responcive effective-table">
+            <div class="sticky-table sticky-ltr-cells border-0 table-hight">
+              <table class="table">
+                <thead>
+                  <tr class="sticky-header">
+                    <th class="dark" width="18%">Bucket</th>
+                    <th class="dark">Condition_1</th>
+                    <th class="dark" width="23%">Condition_2</th>
+                    <th class="dark" width="13%">Over Due</th>
+                    <td class="dark" width="10%">Target</td>
+                    <th class="dark" width="14%">To Call Routing</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="ClientMatrixData.length != 0; else elseTemplate">
+                    <tr *ngFor="let item of ClientMatrixData;let i = index">
+                      <input type="hidden" name="Id-{{i}}" [(ngModel)]="item.Id">
+                      <input type="hidden" name="Client_Id-{{i}}" [(ngModel)]="item.Client_Id">
+                      <td>{{item.Bucket}}</td>
+                      <td>{{item.Condition_1}}</td>
+                      <td>{{item.Condition_2}}</td>
+                      <td>{{item.Over_Due_Condition}}</td>
+                      <td>
+                        <input required type="text" name="Target-{{i}}" #Target="ngModel" pattern="^[0-9][0-9]*$"
+                          maxlength="3" class="form-control" [(ngModel)]="item.Target">
+                        <div class="error" *ngIf="Target.hasError('pattern')">
+                          Please enter valid numaric value
+                        </div>
+                        <div class="error" *ngIf="Target.hasError('required')">
+                          required
+                        </div>
+                      </td>
+                      <td>
+                        <select required #To_Call_Routing="ngModel" name="To_Call_Routing-{{i}}" type="text"
+                          class="form-control" [(ngModel)]="item.To_Call_Routing">
+                          <!-- <option *ngFor="let list of CallList">{{list}}</option> -->
+                          <option value="Public To Call"
+                            *ngIf="item.Queue_Name != 'Public To Call' && item.Queue_Name != 'Private To Call' && item.Queue_Name != 'Special Queue' && item.Queue_Name != 'Manual Queue'">
+                            Public To Call</option>
+                          <option value="Private To Call">Private To Call</option>
+                        </select>
+                        <div class="error" *ngIf="f.submitted && To_Call_Routing.value == 'NA'">
+                          To call routing required
+                          {{f.form.setErrors({ 'invalid': true })}}
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-template #elseTemplate>
+                    <tr>
+                      <td colspan="6" style="text-align: center">Please Select Client</td>
+                    </tr>
+                  </ng-template>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 mt-10">
+          <button class="btn blue square-btn blue-hover btn-txt mr-10" [disabled]="DisableMatrixSave">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- end midd content -->

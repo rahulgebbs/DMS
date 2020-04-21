@@ -1,0 +1,52 @@
+<div class="pop-bg">
+  </div>
+  <div class="pop-position">
+    <div class="col-md-12 p-0 backgroundGrey">
+      <span class="col-md-10 col-sm-10 p-0">
+        <div  class="heading-panel pl-10">
+          <span class="text-sm text-ellipsis heading-txt flex">Data Upload
+          </span>
+        </div>
+      </span>
+      <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </span>
+    </div>
+    <div class="col-md-12 p-0">
+      <!-- <div class="col-md-12 p-0 mt-10 border-b">
+        <div class="col-md-3">
+          <label class="custom-control">
+            <label for="selectall">Select Employees From Bucket</label>
+          </label>
+        </div>   
+      </div>   -->
+      <div class="col-md-12 p-0 code-auto-scroll p-0">
+         <div class="form-group">
+            <label class=" label-std control-label p-0 b-600 pl-0" for="">Upload File</label>
+            <span class="col-md-3 p-0 form-group file-provider mt-1">
+              <div class="file-upload-wrapper" [attr.data-text]="Filename">
+                <input (change)="GetFileData($event)" #file [disabled]="DisableFileInput" name="file-upload-field"
+                  type="file" accept=".xlsx" class="file-upload-field" (onclick)="file.value = null">
+
+              </div>
+            </span>
+            <div class="error" *ngIf="DisplayFileError">
+              Please select the file
+            </div>
+          
+            <button [disabled]="!truefile || DisableUpload" type="button" (click)="FileUpload()"
+              class="btn w-auto pr-upl label grey lg-text label-info square-btn cursor mt-1 mr-5" id="toast-btn">
+              <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</button>
+
+            <button [disabled]="disableDownload" type="button" (click)="downloadTemplate()"
+              class="btn w-auto pr-upl label grey lg-text label-info square-btn cursor mt-1 mr-5" id="toast-btn">
+              <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
+          </div>
+        </div> 
+      <!-- <div class="form-group col-md-12 p-0 mb-10 text-left">
+        <span>
+          <button [disabled]="!allowDeallocate()" (click)="Deallocate($event)"
+            class="btn blue square-btn blue-hover btn-txt mr-10 mt-4">De-allocate</button>
+        </span>
+      </div> -->
+  </div>

@@ -1,0 +1,83 @@
+<app-header [title]="Title"></app-header>
+<div class="col-md-12 pull-left mt-10 border-b pb-10">
+  <form [formGroup]="submit" (ngSubmit)="search()" class="form-horizontal" novalidate>
+    <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client</span>
+    <span class="mr-10 pull-left">
+      <div class="input-group date wt-120">
+        <select class="form-control" (change)="ClientListOnChange($event)" [(ngModel)]="Client_Id"
+          formControlName="Client_Id">
+          <option [selected]="ClientList.length >1" disabled>Select</option>
+          <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">{{c.Client_Name}}
+          </option>
+        </select>
+      </div>
+      <div class="error" *ngIf="submit.get('Client_Id').hasError('required') && validated">Please select client</div>
+    </span>
+    <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">From Date</span>
+    <span class="wt-120 pull-left mr-10">
+
+      <div class="input-group date wt-120" id="datetimepicker1">
+        <input autocomplete="off" [min]="MinDate" [max]="maxDate" [(ngModel)]="FromDate" (keydown)="BlockInput($event)"
+          (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1" class="owl-dp" formControlName="from_date"
+          name="date" [owlDateTime]="dt1">
+        <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+        <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+      </div>
+      <div class="error" *ngIf="submit.get('from_date').hasError('required') && validated">Form Date is required</div>
+      <div class="error" *ngIf="invalidDate">From date should be less than to Date</div>
+    </span>
+    <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto" style="margin-left: 5%">To Date</span>
+    <span class="wt-120 pull-left mr-10">
+
+      <div class="input-group date wt-120" id="datetimepicker2">
+        <input autocomplete="off" [min]="MinDate" [max]="maxDate" [(ngModel)]="ToDate" (keydown)="BlockInput($event)"
+          (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt2" class="owl-dp" formControlName="to_date"
+          name="date" [owlDateTime]="dt2">
+        <span class="input-group-addon" [owlDateTimeTrigger]="dt2">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+        <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+      </div>
+      <div class="error" *ngIf="submit.get('to_date').hasError('required') && validated">To Date is required</div>
+
+
+    </span>
+    <span>
+      <button type="submit" class="btn blue square-btn blue-hover btn-txt mr-10 mt-0"
+        [disabled]="DisableSearch || ClientId == 0" style="margin-left: 5%">Search</button>
+      <button [disabled]="!showMain" type="button" (click)="export()"
+        class="btn blue square-btn blue-hover btn-txt mr-10 mt-0">Export To Excel</button>
+
+    </span>
+  </form>
+
+  <div *ngIf="showMain" class="" style="height: 80vh;">
+    <div class="col-md-12 col-sm-12 col-sm-12 p-0">
+      <div class="col-md-12 col-sm-12 mt-10">
+        <div class="table-responcive">
+          <div class="client-ins-rep sticky-table sticky-ltr-cells border-0 table-hight">
+            <ag-grid-angular [enableColResize]="true" [enableSorting]="true" [enableFilter]="true" [pagination]="true"
+              [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="headers"
+              [suppressDragLeaveHidesColumns]="true" [suppressColumnVirtualisation]="true"
+              [rowSelection]="rowSelection">
+            </ag-grid-angular>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showMsg" class="" style="height: 80vh;">
+  <div class="col-md-12 col-sm-12 col-sm-12 p-0">
+    <div class="col-md-12 col-sm-12 mt-10">
+      <div class="table-responcive">
+        <div class="client-ins-rep sticky-table sticky-ltr-cells border-0 table-hight">
+          <p style="text-align: center;margin-top: 15%">  Deny report not found.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

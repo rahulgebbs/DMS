@@ -1,0 +1,82 @@
+<!-- <div class="tab-content nav-tab-content"> -->
+
+<div role="tabpanel" class="tab-pane nav-tab-content" id="step-6">
+  <div class="col-md-12 p-0">
+    <span class="pull-right pt-8  w-auto ">
+      <b>Client Name :-
+
+        {{ClientData.Client_Name}}</b>
+    </span>
+  </div>
+  <div class="right-most mr-5">Total Rows:- <b>{{Dropdown == null ? '0' : Dropdown.length}}</b></div>
+  <div class="col-md-12 p-0 ">
+    <div class="dropdown-sticky-tbl sticky-table sticky-ltr-cells border-0 table-hight" style="padding-bottom:0px !important;">
+      <table class="table">
+        <thead>
+          <tr class="sticky-header">
+            <th>Column Name</th>
+            <th width="15%">Add / view Values</th>
+            <th>Upload Values</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="!Dropdown; else elseTemplate">
+            <tr>
+              <td colspan="11" style="text-align: center">
+                {{DisplayMessage}}
+              </td>
+            </tr>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <tr *ngFor="let i of Dropdown; let j = index">
+              <td>
+                {{i.Display_Name}}
+              </td>
+              <td>
+                <label class="label grey lg-text label-info square-btn cursor mt-4 wt-100" (click)="getSingleDropdown(i)">
+                  <!-- <i class="fa fa-plus mr-5 lg-text" aria-hidden="true"></i>-->Add / View</label>
+                <!-- <i class="fa fa-plus grey-text ft-18 mr-5" aria-hidden="true" ></i> -->
+              </td>
+              <td>
+                <label class=" error" *ngIf="showFileError">please select file</label>
+                <span class="form-group file-upl">
+                  <!-- <form class="form"> -->
+
+                  <div class="file-upload-wrapper" attr.data-text="{{i.Filename}}">
+                    <input name="file-upload-field" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                      class="file-upload-field" (change)="changeListener($event,j,i)" onclick="this.value = null">
+
+                  </div>
+
+                  <!-- </form> -->
+                </span>
+
+                <span class="file-temp" >
+                  <button type="button" (click)="uploadFile(i.Id,j,i)" class="btn label grey lg-text label-info square-btn cursor mr-10 "
+                    style="border: none;"  [disabled]="i.uploadBtnDisable" > <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</button>
+                  <!-- <label class="label grey lg-text label-info square-btn cursor mr-10" (click)="uploadFile(i.Id,j)">
+                    <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</label> -->
+
+                  <button   style="border: none;"  [disabled]="i.downlaodDisable" class="label btn grey lg-text label-info square-btn cursor w-160" (click)="DownloadTemplate(i)">
+                    <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
+                </span>
+              </td>
+
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-12 text-right p-0">
+    <button id="step-6-next" class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5" (click)="navigate()">Next</button>
+  </div>
+</div>
+
+
+
+
+
+<!-- </div> -->
+<app-dropdown-modal *ngIf="showPopup" (Toggle)="ToggleModal($event)" [(ClientData)]="ClientData" [InventoryId]="InventoryId"
+  [singleDropDown]="singleDropDown" [valueDropdown]="valueDropdown" [values]="values" [data]="data" (getDropdown)="getSingleDropdown($event)"></app-dropdown-modal>

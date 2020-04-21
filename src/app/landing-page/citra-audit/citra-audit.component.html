@@ -1,0 +1,480 @@
+<app-header [title]="title"></app-header>
+<div class="pop-bg">
+</div>
+
+<div class="col-md-12 pt-8">
+  <span class="col-md-12 pull-left pl-7">
+    <form [formGroup]="dashboard">
+      <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
+      <span class="pull-left mr-10 pt-3 wt-15">
+        <select class="form-control" formControlName="ClientId" [(ngModel)]="ClientId" placeholder="d.ff"
+          (change)="onClientChange($event)">
+
+          <option [selected]="ClientList.length >1" disabled>Select</option>
+          <option *ngFor="let Client of ClientList" [value]="Client.Id" [selected]="Client.selected">
+            {{Client.Client_Name}}
+          </option>
+
+        </select>
+      </span>
+      <span class="pull-left mr-10 pt-3 wt-15">
+
+        <input type="radio" value="Current" formControlName="rdbfilter" modal [checked]="IsFilterChecked"> Current
+        <input type="radio" value="Pending" formControlName="rdbfilter" modal> Pending
+      </span>
+      <span>
+        <button class="mt-3 btn blue square-btn blue-hover btn-txt mr-10" data-toggle="modal"
+          data-target=".account-list" (click)="selectedClient()" >Search</button>
+          <!-- [disabled]="disablebtn" -->
+      </span>
+    </form>
+  </span>
+</div>
+
+<div class="top-navigation buckets-list dark col-md-12 col-sm-12 p-0">
+  <ul>
+    <!-- <li class="menu-icon">
+          <i class="fa fa-bars ft-22" aria-hidden="true" data-toggle="modal" data-target="#leftmenu"></i>
+      </li> -->
+    <ul *ngFor="let b of Buckets">
+      <li *ngIf="b.Bucket_Name !='TL Deny'" (click)="ToggleAccountsModal(b.Bucket_Name)"
+        [ngClass]="[ActiveBucket == b.Name ? 'active-li' : '']">
+        <!-- class="active-li" -->
+        <div>
+          <span>{{b.Bucket_Name}}</span>
+          <span class="buckets-list-cl">
+            <b class="badge circle-buget  badge-sm badge-pill">{{b.Count}}</b>
+          </span>
+
+        </div>
+
+      </li>
+    </ul>
+  </ul>
+</div>
+
+<ng-container *ngIf="DisplayMain;else MessageBox">
+  <div class="col-md-12 col-sm-12 col-sm-12 p-0 mb-45">
+    <div class="col-md-12 p-0 agent-blue-sepration agent-field-ht">
+      <div class="col-md-3 p-0 blue-seprator serpartion-h">
+        <div class="col-md-12 col-sm-12 p-0">
+          <div class="heading-panel sT-hight">
+            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Standard Fields</span>
+          </div>
+        </div>
+        <div class="col-md-12 p-0 auto-scroll-section">
+          <form>
+            <ng-container *ngFor="let f of AllFields">
+              <div class="form-group mh-15 "
+                [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-i' : 'border-b']"
+                *ngIf="f.Is_Standard_Field && f.Is_View_Allowed_Agent && !f.Is_Appeal && f.Display_Name != 'Notes'">
+                <label for="f.Id" class="label-std control-label p-0 b-600">{{f.Display_Name}}</label>
+                <span [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-label-t border-b' : '']">
+                  <label for="f.Id" class="control-label w-80 label-s text-color">{{f.FieldValue}}</label>
+                  <!-- <span *ngIf="f.Display_Name.indexOf('Payer') != -1" class="text-right payor-label-ins"
+                    title="Insurance Master" (click)="ToggleInsuranceMaster()">
+                    <i class="fa fa-book ft-22" aria-hidden="true"></i>
+                  </span> -->
+                </span>
+
+              </div>
+            </ng-container>
+          </form>
+        </div>
+      </div>
+
+      <!-- Citra Fields -->
+
+      <div class="col-md-3 p-0">
+        <div class="col-md-12 p-0">
+          <form [formGroup]="ActionForm1" (ngSubmit)="SubmitForm1()">
+            <div class="col-md-12 col-sm-12 p-0">
+              <div class="heading-panel sT-hight">
+                <span class="text-sm text-ellipsis heading-txt flex t-uppercase blue-text">Citra Fields</span>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 p-0 lbl-txt auto-scroll-section">
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Call
+                  <!-- <span class="asteric">*</span> -->
+                  <!-- <span class="pull-right text-right cursor" title="iDecision Tree" data-toggle="modal" data-target=".iDecision-tree">
+                              <i class="mr-5 fa fa-pagelines" aria-hidden="true"></i>iDecision Tree</span> -->
+                </label>
+                <!-- <input for="inputEmail3" name="option" ng-control="options" type="radio" value="Y" id="rdbCallYes" checked> Yes
+                <input for="inputEmail3" name="option" ng-control="options" type="radio" value="N" id="rdbCallNo" > No -->
+
+                <input type="radio" value="Y" formControlName="Call" modal [checked]="IsCallChecked"> Yes
+                <input type="radio" value="N" formControlName="Call" modal> No
+
+                <!-- <select class="form-control" formControlName="Status" (change)="OnStatusChange($event)">
+                  <option value="" [selected]="(!Status) || Status.length>1">Select</option>
+                  <option value="{{item}}" *ngFor="let item of Status" [selected]="(Status.length==1)">{{item}}</option>
+                </select> -->
+                <!-- <div class="error" *ngIf="ActionForm.get('Status').value == '' && Validated">
+                  Status Required
+                  {{ActionForm.setErrors({ 'invalid': true })}}
+                </div> -->
+              </div>
+              <div *ngIf="show" class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Rate the Call
+                  <!-- <span class="asteric">*</span> -->
+                </label>
+                <select class="form-control" id="drpRateCall" formControlName="drpRateCall">
+                  <option value="1" selected>1 </option>
+                  <option value="2">2 </option>
+                  <option value="3">3 </option>
+                  <option value="4">4 </option>
+                  <option value="5">5 </option>
+                  <option value="6">6 </option>
+                  <option value="7">7 </option>
+                  <option value="8">8 </option>
+                  <option value="9">9 </option>
+                  <option value="10">10 </option>
+                </select>
+                <!-- <div class="error" *ngIf="ActionForm.get('SubStatus').value == '' && Validated">
+                  Sub Status Required
+                  {{ActionForm.setErrors({ 'invalid': true })}}
+                </div> -->
+              </div>
+              <div *ngIf="show" class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Transaction
+                  <!-- <span class="asteric">*</span> -->
+                </label>
+                <select class="form-control" id="drpTransaction" formControlName="drpTransaction">
+                  <option value="P" selected> Pass </option>
+                  <option value="F"> Fail </option>
+                </select>
+                <!-- <div class="error" *ngIf="ActionForm.get('ActionCode').value == '' && Validated">
+                  Action Code Required
+                  {{ActionForm.setErrors({ 'invalid': true })}}
+                </div> -->
+              </div>
+
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Feedback For Agent
+                  <!-- <span class="asteric">*</span>
+                  <span class="pull-right text-right cursor" (click)="ToggleNotesGenerator(false)">
+                    <i class="mr-5 fa fa-sticky-note-o" aria-hidden="true"></i>Notes Generator</span> -->
+                </label>
+                <textarea rows="4" class="form-control textarea-resize" placeholder="Write Feedback.." id="txtfeedback"
+                  formControlName="txtfeedback"></textarea>
+                <!-- <div class="error" *ngIf="ActionForm.get('Notes').hasError('required') && Validated">
+                  Notes is required
+                </div> -->
+              </div>
+
+              <div *ngIf="show" class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Comments/Insight Call
+                  <!-- <span class="asteric">*</span>
+                  <span class="pull-right text-right cursor" (click)="ToggleNotesGenerator(false)">
+                    <i class="mr-5 fa fa-sticky-note-o" aria-hidden="true"></i>Notes Generator</span> -->
+                </label>
+                <textarea rows="4" class="form-control textarea-resize" placeholder="Write Comments.." id="txtComments"
+                  formControlName="txtComments"></textarea>
+                <!-- <div class="error" *ngIf="ActionForm.get('Notes').hasError('required') && Validated">
+                  Notes is required
+                </div> -->
+              </div>
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Account Resolved
+                  <!-- <span class="asteric">*</span> -->
+                  <!-- <span class="pull-right text-right cursor" title="iDecision Tree" data-toggle="modal" data-target=".iDecision-tree">
+                                <i class="mr-5 fa fa-pagelines" aria-hidden="true"></i>iDecision Tree</span> -->
+                </label>
+                <!-- <input for="inputEmail3" name="option" ng-control="options" type="radio" value="Y" id="rdbAccResYes" checked> Yes
+                  <input for="inputEmail3" name="option" ng-control="options" type="radio" value="N" id="rdbAccResNo"> No -->
+
+                <input type="radio" value="Yes" formControlName="AccountResolved"
+                  (change)="OnAccountResolvedChange($event)"> Yes
+                <input type="radio" value="No" formControlName="AccountResolved"
+                  (change)="OnAccountResolvedChange($event)"> No
+
+                <!-- <div class="error" *ngIf="ActionForm.get('Status').value == '' && Validated">
+                    Status Required
+                    {{ActionForm.setErrors({ 'invalid': true })}}
+                  </div> -->
+              </div>
+
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Resolved Reason
+                  <!-- <span class="asteric">*</span> -->
+                </label>
+                <select class="form-control" id="drpReRes" formControlName="drpReRes">
+                  <option [value]="''"> --Select-- </option>
+                  <option [value]="'Paid'"> Paid </option>
+                  <option [value]="'Adjusted'"> Adjusted </option>
+                  <option [value]="'Outofscope'"> Out of scope </option>
+                </select>
+                <div class="error"
+                  *ngIf="ActionForm1.controls.drpReRes.touched || formsubmitted == true">
+                  <span *ngIf="ActionForm1.controls.drpReRes.hasError('required')">
+                    Please select the Resolved Reason</span>
+                </div>
+              </div>
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">RCA
+                  <!-- <span class="asteric">*</span>
+                      <span class="pull-right text-right cursor" (click)="ToggleNotesGenerator(false)">
+                        <i class="mr-5 fa fa-sticky-note-o" aria-hidden="true"></i>Notes Generator</span> -->
+                </label>
+                <textarea rows="4" class="form-control textarea-resize" placeholder="Write RCA.." id="txtRca"
+                  formControlName="txtRca"></textarea>
+                <div class="error" *ngIf="ActionForm1.controls.txtRca.touched || formsubmitted == true">
+                    <span *ngIf="ActionForm1.controls.txtRca.hasError('required')">
+                        Please Enter the RCA</span>
+                    </div>
+              </div>
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600 greenLabel">Global Trends Identified<span
+                    class="asteric">*</span>
+                </label>
+                <input type="text" class="form-control textarea-resize" id="txtGlobalTrendsIdentified"
+                  formControlName="txtGlobalTrendsIdentified">
+                <div class="error" *ngIf="ActionForm1.get('txtGlobalTrendsIdentified').hasError('required') && formsubmitted">
+                  Global Trends is required
+                </div>
+              </div>
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600 greenLabel">Process Trends Identified<span
+                    class="asteric">*</span>
+                </label>
+                <input type="text" class="form-control textarea-resize" id="txtProcessTrendsIdentified"
+                  formControlName="txtProcessTrendsIdentified">
+                <div class="error" *ngIf="ActionForm1.get('txtProcessTrendsIdentified').hasError('required') && formsubmitted">
+                  Process Trends is required
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Citra Fields Ends -->
+
+
+      <!--Appeal Section-->
+      <div *ngIf="ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal'"
+        class="col-md-3 p-0 p-0 blue-seprator serpartion-h">
+        <div class="col-md-12 col-sm-12 p-0">
+          <div class="heading-panel sT-hight">
+            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Appeal Fields</span>
+            <br>
+            <br>
+            <form [formGroup]="ActionForm12">
+              <label for="inputEmail3" class="label-std  control-label p-0 b-600"
+                [hidden]="!Disabledenialcontrols">Denail Description
+                <span class="asteric"></span>
+                <!-- <span class="pull-right text-right cursor" title="iDecision Tree" data-toggle="modal" data-target=".iDecision-tree">
+                            <i class="mr-5 fa fa-pagelines" aria-hidden="true"></i>iDecision Tree</span> -->
+              </label>
+              <input id="Denial_Description" formControlName="Denial_Description" title="{{Denial_Description}}"
+                type="text" class="label-std  control-label p-0 b-600"
+                style="font-size: 12px; font-weight: normal !important; width: 305px;height: 25px;"
+                [(ngModel)]="Denial_Description" [hidden]="!Disabledenialcontrols" />
+              <!-- <textarea  id="Denial_Description" rows="8" class="form-control textarea-resize"
+              [(ngModel)]="Denial_Description" [hidden]="Disabledenialcontrols"> </textarea> -->
+
+              <br>
+              <br>
+              <label for="inputEmail3" class="label-std  control-label p-0 b-600" [hidden]="!Disabledenialcontrols">Am
+                Comments
+                <span class="asteric"></span>
+                <!-- <span class="pull-right text-right cursor" title="iDecision Tree" data-toggle="modal" data-target=".iDecision-tree">
+                            <i class="mr-5 fa fa-pagelines" aria-hidden="true"></i>iDecision Tree</span> -->
+              </label>
+              <textarea id="Am_Comments" formControlName="Am_Comments" title="{{Am_Comments}}" type="text"
+                class="label-std  control-label p-0 b-600"
+                style="font-size: 12px; font-weight: normal !important; width: 305px;height: 25px;"
+                [(ngModel)]="Am_Comments" [hidden]="!Disabledenialcontrols"></textarea>
+              <!-- <input id="Am_Comments" formControlName="Am_Comments" type="text"  class="label-std  control-label p-0 b-600" [(ngModel)]="Am_Comments" [hidden]="!Disabledenialcontrols" /> -->
+              <!-- <textarea  id="Am_Comments" formControlName="Am_Comments" rows="8" class="form-control textarea-resize"
+              [(ngModel)]="Am_Comments" [hidden]="Disabledenialcontrols" > </textarea> -->
+            </form>
+          </div>
+        </div>
+        <div class="col-md-12 p-0  auto-scroll-section">
+          <div class="col-md-12 p-0">
+            <ng-container *ngFor="let f of AllFields">
+              <div class="col-md-12" *ngIf="f.Is_Appeal && f.Is_View_Allowed_Agent">
+                <div class="form-group"
+                  [ngClass]="[!f.Is_Edit_Allowed_Agent || f.Column_Datatype == 'Formula' ? 'border-b' : '']">
+                  <label for="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
+                  <ng-container *ngIf="f.Is_Edit_Allowed_Agent; else readonly">
+                    <ng-container [ngSwitch]="f.Column_Datatype">
+                      <ng-container *ngSwitchCase="'Text'">
+                        <!--Dynamic denial code-->
+                        <ng-container [ngSwitch]="f.Display_Name">
+                          <ng-container *ngSwitchCase="'Denial Code'">
+                            <input id="denial-code" [maxlength]="f.Field_Limit" type="text" class="form-control"
+                              [(ngModel)]="f.FieldValue" [ngbTypeahead]="GetDenialCodeList"
+                              (change)="onDenialChanged(f.FieldValue)" />
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'NPI'">
+                            <input id="npi" type="text" class="form-control" [(ngModel)]="f.FieldValue"
+                              [ngbTypeahead]="GetNPIList" />
+                          </ng-container>
+                          <ng-container *ngSwitchDefault>
+                            <ng-container *ngIf="f.Is_Dropdown_Field; else textinput">
+                              <select class="form-control" [(ngModel)]="f.FieldValue" name="{{f.FieldValue}}">
+                                <option *ngFor="let item of f.DropdownList" value="{{item.Dropdown_Value}}">
+                                  {{item.Dropdown_Value}}</option>
+                              </select>
+                            </ng-container>
+                            <ng-template #textinput>
+                              <ng-container *ngIf="f.SetFormula; else elseTemplate">
+                                <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                              </ng-container>
+                              <ng-template #elseTemplate>
+                                <input type="text" class="form-control" id="f.Id" [maxlength]="f.Field_Limit"
+                                  placeholder="" [(ngModel)]="f.FieldValue">
+                              </ng-template>
+                            </ng-template>
+                          </ng-container>
+                        </ng-container>
+
+                        <!--COMMENTED-->
+
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'Date'">
+                        <div class="input-group date col-md-12" id='datetimepicker1'>
+                          <input autocomplete="off" [min]="MinDate" [(ngModel)]="f.FieldValue"
+                            (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1"
+                            class="owl-dp" name="date" [owlDateTime]="dt1">
+                          <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                          <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'Formula'">
+                        <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #readonly>
+                    <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                  </ng-template>
+                </div>
+              </div>
+            </ng-container>
+            <div class="col-md-12">
+              <div class="form-group">
+                <div class="form-group mt-10 letter-tabbed">
+                  <label for="letter" class="label-std  control-label p-0 b-600">Letter</label>
+                  <ul class="nav nav-tabs mt-10">
+                    <li [ngClass]="[AppealType == 'appeal' ? 'active' : '']" (click)="ToggleAppealModal('appeal')">
+                      <a>Appeal</a></li>
+                    <li [ngClass]="[AppealType == 'non_appeal' ? 'active' : '']"
+                      (click)="ToggleAppealModal('non_appeal')">
+                      <a>Non Appeal</a></li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Appeal Ends-->
+      <div class="col-md-3 p-0">
+        <div class="col-md-12 p-0">
+          <form [formGroup]="ActionForm" (ngSubmit)="SubmitForm()">
+            <div class="col-md-12 col-sm-12 p-0">
+              <div class="heading-panel sT-hight">
+                <span class="text-sm text-ellipsis heading-txt flex t-uppercase blue-text">ACTION</span>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 p-0 lbl-txt auto-scroll-section">
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Status
+                  <span class="asteric">*</span>
+                  <!-- <span class="pull-right text-right cursor" title="iDecision Tree" data-toggle="modal" data-target=".iDecision-tree">
+                              <i class="mr-5 fa fa-pagelines" aria-hidden="true"></i>iDecision Tree</span> -->
+                </label>
+                <select class="form-control" formControlName="Status" disabled>
+                  <option value="">Select</option>
+                  <option value="{{item}}" *ngFor="let item of Status">{{item}}</option>
+                </select>
+                <div class="error" *ngIf="ActionForm.get('Status').value == '' && Validated">
+                  Status Required
+                  {{ActionForm.setErrors({ 'invalid': true })}}
+                </div>
+              </div>
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Sub Status
+                  <span class="asteric">*</span>
+                </label>
+                <select class="form-control" formControlName="SubStatus" disabled>
+                  <option value="">Select </option>
+                  <option value="{{item}}" *ngFor="let item of SubStatus" [selected]="SubStatus.length==1">{{item}}
+                  </option>
+                </select>
+                <div class="error" *ngIf="ActionForm.get('SubStatus').value == '' && Validated">
+                  Sub Status Required
+                  {{ActionForm.setErrors({ 'invalid': true })}}
+                </div>
+              </div>
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Action Code
+                  <span class="asteric">*</span>
+                </label>
+                <select class="form-control" formControlName="ActionCode" disabled>
+                  <option value="">Select</option>
+                  <option value="{{item}}" *ngFor="let item of ActionCode">{{item}}
+                  </option>
+                </select>
+                <div class="error" *ngIf="ActionForm.get('ActionCode').value == '' && Validated">
+                  Action Code Required
+                  {{ActionForm.setErrors({ 'invalid': true })}}
+                </div>
+              </div>
+              <!-- <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Work Status
+                  <span class="asteric">*</span>
+                </label>
+                <select class="form-control" formControlName="WorkStatus">
+                  <option value="">Select</option>
+                  <option value="To Call">To Call</option>
+                  <option value="Done">Done</option>
+                </select>
+                <div class="error" *ngIf="ActionForm.get('WorkStatus').value == '' && Validated">
+                  Work Status Required
+                  {{ActionForm.setErrors({ 'invalid': true })}}
+                </div>
+              </div> -->
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Notes
+                  <!-- <span class="asteric">*</span>
+                  <span class="pull-right text-right cursor" (click)="ToggleNotesGenerator(false)">
+                    <i class="mr-5 fa fa-sticky-note-o" aria-hidden="true"></i>Notes Generator</span> -->
+                </label>
+                <textarea formControlName="Notes" rows="8" class="form-control textarea-resize"
+                  placeholder="Write Notes.." disabled></textarea>
+                <div class="error" *ngIf="ActionForm.get('Notes').hasError('required') && Validated">
+                  Notes is required
+                </div>
+              </div>
+              <div class="form-group mh-15">
+                <div class="col-md-12 text-center p-0">
+                  <!-- data-toggle="modal" data-target=".skip-ac" -->
+                  <button type="submit" [disabled]="DisableSubmit"
+                    class="btn blue square-btn blue-hover btn-txt mr-10">Submit</button>
+                  <button type="button" style="display: none" (click)="ClearForm()" [disabled]="DisableSubmit"
+                    class="btn blue square-btn blue-hover btn-txt">Clear</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- Citra Account list popup -->
+<app-citra-accounts-modal *ngIf="OpenAccountsModal" [(WorkingAccountId)]="InventoryId"
+  (GetAllFields)="GetAllFields(null,$event,true)" [CitraAccountsList]="CitraAccountsList"
+  (CloseAccountModal)="ToggleAccountsModal($event)"></app-citra-accounts-modal>

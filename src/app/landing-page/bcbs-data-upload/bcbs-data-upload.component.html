@@ -1,0 +1,35 @@
+<app-header [title]="Title"></app-header>
+<div class="col-md-12 col-sm-12 col-sm-12 p-0">
+  <div class="col-md-12 col-sm-12 white p-0">
+    <form  class="" role="form">
+      <div class="sm-report pv-10 mt-10">
+        <div class="col-md-12 p-0">
+          <div class=" form-group">
+            <label class=" label-std control-label p-0 b-600 pl-0" for="">Upload File</label>
+            <span class="col-md-3 p-0 form-group file-provider mt-1">
+              <div class="file-upload-wrapper" [attr.data-text]="Filename">
+                <input (change)="GetFileData($event)" #file [disabled]="DisableFileInput" name="file-upload-field"
+                  type="file" accept=".xlsx" class="file-upload-field" (onclick)="file.value = null">
+
+              </div>
+            </span>
+            <div class="error" *ngIf="DisplayFileError">
+              Please select the file
+            </div>
+
+            <!-- <span> -->
+            <button [disabled]="!truefile || DisableUpload" type="button" (click)="FileUpload()"
+              class="btn w-auto pr-upl label grey lg-text label-info square-btn cursor mt-1 mr-5" id="toast-btn">
+              <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</button>
+
+            <button [disabled]="disableDownload" type="button" (click)="downloadTemplate()"
+              class="btn w-auto pr-upl label grey lg-text label-info square-btn cursor mt-1 mr-5" id="toast-btn">
+              <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
+          </div>
+        </div>
+
+      </div>
+    </form>
+
+  </div>
+</div>

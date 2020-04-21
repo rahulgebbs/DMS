@@ -1,0 +1,44 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position">
+  <div class="col-md-12 p-0 grey">
+    <span class="col-md-10 col-sm-10 p-0">
+      <div class="heading-panel pl-10">
+        <span class="text-sm text-ellipsis heading-txt flex">Employee Code By Bucket
+        </span>
+      </div>
+    </span>
+    <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div class="col-md-12 p-0">
+    <div class="col-md-12 p-0 mt-10 border-b">
+      <div class="col-md-3">
+        <label class="custom-control">
+          <!-- <input type="checkbox" id="selectall" [(ngModel)]="SelectAll" (change)="SelectAllToggle($event)" /> -->
+          <label for="selectall">Select Employees From Bucket</label>
+        </label>
+      </div>   
+    </div>  
+    <div class="col-md-12 p-0 code-auto-scroll p-0">
+        <div class="col-md-12 p-0 mt-10 border-b"  *ngFor="let Bucket of AllBucket;let k = index;">
+          <div class="col-md-3">
+            <label class="custom-control">
+              <input type="checkbox" id="{{Bucket.Bucket_Id}}"   [checked]= "Bucket.selectedEmployee.length>0" />
+              <label for="{{Bucket.Bucket_Id}}" >{{Bucket.Bucket_Name}}  </label>                           
+            </label>
+             <ng-multiselect-dropdown 
+              [placeholder]="'Select Employees'"  [data]="Bucket.employeeList" [(ngModel)]="Bucket.selectedEmployee"
+              [settings]="dropdownSettings"  
+              ></ng-multiselect-dropdown> 
+          </div>   
+        </div>  
+      </div> 
+    <div class="form-group col-md-12 p-0 mb-10 text-left">
+      <span>
+        <button [disabled]="!allowDeallocate()" (click)="Deallocate($event)"
+          class="btn blue square-btn blue-hover btn-txt mr-10 mt-4">De-allocate</button>
+      </span>
+    </div>
+</div>

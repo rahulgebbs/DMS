@@ -1,0 +1,42 @@
+/* .loading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+    height: 40vh; 
+    /* background: #fff;  */
+/* }
+.loading-midd{
+    max-width: 100%;
+    text-align: center;
+} */ 
+
+
+
+.loading{
+    width: 100%;
+    height: 100%;
+    background-color:#efefef;
+    /* position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; */
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+    align-content: center;
+    margin: auto;
+    padding: 40px;
+}
+.loading-midd{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+    align-content: center;
+}

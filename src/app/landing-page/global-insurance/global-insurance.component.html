@@ -1,0 +1,17 @@
+<app-header [title]="title"></app-header>
+<div class="col-md-12 col-sm-12 col-sm-12 p-0">
+    <div class="col-md-12 col-sm-12 mt-10">
+        <div class="table-responcive">
+                <div class="text-right">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
+            <div class="sticky-table sticky-ltr-cells border-0 table-hight">
+                <ag-grid-angular [enableFilter]="true" [enableColResize]="true" (gridReady)="onGridReady($event)"
+                    (firstDataRendered)="autoSizeAll()" [rowSelection]="RowSelection" class="ag-theme-balham grid-w"
+                    [enableSorting]="true" [suppressColumnVirtualisation]="true" [rowData]="rowData" [pagination]="true"
+                    [paginationAutoPageSize]="true" [columnDefs]="columnDefs" (rowClicked)="OnRowClicked($event)">
+                </ag-grid-angular>
+            </div>
+        </div>
+    </div>
+</div>
+<app-edit-global-modal *ngIf="ShowModal" (UpdateData)="UpdateMasterList()" (CloseModal)="CloseModal()"
+    [SelectedInsurance]="SelectedInsurance"></app-edit-global-modal>

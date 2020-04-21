@@ -1,0 +1,532 @@
+<app-header [title]="Title"></app-header>
+<!-- top-navigation -->
+<div class="top-navigation buckets-list dark col-md-12 col-sm-12 p-0">
+  <ul>
+    <!-- <li class="menu-icon">
+          <i class="fa fa-bars ft-22" aria-hidden="true" data-toggle="modal" data-target="#leftmenu"></i>
+      </li> -->
+    <ul *ngFor="let b of Buckets">
+      <li *ngIf="b.Display_Name !='TL Deny'" (click)="ToggleAccountsModal(b)"
+        [ngClass]="{'active-li':ActiveBucket == b.Name, 'disableBtn': b.disableBtn==true}">
+        <!-- class="active-li" -->
+        <div>
+          <span>{{b.Display_Name}}</span>
+          <span class="buckets-list-cl">
+            <b class="badge circle-buget  badge-sm badge-pill">{{b.Count}}</b>
+          </span>
+
+        </div>
+
+      </li>
+      <li *ngIf="b.Display_Name =='TL Deny'">
+        <div class="dropdown float-left">
+          <a href="#" onclick="javascript:return false;" class="dropdown-a btn btn-link dropdown-toggle"
+            data-toggle="dropdown" role="button" aria-haspopup="true">My Rework
+
+          </a>
+          <ul class="dropdown-menu menu">
+            <li class="menu-item" (click)="ToggleAccountsModal(b)">
+              <span>{{b.Display_Name}} </span>
+              <span class="buckets-list-cl">
+                <b class="badge circle-buget  badge-sm badge-pill">{{b.Count}}</b>
+              </span>
+            </li>
+
+          </ul>
+        </div>
+
+      </li>
+
+    </ul>
+  </ul>
+  <div class="uitlites-nav">
+    <ul class="pull-right dark">
+      <li title="Redeem my rewards" (click)="toggleMenu()">
+        <a>
+          <i class="fa fa-bars" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li class="utility-menu" title="inote Pad" (click)="showInotePad()" *ngIf="viewUtil">
+        <a class="">
+          <i class="fas fa-sticky-note"></i>
+        </a>
+      </li>
+      <li class="utility-menu" title="Denial Code" (click)="showDenialCode()" *ngIf="viewUtil">
+        <a>
+          <i class="fa fa-file-text" aria-hidden="true"></i>
+        </a>
+      </li>
+
+      <li class="utility-menu" title="SAAG" (click)="showSaag()" *ngIf="viewUtil">
+        <a>
+          <i class="fa fa-database" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li class="utility-menu" title="BCBS Assistance" data-toggle="modal" *ngIf="viewUtil" (click)="showBCBS()">
+        <a>
+          <i class="fa fa-users" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li class="utility-menu" title="High Priority Accounts" (click)="openUtilityPopup()">
+        <a>
+          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li class="utility-menu" title="Call Reference Accounts" (click)="openCallReferenceAccounts()">
+        <a>
+          <i class="fa fa-phone-square" aria-hidden="true"></i>
+        </a>
+      </li>
+      <!-- openCallReferenceAccounts() -->
+      <li class="utility-menu" title="Client Update" (click)="showClientUpdate()">
+        <a class="notify-a">
+          <span>
+            <i class="fas fa-bell"></i>
+          </span>
+          <span class="not-cl">
+            <b class="badge b-bell badge-sm badge-pill">{{instructionCount}}</b>
+          </span>
+        </a>
+      </li>
+
+      <li class="utility-menu" title="My Performance" (click)="showMystat()">
+        <a>
+          <i class="fa fa-file-text" aria-hidden="true"></i>
+        </a>
+      </li>
+
+      <li class="utility-menu lunch-i" title="Break Time" id="lock-screen" (click)="showBreak()" *ngIf="viewUtil">
+        <a>
+          <i class="fa fa-coffee" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li class="utility-menu" title="Redeem my rewards" *ngIf="viewUtil">
+        <a>
+          <i class="fa fa-trophy" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li class="utility-menu" title="iDecision-tree" *ngIf="viewUtil">
+        <a target="_blank"
+          href='http://172.18.5.207/DecisionTree/ARDataEntry.aspx?Payor=8VXVhss4jAxeWrWCput71g==&Practice=eXKxvcECOXs=&Acc_Number=nr6F44lfHqE=&Patient_Name=PuT/kqW75efI/2+bZNTajA==&Charge_Amount=z65dynzbqdM=&Balance_Amount=z65dynzbqdM=&CPT=fP1s4Q19ee8=&DOS=NPJUcArTcD0SiruvBAXWQw==&Provider_Name=Xlq1gqbre9Y=&DOB=DfTuLdQUsSxesUI1ob1rTg==&Notes=XzlC0FZyR9lnV0jersRaHg==&ID=fIVQIbr6oCw=&Comments=XzlC0FZyR9lnV0jersRaHg==&Login_Name=hJR1CXhi45sk8UfcNNmMww==&Process=205'>
+          <i class="fa fa-tree" aria-hidden="true"></i>
+        </a>
+      </li>
+
+
+    </ul>
+  </div>
+</div>
+<!-- end top-navigation -->
+
+<!-- Midd content -->
+<ng-container *ngIf="DisplayMain;else MessageBox">
+  <div class="col-md-12 col-sm-12 col-sm-12 p-0 mb-45">
+    <div class="col-md-12 p-0 agent-blue-sepration agent-field-ht">
+      <div class="col-md-3 p-0 blue-seprator serpartion-h">
+        <div class="col-md-12 col-sm-12 p-0">
+          <div class="heading-panel sT-hight">
+            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Standard Fields</span>
+          </div>
+        </div>
+        <div class="col-md-12 p-0 auto-scroll-section" style="height: 100%">
+          <form style="margin-bottom: 10rem;">
+            <ng-container *ngFor="let f of AllFields;let i =index">
+              <div class="form-group mh-15 "
+                [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-i' : 'border-b']"
+                *ngIf="f.Is_Standard_Field && f.Is_View_Allowed_Agent && !f.Is_Appeal && f.Display_Name != 'Notes'">
+                <label for="f.Id" class="label-std control-label p-0 b-600">{{f.Display_Name}}</label>
+                <span *ngIf="f.editableInput==null || f.editableInput==false"
+                  [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-label-t border-b' : '']">
+                  <label for="f.Id" class="control-label w-80 label-s text-color">{{f.FieldValue || "N/A"}}</label>
+                  <span *ngIf="f.Display_Name.indexOf('Payer') != -1" class="text-right payor-label-ins"
+                    title="Insurance Master" (click)="ToggleInsuranceMaster()">
+                    <i class="fa fa-book ft-22" aria-hidden="true"></i>
+                  </span>
+                  <!-- show icon for CallReference_No -->
+                  <span *ngIf="f.Display_Name.indexOf('CallReference_No') != -1" class="text-right payor-label-ins"
+                    title="Call Reference Info" (click)="openCallReferenceInfo(f)">
+                    <i class="fa fa-phone ft-22" aria-hidden="true"></i>
+                  </span>
+                </span>
+                <input *ngIf="f.editableInput==true && f.Column_Datatype=='Text'" name="{{f.Display_Name}}" type="text"
+                  class="form-control" [(ngModel)]="f.FieldValue">
+                <div class='' *ngIf="f.editableInput==true && f.Column_Datatype=='Date'">
+                  <input class="form-control" [type]="'text'" [id]="'field'+i" [owlDateTime]="dt"
+                    [owlDateTimeTrigger]="dt">
+                  <!-- <span class="input-group-addon" [owlDateTimeTrigger]="dt">
+                    <span class="glyphicon glyphicon-time"></span>
+                  </span> -->
+                  <!-- <owl-date-time [pickerType]="'calendar'" #field{{i}}></owl-date-time> -->
+                  <!-- <input [type]="type" [id]="id" [key]="key" [owlDateTime]="dt" [owlDateTimeTrigger]="dt"> -->
+                  <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                </div>
+
+              </div>
+            </ng-container>
+          </form>
+        </div>
+      </div>
+      <div [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-3' : 'col-md-6']"
+        class="p-0 blue-seprator serpartion-h">
+        <div class="col-md-12 col-sm-12 p-0">
+          <div class="heading-panel sT-hight">
+            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Input Fields</span>
+          </div>
+        </div>
+        <div class="col-md-12 p-0  auto-scroll-section">
+          <div class="col-md-12 p-0">
+            <ng-container *ngFor="let f of AllFields">
+              <div
+                [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-12' : 'col-md-6 h-48']"
+                *ngIf="!f.Is_Standard_Field && !f.Is_Appeal && !f.Is_Correspondence && f.Is_View_Allowed_Agent">
+                <div class="form-group"
+                  [ngClass]="[!f.Is_Edit_Allowed_Agent || f.Column_Datatype == 'Formula' || f.Is_Exception ? 'border-b' : '']">
+                  <ng-container *ngIf="f.Display_Name == 'Reference_File_Name'; else otherNames">
+                    <label for="f.Id" class="label-std  control-label p-0 b-600">Reference File</label>
+                  </ng-container>
+                  <ng-template #otherNames>
+                    <label for="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
+                  </ng-template>
+
+
+                  <ng-container *ngIf="f.Is_Edit_Allowed_Agent; else readonly">
+                    <ng-container [ngSwitch]="f.Column_Datatype">
+                      <ng-container *ngSwitchCase="'Text'">
+                        <ng-container *ngIf="f.Is_Dropdown_Field; else textinput">
+                          <select class="form-control" [(ngModel)]="f.FieldValue" name="{{f.FieldValue}}">
+                            <option *ngFor="let item of f.DropdownList" value="{{item.Dropdown_Value}}">
+                              {{item.Dropdown_Value}}</option>
+                          </select>
+                        </ng-container>
+                        <ng-template #textinput>
+                          <ng-container *ngIf="f.SetFormula; else elseTemplate">
+                            <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                          </ng-container>
+                          <ng-template #elseTemplate>
+                            <input type="text" class="form-control" id="f.Id" [maxlength]="f.Field_Limit" placeholder=""
+                              [(ngModel)]="f.FieldValue">
+                          </ng-template>
+
+
+                        </ng-template>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'Date'">
+                        <div class="input-group date col-md-12" id='datetimepicker1'>
+                          <input autocomplete="off" [min]="MinDate" [(ngModel)]="f.FieldValue"
+                            (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1"
+                            class="owl-dp" name="date" [owlDateTime]="dt1">
+                          <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                          <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'Formula'">
+                        <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #readonly>
+                    <ng-container *ngIf="f.Display_Name == 'Reference_File_Name'; else readOnly">
+                      <ng-container *ngIf="!f.FieldValue; else showButton">
+                        <label for="f.Id" class="control-label label-s text-color p-0">No File Uploaded</label>
+                      </ng-container>
+                      <ng-template #showButton>
+                        <button type="button" class="btn blue square-btn blue-hover btn-txt"
+                          (click)="DownloadReferenceFile()">Download</button>
+                      </ng-template>
+                    </ng-container>
+                    <ng-template #readOnly>
+                      <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                    </ng-template>
+                  </ng-template>
+
+
+                </div>
+              </div>
+            </ng-container>
+            <!--Comment History-->
+            <div class="col-md-6 h-48" *ngIf="ActiveBucket == 'TL_Deny' || ActiveBucket == 'Client_Response'">
+              <div class="form-group border-b">
+                <label for="f.Id" class="label-std  control-label p-0 b-600">Comment History</label>
+                <button type="button" class="btn blue square-btn blue-hover btn-txt"
+                  (click)="ViewCommentHistory()">View</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Appeal Section-->
+      <div *ngIf="ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal'"
+        class="col-md-3 p-0 p-0 blue-seprator serpartion-h">
+        <div class="col-md-12 col-sm-12 p-0">
+          <div class="heading-panel sT-hight">
+            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Appeal Fields</span>
+          </div>
+        </div>
+        <div class="col-md-12 p-0  auto-scroll-section">
+          <div class="col-md-12 p-0">
+            <ng-container *ngFor="let f of AllFields">
+              <div class="col-md-12" *ngIf="f.Is_Appeal && f.Is_View_Allowed_Agent">
+                <div class="form-group"
+                  [ngClass]="[!f.Is_Edit_Allowed_Agent || f.Column_Datatype == 'Formula' ? 'border-b' : '']">
+                  <label for="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
+                  <ng-container *ngIf="f.Is_Edit_Allowed_Agent; else readonly">
+                    <ng-container [ngSwitch]="f.Column_Datatype">
+                      <ng-container *ngSwitchCase="'Text'">
+                        <!--Dynamic denial code-->
+                        <ng-container [ngSwitch]="f.Display_Name">
+                          <ng-container *ngSwitchCase="'Denial Code'">
+                            <input id="denial-code" [maxlength]="f.Field_Limit" type="text" class="form-control"
+                              [(ngModel)]="f.FieldValue" [ngbTypeahead]="GetDenialCodeList" />
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'NPI'">
+                            <input id="npi" type="text" class="form-control" [(ngModel)]="f.FieldValue"
+                              [ngbTypeahead]="GetNPIList" />
+                          </ng-container>
+                          <ng-container *ngSwitchDefault>
+                            <ng-container *ngIf="f.Is_Dropdown_Field; else textinput">
+                              <select class="form-control" [(ngModel)]="f.FieldValue" name="{{f.FieldValue}}">
+                                <option *ngFor="let item of f.DropdownList" value="{{item.Dropdown_Value}}">
+                                  {{item.Dropdown_Value}}</option>
+                              </select>
+                            </ng-container>
+                            <ng-template #textinput>
+                              <ng-container *ngIf="f.SetFormula; else elseTemplate">
+                                <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                              </ng-container>
+                              <ng-template #elseTemplate>
+                                <input type="text" class="form-control" id="f.Id" [maxlength]="f.Field_Limit"
+                                  placeholder="" [(ngModel)]="f.FieldValue">
+                              </ng-template>
+                            </ng-template>
+                          </ng-container>
+                        </ng-container>
+
+                        <!--COMMENTED-->
+
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'Date'">
+                        <div class="input-group date col-md-12" id='datetimepicker1'>
+                          <input autocomplete="off" [min]="MinDate" [(ngModel)]="f.FieldValue"
+                            (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1"
+                            class="owl-dp" name="date" [owlDateTime]="dt1">
+                          <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                          <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'Formula'">
+                        <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #readonly>
+                    <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                  </ng-template>
+
+
+                </div>
+              </div>
+            </ng-container>
+            <div class="col-md-12">
+              <div class="form-group">
+                <div class="form-group mt-10 letter-tabbed">
+                  <label for="letter" class="label-std  control-label p-0 b-600">Letter</label>
+                  <ul class="nav nav-tabs mt-10">
+                    <li [ngClass]="[AppealType == 'appeal' ? 'active' : '']" (click)="ToggleAppealModal('appeal')">
+                      <a>Appeal</a></li>
+                    <li [ngClass]="[AppealType == 'non_appeal' ? 'active' : '']"
+                      (click)="ToggleAppealModal('non_appeal')">
+                      <a>Non Appeal</a></li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Appeal Ends-->
+      <div class="col-md-3 p-0">
+        <div class="col-md-12 p-0">
+          <form [formGroup]="ActionForm" (ngSubmit)="SubmitForm()">
+            <div class="col-md-12 col-sm-12 p-0">
+              <div class="heading-panel sT-hight">
+                <span class="text-sm text-ellipsis heading-txt flex t-uppercase blue-text">ACTION</span>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 p-0 lbl-txt auto-scroll-section">
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Status
+                  <span class="asteric">*</span>
+                  <!-- <span class="pull-right text-right cursor" title="iDecision Tree" data-toggle="modal" data-target=".iDecision-tree">
+                              <i class="mr-5 fa fa-pagelines" aria-hidden="true"></i>iDecision Tree</span> -->
+                </label>
+                <select class="form-control" formControlName="Status" (change)="OnStatusChange($event)">
+                  <option value="" [selected]="(!Status) || Status.length>1">Select</option>
+                  <option value="{{item}}" *ngFor="let item of Status" [selected]="(Status.length==1)">{{item}}</option>
+                </select>
+                <div class="error" *ngIf="ActionForm.get('Status').value == '' && Validated">
+                  Status Required
+                  {{ActionForm.setErrors({ 'invalid': true })}}
+                </div>
+              </div>
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Sub Status
+                  <span class="asteric">*</span>
+                </label>
+                <select class="form-control" formControlName="SubStatus" (change)="OnSubStatusChange($event)">
+                  <option value="">Select </option>
+                  <option value="{{item}}" *ngFor="let item of SubStatus" [selected]="SubStatus.length==1">{{item}}
+                  </option>
+                </select>
+                <div class="error" *ngIf="ActionForm.get('SubStatus').value == '' && Validated">
+                  Sub Status Required
+                  {{ActionForm.setErrors({ 'invalid': true })}}
+                </div>
+              </div>
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Action Code
+                  <span class="asteric">*</span>
+                </label>
+                <select class="form-control" formControlName="ActionCode">
+                  <option value="" [selected]="(!ActionCode) || ActionCode.length>1">Select</option>
+                  <option value="{{item}}" *ngFor="let item of ActionCode" [selected]="ActionCode.length==1">{{item}}
+                  </option>
+                </select>
+                <div class="error" *ngIf="ActionForm.get('ActionCode').value == '' && Validated">
+                  Action Code Required
+                  {{ActionForm.setErrors({ 'invalid': true })}}
+                </div>
+              </div>
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Work Status
+                  <span class="asteric">*</span>
+                </label>
+                <select class="form-control" formControlName="WorkStatus">
+                  <option value="">Select</option>
+                  <option value="To Call">To Call</option>
+                  <option value="Done">Done</option>
+                </select>
+                <div class="error" *ngIf="ActionForm.get('WorkStatus').value == '' && Validated">
+                  Work Status Required
+                  {{ActionForm.setErrors({ 'invalid': true })}}
+                </div>
+              </div>
+              <div class="form-group mh-15">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Notes
+                  <span class="asteric">*</span>
+                  <span class="pull-right text-right cursor" (click)="ToggleNotesGenerator(false)">
+                    <i class="mr-5 fa fa-sticky-note-o" aria-hidden="true"></i>Notes Generator</span>
+                </label>
+                <textarea formControlName="Notes" rows="8" class="form-control textarea-resize"
+                  placeholder="Write Notes.."></textarea>
+                <div class="error" *ngIf="ActionForm.get('Notes').hasError('required') && Validated">
+                  Notes is required
+                </div>
+              </div>
+              <div class="form-group mh-15">
+                <div class="col-md-12 text-center p-0">
+                  <!-- data-toggle="modal" data-target=".skip-ac" -->
+                  <div class="callImage">
+                    <img (click)="openLinkForCall()" src="assets/images/call_icon.png" alt="">
+                    <p class="callText">Web Calling</p>
+                  </div>
+                  <button style="margin-top: 1rem;" type="submit" [disabled]="DisableSubmit"
+                    class="btn blue square-btn blue-hover btn-txt mr-10">Submit</button>
+                  <button style="margin-top: 1rem;" type="button" (click)="ClearForm()" [disabled]="DisableSubmit"
+                    class="btn blue square-btn blue-hover btn-txt mr-10">Clear</button>
+                  <button style="margin-top: 1rem;" *ngIf="Is_New_Line==false" type="button" (click)="addNewLine()"
+                    [disabled]="DisableSubmit" class="btn blue square-btn blue-hover btn-txt">Add New Line <i
+                      class="fa fa-plus"></i></button>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="floatingBtn" *ngIf="enableClientUserMapping=='true'">
+            <img class="userImage" src="assets/images/userImage.png" alt="Client User Mapping Details"
+              title="Client User Mapping Details" (click)="toggleClientUserModal()">
+            <!-- <button class="buttonWithIcon" title="Client User Mapping Details" (click)="toggleClientUserModal()">
+              <i class="fa fa-plus"></i>
+            </button> -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ng-container>
+<!-- end midd content -->
+<ng-template #MessageBox>
+  <div class="message-box">
+    {{DisplayMessage}}
+  </div>
+</ng-template>
+
+<!-- app-client-user-mapping -->
+<app-client-user-mapping *ngIf="clientUserModal==true" [modalStatus]="clientUserModal"
+  (hideModal)="hideClientUserMapping($event)"></app-client-user-mapping>
+
+<!-- Account list popup -->
+<app-accounts-modal *ngIf="OpenAccountsModal" [(WorkingAccountId)]="InventoryId"
+  (GetAllFields)="GetAllFields({},$event,true)" [AccountsList]="AccountsList"
+  (CloseAccountModal)="ToggleAccountsModal($event)"></app-accounts-modal>
+
+<!-- inotepad popup -->
+
+<app-i-notepad *ngIf="DisplayNotepad" (Toggle)="ToggleNotepadModal($event)" [(notevalue)]="NoteValue"></app-i-notepad>
+
+<app-denial-code-popup *ngIf="DisplayDenialCode" (Toggle)="ToggleDenialCodeModal($event)" [(DenialCodes)]="DenialCodes">
+</app-denial-code-popup>
+<!-- SAAG popup -->
+<app-saag-popup *ngIf="DisplaySaag" (Toggle)="ToggleSaagModal($event)" [(AgentSaag)]="AgentSaag"></app-saag-popup>
+<app-break-popup *ngIf="DisplayBreak" (Toggle)="ToggleBreakModal($event)" [(agentBreak)]="agentBreak"></app-break-popup>
+
+<!-- Client Update popup -->
+<app-client-update *ngIf="DisplayClientUpdate" (getCount)="getInstructionCount()" (Toggle)="ToggleClientModal()"
+  [(ClientUpdateData)]="ClientUpdateData" [(UserId)]="UserId">
+</app-client-update>
+
+<!-- BCBS Assistance popup -->
+<app-bcb-popup *ngIf="DisplayBcbs" (Toggle)="ToggleBcbsModal($event)" [(BCBAssistance)]="BCBAssistance"></app-bcb-popup>
+
+
+<!-- My stats popup -->
+<app-mystats *ngIf="DisplayMystat" [(MyStat)]="MyStat" [(statCalucualted)]="statCalucualted"
+  (Toggle)="ToggleMyStatModal($event)"></app-mystats>
+
+<!-- High Priority Accounts Popup -->
+<app-inventory-high-priority *ngIf="showHighPriorityAccounts==true" [old_Inventory_Log_Id]="InventoryLogId"
+  (close)="closeHighPriorityAccountModal($event)" (allFields)="highPriorityLog($event)"></app-inventory-high-priority>
+
+<!-- Call Reference Accounts -->
+<app-call-reference [Old_Inventory_Log_Id]="InventoryLogId" *ngIf="callreferenceAcccounts==true"
+  (close)="closeCallReferenceModal($event)" (allFields)="callreferenceLog($event)"></app-call-reference>
+
+<!-- Insurance master popup -->
+
+
+<!-- <div class="col-md-12 mb-10 text-center">
+                  
+              </div> -->
+
+<!-- Account skip popup -->
+
+<app-insurance-master [SelectedGlobal]="InsuranceData" (CloseInsMaster)="ToggleInsuranceMaster($event)"
+  *ngIf="OpenInsuranceMaster"></app-insurance-master>
+<app-notes-generator (CloseNotesGen)="ToggleNotesGenerator($event)" *ngIf="OpenNotesGenerator"></app-notes-generator>
+<app-appeal-modal [Client_Name]="Client_Name" [Inventory_Id]="InventoryId" [AllFields]="AllFields" [GUIDList]="GUIDList"
+  (GUIDListChange)="GUIDList=$event" [(IdentityProofList)]="IdentityProofList" [ClientId]="ClientId"
+  [(TemplateCheck)]="CheckTemplates" [(AppealType)]="AppealType" *ngIf="DisplayAppeal"
+  (CloseModal)="ToggleAppealModal()">
+</app-appeal-modal>
+
+<app-comment-history-modal *ngIf="ToggleCommentHistory" (ClosePopup)="ToggleCommentHistoryPopup()"
+  [HistoryData]="CommentHistory">
+</app-comment-history-modal>
+
+<app-call-reference-info [CallReference_No]="CallReference_No" *ngIf="showCallReferenceInfo==true"
+  (close)="hideCallReferenceInfo()">
+</app-call-reference-info>

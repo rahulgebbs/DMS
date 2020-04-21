@@ -1,0 +1,13 @@
+.m-b-t {
+  margin-top: 2px !important;
+  margin-bottom: 5px;
+}
+
+.info {
+  margin-left: 34%;
+}
+
+.radioBorder {
+  border: 1px solid #dfdfdf;
+  padding: 0.1rem 1rem 1rem 1rem;
+}

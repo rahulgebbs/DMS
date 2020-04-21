@@ -1,0 +1,30 @@
+#enableTwoFactor {
+  p {
+    font-size: 1rem;
+    color: #000;
+    width: 80%;
+    text-align: center;
+    margin: auto;
+  }
+
+  .alignBarcode {
+    display: flex;
+    margin-top: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    flex-direction: column;
+    img {
+      max-width: 200px !important;
+      max-height: 200px !important;
+    }
+  }
+
+  .alignBtn {
+    display: flex;
+    margin-top: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+}

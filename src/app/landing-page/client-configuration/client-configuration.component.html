@@ -1,0 +1,146 @@
+<app-header [title]="title"></app-header>
+
+<div class="col-md-12 col-sm-12 grid-h">
+  <div class="col-md-12 p-0 mt-10">
+    <div class="board">
+      <ul class="nav nav-tabs hide">
+            <div class="liner"></div>
+            <li [ngClass]="[ShowTabName == 'client' ? 'active' : ClientComplete ? 'completed' : '']">
+              <a class="btn" (click)="navigation('client')">
+                <span>
+                  Client Configuration
+                  <!-- <i class="glyphicon glyphicon-user"></i> -->
+                </span>
+              </a>
+            </li>
+            <li class="sm-width s-width"
+              [ngClass]="[ShowTabName == 'saag' ? 'active' : clientData.Is_SAAG_Uploaded ? 'completed' : '']">
+              <a class="btn" (click)="navigation('saag')">
+                <span>
+                  SAAG Master
+                  <!-- <i class="glyphicon glyphicon-ok"></i> -->
+                </span>
+              </a>
+            </li>
+            <li class="sm-width-c clt-width"
+              [ngClass]="[ShowTabName == 'insurance' ? 'active' : clientData.Is_Insurance_Uploaded ? 'completed' : '']">
+              <a class="btn" (click)="navigation('insurance')">
+                <span>
+                  client Insurance
+                  <!-- <i class="glyphicon glyphicon-ok"></i> -->
+                </span>
+              </a>
+            </li>
+            <li class="sm-width-c pm-width"
+              [ngClass]="[ShowTabName == 'provider' ? 'active' : clientData.Is_Provider_Uploaded ? 'completed' : '']">
+              <a class="btn" (click)="navigation('provider')">
+                <span>
+                  Provider Master
+                  <!-- <i class="glyphicon glyphicon-ok"></i> -->
+                </span>
+              </a>
+            </li>
+            <li class="sm-width-c"
+              [ngClass]="[ShowTabName == 'inventory' ? 'active' : clientData.Is_Inventory_Uploaded ? 'completed':'']">
+              <a class="btn" (click)="navigation('inventory')">
+                <span>
+                  Client Inventory
+                  <!-- <i class="glyphicon glyphicon-heart"></i> -->
+                </span>
+              </a>
+            </li>
+            <li class="dm-width"
+              [ngClass]="[ShowTabName == 'dropdown' ? 'active' : clientData.Is_Dropdown_Uploaded ? 'completed':'']">
+              <a class="btn" (click)="navigation('dropdown')">
+                <span>
+                  Dropdown Management
+                  <!-- <i class="glyphicon glyphicon-plus"></i> -->
+                </span>
+              </a>
+            </li>
+            <li class="dm-width"
+              [ngClass]="[ShowTabName == 'formula' ? 'active' :'',clientData.Is_Formula_Uploaded ? 'completed':'']">
+              <a class="btn" (click)="navigation('formula')">
+                <span>
+                  Formula Management
+                  <!-- <i class="glyphicon glyphicon-ok"></i> -->
+                </span>
+              </a>
+            </li>
+            <li  class="dm-width"
+              [ngClass]="[ShowTabName == 'appeal' ? 'active' :'',clientData.Is_Appeal_Uploaded ? 'completed':'']">
+              <a class="btn" (click)="navigation('appeal')">
+                
+                <span class="pr-20">
+                  Appeal Management
+    
+                </span>
+              </a>
+            </li>
+    
+      </ul>
+      <ul class="steps steps-5">
+        <li (click)="navigation('client')" [ngClass]="[ShowTabName == 'client' ? 'active' : ClientComplete ? 'completed' : '']">
+            <div class="li-title">
+              Client Configuration
+            </div>
+        </li>
+        <li (click)="navigation('saag')" [ngClass]="[ShowTabName == 'saag' ? 'active' : clientData.Is_SAAG_Uploaded ? 'completed' : '']">
+            <div class="li-title">
+              SAAG Master
+            </div>
+        </li>
+        <li (click)="navigation('insurance')" [ngClass]="[ShowTabName == 'insurance' ? 'active' : clientData.Is_Insurance_Uploaded ? 'completed' : '']">
+            <div class="li-title">
+              client Insurance
+            </div>
+        </li>
+        <li (click)="navigation('provider')" [ngClass]="[ShowTabName == 'provider' ? 'active' : clientData.Is_Provider_Uploaded ? 'completed' : '']">
+            <div class="li-title">
+              Provider Master
+            </div>
+        </li>
+        <li (click)="navigation('inventory')" [ngClass]="[ShowTabName == 'inventory' ? 'active' : clientData.Is_Inventory_Uploaded ? 'completed':'']">
+            <div class="li-title">
+              Client Inventory
+            </div>
+        </li>
+        <li (click)="navigation('dropdown')" [ngClass]="[ShowTabName == 'dropdown' ? 'active' : clientData.Is_Dropdown_Uploaded ? 'completed':'']">
+            <div class="li-title">
+              Dropdown Management
+            </div>
+        </li>
+        <li (click)="navigation('formula')" [ngClass]="[ShowTabName == 'formula' ? 'active' :'',clientData.Is_Formula_Uploaded ? 'completed':'']">
+            <div class="li-title">
+              Formula Management
+            </div>
+        </li>
+        <li (click)="navigation('appeal')" [ngClass]="[ShowTabName == 'appeal' ? 'active' :'',clientData.Is_Appeal_Uploaded ? 'completed':'']">
+            <div class="li-title">
+              Appeal Management
+            </div>
+        </li>
+      </ul>
+    </div>
+    <!-- client component  -->
+
+    <!-- <div class="modal fade client-list" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"> -->
+    <app-client (next_page)="next_page($event)" [SelectedClientData]="clientData" [selectClient]="TabError"
+      (messageEvent)="receiveClient($event)" *ngIf="ShowTabName == 'client'"></app-client>
+    <!-- </div> -->
+   
+    <app-saag (next_page)="next_page($event)" [(ClientData)]="clientData" *ngIf="ShowTabName == 'saag'"></app-saag>
+    <app-insurance (next_page)="next_page($event)" [(ClientData)]="clientData" *ngIf="ShowTabName == 'insurance'">
+    </app-insurance>
+    <app-provider (next_page)="next_page($event)" [(ClientData)]="clientData" *ngIf="ShowTabName == 'provider'">
+    </app-provider>
+    <app-inventory (next_page)="next_page($event)" [(ClientData)]="clientData" *ngIf="ShowTabName == 'inventory'">
+    </app-inventory>
+    <app-dropdown (next_page)="next_page($event)" [(ClientData)]="clientData" *ngIf="ShowTabName == 'dropdown'">
+    </app-dropdown>
+    <app-formula (next_page)="next_page($event)" [(ClientData)]="clientData" *ngIf="ShowTabName == 'formula'">
+    </app-formula>
+    <app-appeal (next_page)="next_page($event)" [(ClientData)]="clientData" *ngIf="ShowTabName=='appeal'"></app-appeal>
+
+  </div>
+</div>

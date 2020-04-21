@@ -1,0 +1,60 @@
+<app-header [title]="Title"></app-header>
+<div class="container-fluid">
+  <div class="row mt-10 p-0 ml-10">
+    <div class="col-md-5" style="border-right: 1px solid #cfcfcf;">
+      <div class="col-md-8 p-0" style="position: relative;">
+        <div class="disableDiv" *ngIf="editField==true">
+
+        </div>
+        <span class="text-sm text-ellipsis heading-txt flex">Menu Mapping</span>
+        <div class="" novalidate>
+          <div class="form-group mt-10">
+            <label class=" label-std control-label p-0 b-600 pl-0" for="">Client</label>
+            <ng-multiselect-dropdown [placeholder]="'Select Client'" [data]="clientList"
+              [(ngModel)]="menuMappingObj.client" [settings]="clientSetting" (onSelect)="getUserList()"
+              (onDeSelect)="getUserList()">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="form-group mt-10">
+            <label class=" label-std control-label p-0 b-600 pl-0" for="">Role</label>
+            <ng-multiselect-dropdown [placeholder]="'Select Role'" [data]="roleList" [(ngModel)]="menuMappingObj.role"
+              [settings]="roleSetting" (onSelect)="getUserList()" (onDeSelect)="getUserList()">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="form-group mt-10">
+            <label class=" label-std control-label p-0 b-600 pl-0" for="">User List</label>
+            <ng-multiselect-dropdown [placeholder]="'Select User'" [data]="userList"
+              [(ngModel)]="menuMappingObj.userList" [settings]="userListSetting" (onSelect)="checkAssignMenu()"
+              (onDeSelect)="checkAssignMenu()">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="form-group mt-10">
+            <!-- <label for="" class=" label-std control-label p-0 b-600 pl-0">Select Menu</label> -->
+            <button [disabled]="disableMenuStatus" type="button" class="btn blue square-btn blue-hover btn-txt"
+              (click)="openAssignMenuModal()">Select
+              Menu List</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-11 p-0">
+        <!-- <h5>User List mapped with menu</h5> -->
+        <br />
+        <span class="text-sm text-ellipsis heading-txt flex">User List Mapped With Menu</span>
+        <br />
+        <ag-grid-angular style="height: 40vh;" [enableColResize]="true" [enableSorting]="true" [enableFilter]="true"
+          [pagination]="true" [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData"
+          [columnDefs]="columnDefs" (cellClicked)='onCellClicked($event)' (firstDataRendered)="OnGridReady($event)"
+          [suppressDragLeaveHidesColumns]="true" [suppressColumnVirtualisation]="true" [gridOptions]="gridOptions">
+        </ag-grid-angular>
+
+      </div>
+    </div>
+    <div class="col-md-7 p-0">
+      <div class="col-md-12">
+        <app-assign-menu *ngIf="assignStatus==true" class="component" [client]="activeClient"
+          (close)="closeMenuModal($event)">
+        </app-assign-menu>
+      </div>
+    </div>
+  </div>
+</div>

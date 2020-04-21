@@ -1,0 +1,39 @@
+<!-- <div class="pop-bg">
+</div> -->
+<div class="pop-position">
+  <div class="col-md-12 p-0">
+    <span class="col-md-12 col-sm-12">
+      <div class="heading-panel">
+        <span class="text-sm text-ellipsis heading-txt flex">Assign Menu ({{client.UsernameArr[0] || 'N/A'}} -
+          {{client.Role_Name || 'N/A'}})</span>
+      </div>
+    </span>
+  </div>
+  <div class="col-md-12 p-0 mt-10 mb-10" id="assignContainer">
+    <div class="row p-0 ml-5">
+      <ng-container *ngFor="let menu of client.menuList;let index=index">
+        <div *ngIf="checkMenuAccess(menu)" class="col-md-4 col-xs-6 menuItem">
+          <label class="custom-control">
+            <input class="form-control" type="checkbox" id="menu{{index}}" name="menu{{index}}"
+              [(ngModel)]="menu.selected" value="{{menu.Id}}" name="{{menu.Id}}" (change)="enableCheckbox(menu)">
+            <label for="menu{{index}}" style="text-transform: capitalize;">
+              {{menu.Menu_Name}}
+            </label>
+          </label>
+          <ng-multiselect-dropdown *ngIf="menu && menu.subMenus && menu.subMenus.length>0" [placeholder]="'Select User'"
+            [data]="menu.subMenus" [(ngModel)]="menu.subMenuList" [settings]="subMenuSetting"
+            (onSelect)="manageCheckbox(menu)" (onDeSelect)="manageCheckbox(menu)" (onSelectAll)="manageCheckbox(menu)">
+          </ng-multiselect-dropdown>
+        </div>
+      </ng-container>
+      <div class="col-md-12 p-0" id="footerSection">
+        <div class="row p-0">
+          <button class="btn btn-danger " (click)="closeModal()">Cancel</button>
+          <button class="btn btn-primary" (click)="submit()" [disabled]="httpStatus==true">Submit
+            <i *ngIf="httpStatus==true" class="fa fa-circle-o-notch fa-spin" style="font-size:1.5rem"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>

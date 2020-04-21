@@ -1,0 +1,107 @@
+<div *ngIf="showPopup">
+
+  <div class="pop-bg">
+  </div>
+  <div class="pop-position formula-pop">
+    <form [formGroup]="addFormula" (ngSubmit)="submitFrom()" autocomplete="off">
+      <div class="modal-content  white">
+        <div class="col-md-12 grey p-0">
+          <span class="col-md-10 col-sm-10 p-0">
+            <div class="heading-panel">
+              <span class="text-sm text-ellipsis heading-txt flex">Generate Formula </span>
+            </div>
+          </span>
+          <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="closeModel()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="col-md-12 mt-15 p-0">
+          <div class="middle-box w-100">
+            <div class="col-md-12">
+              <input type="hidden" name="name" id="texFormula" class="form-control formula-input" placeholder="Create Formula"
+                formControlName="Id" [(ngModel)]="Id" />
+              <input type="hidden" name="name" id="texFormula" class="form-control formula-input" placeholder="Create Formula"
+                formControlName="Client_Inventory_Id" [(ngModel)]="Client_Inventory_Id" />
+              <input type="hidden" name="name" id="texFormula" class="form-control formula-input" placeholder="Create Formula"
+                formControlName="Client_Id" [(ngModel)]="Client_Id" />
+              <input type="hidden" name="name" id="texFormula" class="form-control formula-input" placeholder="Create Formula"
+                formControlName="Is_Active" [(ngModel)]="Is_Active" />
+              <input type="hidden" name="name" id="texFormula" class="form-control formula-input" placeholder="Create Formula"
+                formControlName="Updated_Date" [(ngModel)]="Updated_Date" />
+
+              <input type="text" name="name" id="texFormula" class="form-control formula-input" placeholder="Create Formula"
+                formControlName="Expression" [(ngModel)]="Expression" (keypress)="restrict($event)" (keyup)="restrict($event)" (keydown)="restrict($event)"/>
+              <label class="error" *ngIf="validate && addFormula.get('Expression').hasError('required')">Expression
+                value is require</label>
+              <label class="error" *ngIf="addFormula.get('Expression').hasError('maxlength')">Maximum 200 charcter
+                allowed</label>
+              <div class="num-pad mt-10">
+                <div class="col-md-12 p-0 grey">
+                  <div class="col-md-2 p-0 operator-seprator">
+                    <div class="num">
+                      <div class="txt operators-box" (click)="appendExpression('+')" [class.disabled]="disableSymbol">
+                        +
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2 p-0 operator-seprator" (click)="appendExpression('-')">
+                    <div class="num">
+                      <div class="txt operators-box"  [class.disabled]="disableSymbol">
+                        -
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2 p-0 operator-seprator" (click)="appendExpression('*')">
+                    <div class="num">
+                      <div class="txt operators-box multiplication-symbol"  [class.disabled]="disableSymbol">
+                        *
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2 p-0 operator-seprator" (click)="appendExpression('/')">
+                    <div class="num">
+                      <div class="txt operators-box"  [class.disabled]="disableSymbol">
+                        /
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2 p-0 operator-seprator" (click)="appendExpression('(')" >
+                    <div class="num">
+                      <div class="txt operators-box"  [class.disabled]="disableSymbol">
+                        (
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2 p-0" (click)="appendExpression(')')">
+                    <div class="num">
+                      <div class="txt operators-box"  [class.disabled]="disableSymbol">
+                        )
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix">
+                </div>
+              </div>
+              <div class="col-md-12 p-0 hgt-box mt-10 border-t border-b mb-10">
+                <div class="col-md-12 p-0 " *ngFor="let i of FormulaValues" (click)="appendExpression(i.Display_Name)" >
+                  <label class="border-b light-blue-hover square-btn btn-txt w-100 mb-0"  [class.disabled]="disableValue">{{i.Display_Name}}</label>
+                </div>
+                <div class="col-md-12 p-0 " *ngIf="!FormulaValues">
+                  <label class="border-b light-blue-hover square-btn btn-txt w-100 mb-0">No value found for this client</label>
+                </div>
+
+              </div>
+              <div class="col-md-12 text-center mb-10">
+                <button type="submit" class="btn blue square-btn blue-hover btn-txt mr-10" [disabled]="disableSave">Save</button>
+                <button type="button" class="btn blue square-btn blue-hover btn-txt" (click)="clearForm()">Clear</button> 
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>

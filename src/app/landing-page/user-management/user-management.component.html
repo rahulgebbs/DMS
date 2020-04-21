@@ -1,0 +1,350 @@
+<body class="theme4">
+  <app-header [title]="title"></app-header>
+  <!-- end -->
+  <form [formGroup]="addUser" (ngSubmit)="submitFrom()">
+    <div class="container-fliud white flex ">
+
+      <div class="col-md-3 col-xs-4 p-0 ueser-crt blue-seprator serpartion-htg">
+        <div class="col-md-12 col-sm-12">
+          <div class="heading-panel sT-hight p-0">
+            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">User Creation</span>
+          </div>
+        </div>
+        <div class="col-md-12 col-xs-12 p-0 box-heightLG">
+          <!-- <form> -->
+          <div class="col-md-12 col-xs-12 p-0">
+            <div class="col-md-6 col-xs-6 p-0">
+              <div class="form-group mh-15 mr-5">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">User Type</label>
+                <select class="form-control" formControlName="User_Type" (change)="seletedUserType($event)"
+                  [(ngModel)]="editUser.User_Type">
+                  <option [ngValue]="undefined" disabled>Select User Type</option>
+                  <option [ngValue]="i.Id" *ngFor='let i of user_Type'>{{i.Value}}</option>
+                </select>
+                <label class="error  mt-0" *ngIf="addUser.get('User_Type').hasError('required') && validated">User Type
+                  is required</label>
+
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-6 p-0">
+              <div class="form-group mh-15 ml-5">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Role</label>
+                <select class="form-control" formControlName="Role" (change)="seletedUserRole($event)"
+                  [(ngModel)]="editUser.Role">
+                  <option [ngValue]="undefined" disabled >Select Role</option>
+                  <option [ngValue]="i.Id" *ngFor='let i of role'>{{i.Value}}</option>
+                </select>
+                <label class="error  mt-0" *ngIf="addUser.get('Role').hasError('required') && validated">User Role is
+                  required</label>
+
+                <label class="error  mt-0" *ngIf="!canEditData">You can't edit this type of role</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-xs-12 p-0">
+            <div class="col-md-6 col-xs-6 p-0">
+              <div class="form-group mh-15 mr-5">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Employee Code</label>
+                <input type="hidden" [(ngModel)]="editUser.Id" formControlName="Id">
+                <input type="hidden" [(ngModel)]="editUser.Updated_Date" formControlName="Updated_Date">
+                <input type="text" class="form-control" id="lastname" placeholder=""
+                  [(ngModel)]="editUser.Employee_Code" formControlName="Employee_Code">
+                <label class="error  mt-0"
+                  *ngIf="addUser.get('Employee_Code').hasError('required') && validated && editUser.User_Type != 'Client'">Employee_Code
+                  is required</label>   
+                <div class="error" *ngIf="addUser.get('Employee_Code').hasError('pattern') ||  addUser.get('Employee_Code').hasError('invalidNumber')">Please Enter Valid
+                  Employee_Code</div>
+                <label class="error  mt-0" *ngIf="addUser.get('Employee_Code').hasError('max') ">Maximum 20
+                  Charcter allowed </label>
+
+
+
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-6 p-0">
+              <div class="form-group mh-15 ml-5">
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600">User Name</label>
+                <input type="text" class="form-control" id="lastname" placeholder="" [(ngModel)]="editUser.Username"
+                  formControlName="Username" maxlength="20">
+                <label class="error  mt-0" *ngIf="addUser.get('Username').hasError('required') && validated">Username
+                  is required</label>
+                <label class="error  mt-0" *ngIf="addUser.get('Username').hasError('maxlength')">Maxmium
+                  20 charcter allowed</label>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-xs-12">
+            <label for="inputEmail3" class="label-std  control-label p-0 b-600">Email Id</label>
+            <input type="text" class="form-control" id="lastname" placeholder="" [(ngModel)]="editUser.Email_Id"
+              formControlName="Email_Id" maxlength="50">
+            <label class="error  mt-0" *ngIf="addUser.get('Email_Id').hasError('required') && validated">Email_Id is
+              required</label>
+            <label class="error  mt-0" *ngIf="addUser.get('Email_Id').hasError('invalidDomain') && validated">Invalid
+              Email
+              domain</label>
+            <label class="error  mt-0" *ngIf="addUser.get('Email_Id').hasError('EmailInvalid') && validated">Invalid
+              Email
+            </label>
+            <label class="error  mt-0" *ngIf="addUser.get('Email_Id').hasError('maxlength') && validated">Maxmium 50
+              charcter allowed</label>
+          </div>
+          <div class="col-md-12 col-xs-12">
+            <label for="inputEmail3" class="label-std  control-label p-0 b-600">Full Name</label>
+            <input type="text" class="form-control" id="lastname" placeholder="" value="Jitendrasing Jadhav"
+              [(ngModel)]="editUser.Full_Name" formControlName="Full_Name" maxlength="50">
+            <label class="error  mt-0" *ngIf="addUser.get('Full_Name').hasError('required') && validated">Full_Name is
+              required</label>
+            <label class="error  mt-0" *ngIf="addUser.get('Full_Name').hasError('maxlength') && validated">Maxmium 50
+              charcter allowed</label>
+          </div>
+          <div class="form-group process-h border-t mt-10 mh-15" *ngIf="editUser.Role =='Agent'">
+            <label for="inputEmail3" class="label-std  control-label col-md-12 col-xs-12 p-0 b-600">Expertise</label>
+            <div class="col-md-12 col-xs-12 p-0">
+              <div class="col-md-6 col-xs-6 p-0">
+                <span class="pt-10">
+                  <label>Call</label>
+                </span>
+                <span class="text-right right-spacing">
+                  <div class="yesnoswitch">
+                    <input type="checkbox" name="yesnoswitch" class="yesnoswitch-checkbox" id="call"
+                      [(ngModel)]="editUser.Expertise_In_Call" formControlName="Expertise_In_Call">
+                    <label class="yesnoswitch-label" for="call">
+                      <span class="yesnoswitch-inner"></span>
+                      <span class="yesnoswitch-switch"></span>
+                    </label>
+                  </div>
+                </span>
+              </div>
+              <div class="col-md-6 col-xs-6 p-0">
+                <span class="pt-10">
+                  <label>Email</label>
+                </span>
+                <span class="text-right">
+                  <div class="yesnoswitch">
+                    <input type="checkbox" name="yesnoswitch" class="yesnoswitch-checkbox" id="email"
+                      [(ngModel)]="editUser.Expertise_In_Email" formControlName="Expertise_In_Email">
+                    <label class="yesnoswitch-label" for="email">
+                      <span class="yesnoswitch-inner"></span>
+                      <span class="yesnoswitch-switch"></span>
+                    </label>
+                  </div>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-12 col-xs-12 mt-10 p-0">
+              <div class="col-md-6 col-xs-6 p-0">
+                <span class="pt-10">
+                  <label>Fax</label>
+                </span>
+                <span class="text-right right-spacing">
+                  <div class="yesnoswitch">
+                    <input type="checkbox" name="yesnoswitch" class="yesnoswitch-checkbox" id="fax"
+                      [(ngModel)]="editUser.Expertise_In_Fax" formControlName="Expertise_In_Fax">
+                    <label class="yesnoswitch-label" for="fax">
+                      <span class="yesnoswitch-inner"></span>
+                      <span class="yesnoswitch-switch"></span>
+                    </label>
+                  </div>
+                </span>
+              </div>
+              <div class="col-md-6 col-xs-6 p-0">
+                <span class="pt-10">
+                  <label>Website</label>
+                </span>
+                <span class="text-right">
+                  <div class="yesnoswitch">
+                    <input type="checkbox" name="yesnoswitch" class="yesnoswitch-checkbox" id="website"
+                      [(ngModel)]="editUser.Expertise_In_Website" formControlName="Expertise_In_Website">
+                    <label class="yesnoswitch-label" for="website">
+                      <span class="yesnoswitch-inner"></span>
+                      <span class="yesnoswitch-switch"></span>
+                    </label>
+                  </div>
+                </span>
+              </div>
+              <label class="error  mt-0" *ngIf="addUser.get('Experties').hasError('required') && validated">Atleast one
+                of the expertise is required</label>
+            </div>
+          </div>
+          <div class="col-md-12 col-xs-12 mt-5">
+            <div class="col-md-12 col-xs-12 p-0">
+              <span class="col-md-6 col-xs-6 p-0">
+                <label>User State</label>
+              </span>
+              <div class="activeswitch">
+                <input type="checkbox" name="activeswitch" class="activeswitch-checkbox" id="activeswitch"
+                  [(ngModel)]="editUser.Is_Deactivated" formControlName="Is_Deactivated">
+                <label class="activeswitch-label" for="activeswitch">
+                  <span class="activeswitch-inner"></span>
+                  <span class="activeswitch-switch"></span>
+                </label>
+              </div>
+            </div>
+            <div class="col-md-12 col-xs-12 p-0 mt-5">
+              <span class="col-md-6 p-0">
+                <label>Account Lock</label>
+              </span>
+              <span class="col-md-6 p-0 text-right">
+                <div class="lockswitch">
+                  <input type="checkbox" name="lockswitch" class="lockswitch-checkbox" id="lockswitch"
+                    [(ngModel)]="editUser.Is_Locked" formControlName="Is_Locked">
+                  <label class="lockswitch-label" for="lockswitch">
+                    <span class="lockswitch-inner"></span>
+                    <span class="lockswitch-switch"></span>
+                  </label>
+                </div>
+              </span>
+            </div>
+            <div class="col-md-12 col-xs-12 p-0 mt-10">
+              <span class="col-md-6 col-xs-6 p-0">
+                <label>Terminate</label>
+              </span>
+              <span class="col-md-6 col-xs-6 p-0 text-right">
+                <div class="yesnoswitch">
+                  <input type="checkbox" name="yesnoswitch" class="yesnoswitch-checkbox" id="terminate"
+                    [(ngModel)]="editUser.Is_Terminated" formControlName="Is_Terminated">
+                  <label class="yesnoswitch-label" for="terminate">
+                    <span class="yesnoswitch-inner"></span>
+                    <span class="yesnoswitch-switch"></span>
+                  </label>
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-12 col-xs-12" *ngIf="editClient">
+            <div class="col-md-12 col-xs-12 p-0 pb-7"></div>
+            <div class="col-md-6 col-xs-6 p-0">
+              <label for="inputEmail3">Client</label>
+            </div>
+            <div class="col-md-6 col-xs-6 text-right p-0" >
+              <label class="cursor" title="Add Client" (click)="toggelPopup()">
+                <i class="fa fa-plus-square ft-22-50 mr-3 grey-text"></i>
+              </label>
+
+            </div>
+            <label class="error" *ngIf="addUser.get('Comma_Separated_Clients').hasError('required') && validated">
+              Atleast one client is required</label>
+            <label class="error"
+              *ngIf="addUser.get('Comma_Separated_Clients').hasError('cllientLimitExceed') && validated">
+              This user role can be mapped with only one client</label>
+            <div class="col-md-12 col-xs-12 error hide mt-0 mt-10 p-0">
+              Enter Client
+            </div>
+          </div>
+          <div class="col-md-12 col-xs-12">
+            <div class="col-md-12 col-xs-12 text-center border-t p-0">
+              <button type="submit" class="btn blue square-btn blue-hover btn-txt mr-10 mt-5 mb-5 w-51"
+                data-toggle="modal" data-target=".skip-ac" [disabled]="submitBtnDisable">Submit</button>
+              <button type="button" class="btn blue square-btn blue-hover btn-txt mt-5 mb-5 w-51"
+                (click)="clearForm()">Clear</button>
+            </div>
+          </div>
+
+          <!-- </form> -->
+        </div>
+      </div>
+<!-- Upload functionality added on  30-07-2019 starts-->
+      <div class="col-md-9">
+        <span class="form-group file-provider mt-10">
+          <div class="file-upload-wrapper" [attr.data-text]="Filename">
+            <input name="file-upload-field" #filedata type="file" accept=".xlsx" class="file-upload-field"
+              (change)="changeListener($event)">
+          </div>
+          <label class="error" *ngIf="validated && !fileSelected">Please select the file</label>
+          <!-- </form> -->
+        </span>
+        <span>
+      
+          <button type="button" (click)="FileUpload()" [disabled]="uploadBtnDisable"
+            class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-10" style="border: none;">
+            <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</button>
+        </span>
+      
+        <div class="p-0 mt-10" (click)="downloadTemplate()">
+          <button type="button" [disabled]="downloadTemplateDisable"
+            class="export-btn btn label grey lg-text label-info square-btn cursor mt-0  mr-10" style="border: none;">
+            <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
+        </div>
+      </div>
+      <!-- Upload functionality added on  30-07-2019 ends-->
+
+      <div class="col-md-9 col-xs-8 userlist-stickytable">
+        <div class="col-md-12 col-sm-12 p-0">
+          <div class="heading-panel sT-hight p-0">
+            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">User List</span>
+            <div class="right-most">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
+          </div>
+        </div>
+        <div class="col-md-12 col-sm-12 p-0">
+          <div class="table-responcive">
+            <div class="sticky-table sticky-ltr-cells border-0 table-hight">
+              <ag-grid-angular [enableColResize]="true" [enableSorting]="true" [enableFilter]="true" [pagination]="true"
+                [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
+                (cellClicked)='onCellClicked($event)' [suppressDragLeaveHidesColumns]="true"
+                [suppressColumnVirtualisation]="true" [rowSelection]="rowSelection" (firstDataRendered)="autoSizeAll()"
+                (gridReady)="onGridReady($event)">
+              </ag-grid-angular>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end midd content -->
+    </div>
+    <!-- End container-fliud -->
+
+    <!-- Add-client popup -->
+    <div *ngIf="show">
+      <div class="pop-bg">
+      </div>
+      <div class="pop-position">
+        <!-- <div class=" fade add-process in" tabindex="-1" role="dialog" > -->
+        <!-- <div class="modal-content modal-dialog modal-lg  modal-bottom client-add-popup lb-white ng-width1" role="document"
+        style="background: #fff;"> -->
+        <div class="col-md-12 grey p-0">
+          <span class="col-md-10 col-sm-10 p-0">
+            <div class="heading-panel">
+              <span class="text-sm text-ellipsis heading-txt flex">Add Client</span>
+            </div>
+          </span>
+          <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="closePopup()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="col-md-12 p-0 client-list-scroll">
+          <div class="col-md-12 p-0 mt-10">
+            <div class="col-md-4 mb-10" *ngFor="let j of client; let k = index;">
+              <label class="custom-control">
+                <input type="checkbox"  id="{{k}}" [checked]=" ( j.old == true )"
+                  (click)="changeCheckbox(k,$event)" formControlName="vals" />
+                <label for="{{k}}">{{j.Client_Name}}</label>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 text-left mb-10">
+          <div class="col-md-2 p-0">
+            <button type="button" class="btn blue square-btn blue-hover btn-txt mr-10" (click)="checkOk()">Ok</button>
+            <button type="button" class="btn blue square-btn blue-hover btn-txt" (click)="clearClient()">Clear</button>
+          </div>
+          <div class="col-md-10 p-0">
+            <span class="pull-left error  w-auto"
+              *ngIf="addUser.get('Comma_Separated_Clients').hasError('cllientLimitExceed') && validated">
+              This user role can be mapped with only one client
+            </span>
+            <span class="pull-left error  w-auto"
+              *ngIf="addUser.get('Comma_Separated_Clients').hasError('required') && validated">
+              Atleast one client is required
+            </span>
+
+            <span class="pull-left error  w-auto" *ngIf="canClose == false">
+              This user role can be mapped with only one client
+            </span>
+          </div>
+          <!-- </div>
+      </div> -->
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- fOOTER -->

@@ -1,0 +1,52 @@
+
+<app-header [title]="Title"></app-header>
+<div class="col-md-12 col-sm-12 col-sm-12 p-0">
+  <div class="col-md-12 col-sm-12 p-0">
+    <form [formGroup]="UnworkedForm" (ngSubmit)="ExportToExcel()" class="form-horizontal" novalidate>
+      <div class="sm-report text-center pv-10 mt-10">
+        <div class="col-md-12 p-0">
+          <div class="form-group">
+            <label class=" label-std control-label p-0 b-600 pl-0" for="">Client</label>
+            <!-- <div class="col-sm-7 p-0"> -->
+            <select (change)="ClientListOnChange($event)" formControlName="Client_Id" name="Client" #selectedelem
+              class="form-control" [(ngModel)]="ClientId">
+              <option [selected]="ClientList.length >1" value="" disabled>Select</option>
+              <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">{{c.Client_Name}}</option>
+            </select>
+            <div class="error" *ngIf="UnworkedForm.get('Client_Id').hasError('required') && DisplayError">
+              please select a client
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label-std control-label p-0 b-600 pl-0" for="card-number">Employee ID</label>
+            <!-- <div class="col-sm-7 p-0 text-right"> -->
+            <span class="col-md-10 p-0">
+              <input type="text" class="form-control col-md-4" autocomplete="off" name="card-number"
+                #EmployeesList="ngModel" id="card-number" (keydown)="BlockInput($event)" (keyup)="BlockInput($event)"
+                oncontextmenu="return false" (keypress)="BlockInput($event)" [ngModelOptions]="{standalone: true}"
+                [ngModel]="EmployeeString">
+              <div class="error" *ngIf="UnworkedForm.get('Employee_Ids').hasError('required') && DisplayError">
+                Please select employee
+              </div>
+            </span>
+            <span [ngClass]="DisableEmployeeSelect ? 'disabled' : ''"
+              class="col-md-2 btn grey square-btn  btn-txt  p-0 h-25" (click)="!DisableEmployeeSelect && OpenModal()"
+              style="padding: 0.5px 10px !important;">Select</span>
+          </div> 
+        </div>
+        <div class="col-md-12 p-0 mt-10 text-left">
+          <button type="submit" class="btn blue square-btn blue-hover btn-txt" [disabled]="disablesubmit">Export
+            To Excel</button>
+            &nbsp;
+ <!-- <input type="button" value="Download" (click)="GetUnworkedAccountReportData()" class="btn blue square-btn blue-hover btn-txt" [disabled]="disablesubmit" />  -->
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<app-employee-selector-modal *ngIf="ShowModal" [AllEmployees]="Employees" (SendSelectedEmp)="SetSelectedEmp($event)"
+  (CloseModal)="CloseModal($event)"></app-employee-selector-modal>
+
+  

@@ -1,0 +1,68 @@
+<div class="pop-bg">
+</div>
+
+<div class="pop-position">
+
+    <div class="col-md-12 p-0 grey">
+        <span class="col-md-10 col-sm-10 p-0">
+            <div class="heading-panel">
+                <span class="text-sm text-ellipsis heading-txt flex">Setting Template</span>
+            </div>
+        </span>
+        <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="closeModel()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </span>
+    </div>
+    <div class="col-md-12 p-0 mt-10">
+        <div class="col-md-12 col-sm-12 col-xs-12 mb-10">
+            <div *ngFor="let a of templatelist; let i = index" class="col-md-12 col-sm-12 col-xs-12 p-0">
+                <label class="w-100">{{a.type.split("_").join(" ") + ':*'}}</label>
+                <span class="form-group  mt-10">
+                    <form class="form">
+                        <div class="file-upload-wrapper inventory-provider" [attr.data-text]="a.uploadname">
+                            <input name="file-upload-field" (change)="OnChange($event,a.type,i);"
+                                onclick="this.value = null" type="file" accept=".pdf">
+                        </div>
+                    </form>
+                </span>
+                <span>
+                    <button [disabled]="a.uploadname == 'No File Chosen' || disableUpload" (click)="uploadAppealTemplate(a.type);"
+                        class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-0">
+                        Upload</button>
+                    <button [disabled]="a.uploadedurl == ''" (click)="viewUploadedFile(a.type)"
+                        class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-0">
+                        Download </button>
+
+                    <!-- data-toggle="modal"  data-target=".file-view"  -->
+                    <button [disabled]="a.delete == ''" (click)="deleteUploadedFile(a.type)"
+                        class=" btn pr-upl label grey lg-text label-info square-btn cursor mr-0 mt-0"> Delete</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div  id="view"  class="modal fade file-view in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="z-index: 100000;">
+    <div class="modal-dialog modal-top dark popup-width-globle" role="document">
+        <div class="modal-content white" style="width: 100%; height: 600px;">
+            <div class="col-md-12 p-0 grey">
+                <span class="col-md-10 col-sm-10 p-0">
+                    <div class="heading-panel">
+                        <span class="text-sm text-ellipsis heading-txt flex">{{viewLabel}}</span>
+                    </div>
+                </span>
+                <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" data-dismiss="modal">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </span>
+            </div>
+            <div class="col-md-12 p-0 mt-10">              
+              
+               <iframe src="https://www.antennahouse.com/XSLsample/pdf/sample-link_1.pdf" width="100%" height="600px"></iframe> 
+               <embed src="viewdata"   style="width: 100%;height: 600px"   type="application/pdf">
+               <iframe src="viewdata" width="100%" height="600px"></iframe>
+             
+            </div>
+        </div>
+    </div>
+</div> -->

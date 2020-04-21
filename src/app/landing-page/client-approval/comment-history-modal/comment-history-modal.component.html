@@ -1,0 +1,64 @@
+<div class="pop-bg"></div>
+<div class="pop-position">
+  <div class="col-md-12 p-0 grey">
+    <span class="col-md-10 col-sm-10 p-0">
+      <div class="heading-panel pl-10">
+        <span class="text-sm text-ellipsis heading-txt flex">History</span>
+      </div>
+    </span>
+    <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </span>
+  </div>
+
+  <div class="col-md-12 p-0">
+    <div class="sticky-table sticky-ltr-cells border-0 table-hight popup-table-height">
+      <table class="table">
+        <thead>
+          <tr class="sticky-header">
+            <th width="160">Comment Date</th>
+            <th width="120">Comment By</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Comments</th>
+            <th>Attachment Avaliable</th>
+            <th>Attachment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="HistoryData.length != 0; else noHistory">
+            <tr *ngFor="let h of HistoryData">
+              <td>{{h.Created_On}}</td>
+              <td>{{h.Created_By}}</td>
+              <td>{{h.Role}}</td>
+              <td>{{h.Status}}</td>
+              <td>{{h.Comments}}</td>
+              <td>{{h.AttachementAvailable}}</td>
+              <td>
+                <ng-container *ngIf="h.AttachementAvailable == 'Yes'; else noFile">
+                  <button type="button" [disabled]="DisableDownload" class="btn grey"
+                    (click)="GetReferenceFile(h.Reference_File_Name)">Download</button>
+                </ng-container>
+                <ng-template #noFile>
+                  -
+                </ng-template>
+
+
+              </td>
+            </tr>
+          </ng-container>
+          <ng-template #noHistory>
+            <tr>
+              <td colspan="7">
+                No Comments Found
+              </td>
+            </tr>
+          </ng-template>
+
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

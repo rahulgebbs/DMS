@@ -1,0 +1,51 @@
+.owl-dp {
+	width: 100%;
+	height: 25px;
+	border: 1px solid #2431403b;
+	padding: 5px 5px;
+}
+.label-s{
+	height: 11px;
+}
+.input-group.date .input-group-addon {
+	cursor: pointer;
+}
+.bell-group{
+	width: 30px;
+    height: 20px;
+}
+.bell-a{
+	cursor: pointer;
+    top: 2px;
+    height: 25px;
+    float: left;
+    position: relative;
+}
+
+.b-bell{
+	font-size: 10px;
+	min-width: 3px;
+    padding: 3px 5px;
+}
+.bell-f{
+    font-size: 25px;
+    vertical-align: middle;
+    color: #0078ae;
+}
+.bell-cir{
+	top: -27px;
+	right: 0px;
+}
+.bell-badge-back{
+	color: #000000;
+    background: #d2d1d1;
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+	.mb-45 {
+		margin-bottom: 46px;
+	}
+}
+
+.pb-10 {
+	padding-bottom: 10px !important;
+}

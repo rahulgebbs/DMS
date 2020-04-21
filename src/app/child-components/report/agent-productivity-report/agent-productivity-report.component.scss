@@ -1,0 +1,192 @@
+#title {
+  text-align: center;
+}
+
+#formContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .form-group {
+    // margin-right: 1rem;
+    padding: 1rem;
+
+    label {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+/* report section*/
+#reportSection {
+  margin-bottom: 2rem;
+
+  #noReport {
+    text-align: center;
+  }
+
+  table {
+    font-size: 1.2rem;
+  }
+}
+
+.newSection {
+  min-height: 50px;
+  width: 100%;
+  border: 1px solid;
+}
+
+tr {
+  color: black;
+  text-align: center;
+}
+
+tr:nth-child(odd) {
+  // background-color: #b7e4ff !important;
+}
+
+tr:nth-child(even) {
+  // background-color: #fff !important;
+}
+
+.paddingLeft-2 {
+  padding-left: 2.5rem;
+}
+
+.paddingLeft-3 {
+  padding-left: 4rem;
+}
+
+.paddingLeft-4 {
+  padding-left: 6.5rem;
+}
+
+.paddingLeft-5 {
+  padding-left: 7rem;
+}
+
+i {
+  float: left;
+  cursor: pointer;
+  padding: 0.2rem 0.2rem 0 0.2rem;
+}
+
+.tdItem {
+  float: left;
+}
+
+.noData {
+  h3 {
+    margin: 0 !important;
+  }
+
+  td {
+    text-align: center;
+    // width: 150%;
+  }
+}
+
+#tableContainer {
+  // max-height: 425px !important;
+  max-height: 70vh !important;
+  font: 13px "open sans";
+
+  color: #333333;
+  overflow-y: auto;
+}
+
+th,
+tr {
+  font: 13px "open sans";
+  font-weight: 700;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background: #666;
+  color: #fff;
+  font-size: 1.1rem;
+  // padding: 6px 10px;
+}
+
+th,
+td {
+
+  // padding: 0; */
+  min-width: 60px;
+  text-align: center !important;
+  /* align-items: center; */
+  /* display: grid; */
+  max-width: 400px;
+  padding: 0 1rem;
+  /* flex-direction: column; */
+  /* float: left; */
+  text-transform: capitalize !important;
+  border: none !important;
+}
+
+.refreshIcon {
+  text-align: center;
+  float: right;
+}
+
+/* color codes*/
+.clientColor {
+  td {
+    color: #34495e !important; // black
+  }
+}
+
+.managerColor {
+  td {
+    color: #0652DD !important; //blue
+  }
+}
+
+.supervisorColor {
+  td {
+    color: #ED4C67 !important; //red
+  }
+}
+
+.agentColor {
+  td {
+    // color: #009432 !important; // green
+    color: #993333 !important; // dark red
+  }
+}
+
+.fetchingMsg {
+  text-align: center;
+
+  i {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.monthFilter {
+  min-width: 202px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #2431403b;
+  min-height: 25px;
+  margin-bottom: 0rem;
+  text-align: right;
+  padding-left: 1rem;
+
+  span {
+    float: right;
+    text-align: right;
+    position: absolute;
+    right: 5%;
+  }
+}
+
+/*
+  the ability to concentrate single-mindedly on your
+  most important task, to do it well and to finish it completely, is the
+  key to great success, achievement, respect, status and happiness in
+  life
+  */

@@ -1,0 +1,299 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position">
+  <div class="col-md-12 p-0 grey">
+    <span class="col-md-10 col-sm-10 p-0">
+      <div class="heading-panel pl-10">
+        <span class="text-sm text-ellipsis heading-txt flex">Insurance Master
+        </span>
+      </div>
+    </span>
+    <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div class="col-md-12 p-0 mt-10">
+    <div class="col-md-4 p-0 border-r pt-15">
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Practice Name</span>
+          <span for="inputEmail3" class="control-label label-s t-color col-md-6">{{SelectedGlobal.Practice_Name}}</span>
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Payer Name</span>
+          <span for="inputEmail3" class="control-label label-s t-color col-md-6">{{SelectedGlobal.Payer_Name}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Timely Filing Limits in Days</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Timely_Filing_Limits_in_Days}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Contact Number</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Contact_Number}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Website</span>
+          <span for="inputEmail3" class="control-label label-s t-color col-md-6">{{SelectedGlobal.Website}}</span>
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Start Time</span>
+          <span for="inputEmail3" class="control-label label-s t-color col-md-6">{{SelectedGlobal.Start_Time}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Claim Mailing Address</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Claim_Mailing_Address}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Appeal Mailing Address</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Appeal_Mailing_Address}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">End Time</span>
+          <span for="inputEmail3" class="control-label label-s t-color col-md-6">{{SelectedGlobal.End_Time}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Appeal Filing Limit In Days</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Appeal_Filing_Limit_In_Days}}</span>
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Insurance Name for Mail</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Insurance_Name_for_Mail}}</span>
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Is IVR</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Is_IVR}}</span>
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">CSR Fax</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.CSR_Fax}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 p-0 border-r pt-15">
+
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Financial Class</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Financial_Class}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Appeal Mailing Address 1</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Appeal_Mailing_Address1}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Appeal Mailing Address2</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Appeal_Mailing_Address2}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Appeal Mailing City</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Appeal_Mailing_City}}</span>
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Appeal Mailing State</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Appeal_Mailing_State}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Appeal Mailing Zipcode</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Appeal_Mailing_Zipcode}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Claim Mailing Address1</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Claim_Mailing_Address1}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Claim Mailing Address2</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Claim_Mailing_Address2}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Claim Mailing City</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Claim_Mailing_City}}</span>
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Claim Mailing State</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Claim_Mailing_State}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+          <div class="form-group">
+            <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Insurance Code</span>
+            <span for="inputEmail3"
+              class="control-label label-s t-color col-md-6">{{SelectedGlobal.Insurance_Code}}</span>
+  
+          </div>
+        </div>
+        <div class="col-md-12 mb-10">
+            <div class="form-group">
+              <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Is Voice</span>
+              <span for="inputEmail3"
+                class="control-label label-s t-color col-md-6">{{SelectedGlobal.Is_Voice}}</span>
+    
+            </div>
+          </div>
+          <div class="col-md-12 mb-10">
+              <div class="form-group">
+                <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Attention To</span>
+                <span for="inputEmail3"
+                  class="control-label label-s t-color col-md-6">{{SelectedGlobal.Attention_To}}</span>
+      
+              </div>
+            </div>
+    </div>
+    <div class="col-md-4 p-0 border-r pt-15">
+
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Claim Mailing Zipcode</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Claim_Mailing_Zipcode}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Fax No</span>
+          <span for="inputEmail3" class="control-label label-s t-color col-md-6">{{SelectedGlobal.Fax_No}}</span>
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Insurance Name Gebbs</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Insurance_Name_Gebbs}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Appeal Mailing FaxNo</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Appeal_Mailing_FaxNo}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Claim Mailing FaxNo</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Claim_Mailing_FaxNo}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Appeal Mailing ContactNo</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Appeal_Mailing_ContactNo}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Claim Mailing ContactNo</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Claim_Mailing_ContactNo}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+        <div class="form-group">
+          <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Insurance Name for Appeal</span>
+          <span for="inputEmail3"
+            class="control-label label-s t-color col-md-6">{{SelectedGlobal.Insurance_Name_for_Appeal}}</span>
+
+        </div>
+      </div>
+      <div class="col-md-12 mb-10">
+          <div class="form-group">
+            <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Insurance State</span>
+            <span for="inputEmail3"
+              class="control-label label-s t-color col-md-6">{{SelectedGlobal.Insurance_State}}</span>
+  
+          </div>
+        </div>
+        <div class="col-md-12 mb-10">
+            <div class="form-group">
+              <span for="inputEmail3" class="label-std control-label p-0 b-600 col-md-6">Email Id</span>
+              <span for="inputEmail3"
+                class="control-label label-s t-color col-md-6">{{SelectedGlobal.Email_Id}}</span>
+    
+            </div>
+          </div>
+
+    </div>
+  </div>
+</div>

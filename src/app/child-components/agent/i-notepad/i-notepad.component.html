@@ -1,0 +1,28 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position">
+  <div class="fade inotepad in" tabindex="-1">
+    <div class="" role="document">
+      <div class="body">
+        <div class=" inote-popup" style="width: 100%;">
+          <div class="col-md-12 border-b p-0 grey">
+            <span class="col-md-10 col-sm-10 p-0">
+              <div class="heading-panel pl-10">
+                <span class="text-sm text-ellipsis heading-txt flex">iNotepad</span>
+              </div>
+            </span>
+            <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="closeModel()">
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </span>
+          </div>
+          <div class="col-md-12 col-sm-12 p-0">
+            <textarea class="form-control textarea-resize" [(ngModel)]="notevalue" rows="8" placeholder="Type note here..."></textarea>
+          </div>
+          <div class="col-md-12 mt-10 p-0 text-center mb-10">
+            <button class="btn btn-txt blue square-btn blue-hover" (click)="clear()">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

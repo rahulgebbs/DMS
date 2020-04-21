@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css"; */
+@import "../node_modules/ng-pick-datetime/assets/style/picker.min.css";
+.owl-dt-container {
+  font-size: 1.5rem !important;
+}
+
+.disable-row {
+  background: #cfcfcf !important;
+  color: #000 !important;
+  cursor: not-allowed !important;
+}
+
+.highLight-row {
+  background-color: #ebf0fd !important;
+  color: #000 !important;
+  cursor: not-allowed !important;
+}
+
+.ag-row-hover {
+  /* background: #378eca !important; */
+  background-color: #8fcfff !important;
+}
+
+#Password {
+  text-security: disc;
+  -webkit-text-security: disc;
+  -mox-text-security: disc;
+  font-family: "text-security-disc";
+}
+
+html{
+  overflow-x: hidden !important;
+}

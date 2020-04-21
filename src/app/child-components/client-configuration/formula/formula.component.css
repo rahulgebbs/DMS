@@ -1,0 +1,66 @@
+.grid-w{
+    height: 100%;
+}
+
+.pop-bg{
+    background: #000000b8;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    opacity: 1;
+    padding-right: 6px;
+    overflow-x: hidden;
+    z-index: 1000;
+    overflow-y: inherit;
+    /* z-index: 1050; */
+}
+.pop-position{
+    height: auto;
+    background: white;
+    margin: auto;
+    width: 28%;
+    position: fixed;
+    /* -webkit-transform: translate(0, 50%); */
+    /* transform: translate(0, 120%); */
+    z-index: 10000000;
+    left: 0px;
+    right: 0;
+    /* bottom: 42px; */
+    top: calc(100% - 75%);
+}
+.grey{
+    background: #ddd;
+    color: #000;
+}
+.p-0 {
+    padding: 0px !important;
+}
+.heading-panel {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: .5em 1em;
+}
+.heading-txt {
+    font-size: 18px;
+    font-weight: 600;
+    height: 20px;
+}
+.pv-10 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+.pt-7{
+    padding-top: 7px;
+}

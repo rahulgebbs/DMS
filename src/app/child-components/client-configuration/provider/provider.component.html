@@ -1,0 +1,66 @@
+<div role="tabpanel" class="tab-pane nav-tab-content" id="step-4">
+  <div class="col-md-12 p-0">
+    <div class="provider-process">
+      <div class="col-md-9">
+        <span class="form-group file-provider mt-10">
+          <div class="file-upload-wrapper" [attr.data-text]="Filename">
+            <input name="file-upload-field" #filedata type="file" (onclick)="filedata.value = null" accept=".xlsx"
+              class="file-upload-field" (change)="changeListener($event)">
+          </div>
+          <label class="error mt-0" *ngIf="!fileSelected">Please select the file</label>
+          <!-- </form> -->
+        </span>
+        <span (click)="uploadFile()" aria-disabled="btnDisable">
+          <button type="button" [disabled]="uploadBtnDisable"
+            class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-10" style="border: none;">
+            <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</button>
+          <!-- <label class="mt-10 pr-upl label grey lg-text label-info square-btn cursor mr-10" >
+            <i class="fa fa-upload mr-5 lg-text" aria-hidden="true" aria-disabled="btnDisable"></i>Upload</label> -->
+        </span>
+        <div class="p-0 mt-10" (click)="downloadTemplate()">
+          <button [disabled]="downloadTemplateDisable" style="border: none;"
+            class="export-btn btn label grey lg-text label-info square-btn cursor mt-0  mr-10">
+            <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
+        </div>
+        <span (click)="exporttoExcel()">
+          <button [disabled]="exportDisable" style="border: none;"
+            class="export-btn btn label grey lg-text label-info square-btn cursor mr-10 mtb-10">
+            <i class="fa fa-file-excel-o mr-5" aria-hidden="true"></i>Export To Excel</button>
+        </span>
+
+      </div>
+      <div class="col-md-3 p-0">
+        <span class="pull-right pt-8  w-auto">
+          <b>Client Name :-
+            {{ClientData.Client_Name}}</b>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 p-0">
+    <div class="right-most mr-5">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
+    <div class="col-md-12 p-0">
+      <div class="provider-sticky-tbl sticky-table sticky-ltr-cells border-0 table-hight">
+        <ag-grid-angular [enableSorting]="true" [enableFilter]="true" [pagination]="true" [enableColResize]="true"
+          [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
+          [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true" [rowSelection]="rowSelection"
+          (gridReady)="onGridReady($event)" [suppressColumnVirtualisation]="true" (rowClicked)="onRowClicked($event)"
+          (cellClicked)='onCellClicked($event)'>
+        </ag-grid-angular>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12 text-right p-0">
+    <button id="step-4-next" class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5"
+      (click)="nevigate()">Next</button>
+
+  </div>
+</div>
+
+<app-provider-signature-modal [SelectedProvider]="editProvider
+" (Toggle)="ToggleModal($event)" *ngIf="showPopup"></app-provider-signature-modal>
+<app-provider-model *ngIf="showEditPopup" [SelectedProvider]="SelectedProvider"
+  (getProvider)="getProviderMaster($event)" [EditPopup]="showEditPopup" (Toggle)="closeEdit($event)">
+</app-provider-model>

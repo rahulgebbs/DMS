@@ -1,0 +1,29 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position">
+  <div class="col-md-12 p-0 grey">
+    <span class="col-md-10 col-sm-10 p-0">
+      <div class="heading-panel pl-10">
+        <span class="text-sm text-ellipsis heading-txt flex">Delete Client User Mapping
+        </span>
+      </div>
+    </span>
+    <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="closeModal(false)">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div id="editFormContainer">
+      <div class="container">
+         <h3>Are you sure you want to Inactive this record ? </h3>
+      </div>
+  </div>
+  <div class="col-md-12 p-0" id="footerSection">
+    <div class="row p-0">
+      <button class="btn btn-danger " (click)="closeModal(false)">Cancel</button>
+      <button class="btn btn-primary" (click)="submit()" [disabled]="httpStatus==true">Submit
+        <i *ngIf="httpStatus==true" class="fa fa-circle-o-notch fa-spin" style="font-size:1.5rem"></i>
+      </button>
+    </div>
+  </div>
+
+</div>

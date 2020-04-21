@@ -1,0 +1,294 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position gloabal-insurance-pop">
+  <div class="col-md-12 p-0 grey">
+    <span class="col-md-10 col-sm-10 p-0">
+      <div class="heading-panel pl-10">
+        <span class="text-sm text-ellipsis heading-txt flex">Global Insurance
+        </span>
+      </div>
+    </span>
+    <span *ngIf="!DisableSubmit" class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div class="col-md-12 p-0">
+    <form #f="ngForm" (ngSubmit)="f.form.valid && UpdateInsurance()" novalidate>
+      <div class="global-ins-pop-field col-md-12 p-0">
+      <div class="col-md-12 mt-5">
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Practice Name</label>
+            <input maxlength="100" type="text" class="form-control" name="Practice_Name" [(ngModel)]="SelectedInsurance.Practice_Name">
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Payer Name</label>
+            <input type="text" class="form-control" #Payer_Name="ngModel" required maxlength="100" name="Payer_Name"
+              [(ngModel)]="SelectedInsurance.Payer_Name">
+            <div class="error" *ngIf="f.submitted && Payer_Name.hasError('required') ">
+              Payer Name is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Timely Filing Limits in Days</label>
+            <input class="form-control" #Timely_Filing_Limit_In_Days="ngModel" required pattern="^(?:36[0-5]|3[0-5]\d|[12]\d{2}|[1-9]\d?)$"
+              maxlength="3" name="Timely_Filing_Limits_in_Days" type="text" [(ngModel)]="SelectedInsurance.Timely_Filing_Limits_in_Days">
+            <div class="error" *ngIf="Timely_Filing_Limit_In_Days.hasError('pattern')">
+              Numbers only upto 365
+            </div>
+            <div class="error" *ngIf="Timely_Filing_Limit_In_Days.hasError('required')">
+              required
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 p-0 pl-10">
+          <div class="form-group mr-0">
+            <label class="label-std control-label p-0 b-600">Contact No</label>
+            <input maxlength="50" type="text" class="form-control" name="Contact_No" [(ngModel)]="SelectedInsurance.Contact_Number">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 ">
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Website</label>
+            <input maxlength="100" type="text" class="form-control" name="Website" [(ngModel)]="SelectedInsurance.Website">
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Start Time</label>
+            <input class="form-control" pattern="^((([0]?[1-9]|1[0-2])(:|\.)[0-5][0-9]((:|\.)[0-5][0-9])?( )?)|(([0]?[0-9]|1[0-9]|2[0-3])(:|\.)[0-5][0-9]((:|\.)[0-5][0-9])?))$"
+              maxlength="8" type="text" #Start_Time="ngModel" [(ngModel)]="SelectedInsurance.Start_Time" name="Start_Time">
+            <div class="error" *ngIf="Start_Time.hasError('pattern')">
+              Time format: HH:mm:ss
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Claim Mailing Address</label>
+            <input type="text" maxlength="200" class="form-control" name="Claim_Mailing_Address" [(ngModel)]="SelectedInsurance.Claim_Mailing_Address">
+          </div>
+        </div>
+        <div class="col-md-3 p-0 pl-10">
+          <div class="form-group mr-0">
+            <label class="label-std control-label p-0 b-600">Appeal Mailing Address</label>
+            <input type="text" maxlength="200" class="form-control" name="Appeal_Mailing_Address" [(ngModel)]="SelectedInsurance.Appeal_Mailing_Address">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">End Time</label>
+            <input class="form-control" pattern="^((([0]?[1-9]|1[0-2])(:|\.)[0-5][0-9]((:|\.)[0-5][0-9])?( )?)|(([0]?[0-9]|1[0-9]|2[0-3])(:|\.)[0-5][0-9]((:|\.)[0-5][0-9])?))$"
+              maxlength="8" type="text" #End_Time="ngModel" [(ngModel)]="SelectedInsurance.End_Time" name="End_Time">
+            <div class="error" *ngIf="End_Time.hasError('pattern')">
+              Time format: HH:mm:ss
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Appeal Filing Limits in Days</label>
+            <input class="form-control" #Appeal_Filing_Limit_In_Days="ngModel" required maxlength="3" pattern="^(?:36[0-5]|3[0-5]\d|[12]\d{2}|[1-9]\d?)$"
+              type="text" [(ngModel)]="SelectedInsurance.Appeal_Filing_Limit_In_Days" name="Appeal_Filing_Limit_In_Days">
+            <div class="error" *ngIf="Appeal_Filing_Limit_In_Days.hasError('pattern')">
+              Numbers only upto 365
+            </div>
+            <div class="error" *ngIf="Appeal_Filing_Limit_In_Days.hasError('required')">
+              required
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Financial Class</label>
+            <input type="text" maxlength="200" class="form-control" name="Financial_Class" [(ngModel)]="SelectedInsurance.Financial_Class">
+          </div>
+        </div>
+        <div class="col-md-3 p-0 pl-10">
+          <div class="form-group mr-0">
+            <label class="label-std control-label p-0 b-600">Appeal Mailing Address 1</label>
+            <input type="text" maxlength="200" class="form-control" name="Appeal_Mailing_Address1" [(ngModel)]="SelectedInsurance.Appeal_Mailing_Address1">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Appeal Mailing Address 2</label>
+            <input type="text" maxlength="200" class="form-control" name="Appeal_Mailing_Address2" [(ngModel)]="SelectedInsurance.Appeal_Mailing_Address2">
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Appeal Mailing City</label>
+            <input type="text" maxlength="50" class="form-control" name="Appeal_Mailing_City" [(ngModel)]="SelectedInsurance.Appeal_Mailing_City">
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Appeal Mailing State</label>
+            <input type="text" maxlength="50" class="form-control" name="Appeal_Mailing_State" [(ngModel)]="SelectedInsurance.Appeal_Mailing_State">
+          </div>
+        </div>
+        <div class="col-md-3 p-0 pl-10">
+          <div class="form-group mr-0">
+            <label class="label-std control-label p-0 b-600">Appeal Mailing Zipcode</label>
+            <input type="text" maxlength="50" class="form-control" name="Appeal_Mailing_Zipcode" [(ngModel)]="SelectedInsurance.Appeal_Mailing_Zipcode">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Claim Mailing Address 1</label>
+            <input type="text" class="form-control" maxlength="200" name="Claim_Mailing_Address1" [(ngModel)]="SelectedInsurance.Claim_Mailing_Address1">
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Claim Mailing Address 2</label>
+            <input type="text" class="form-control" maxlength="200" name="Claim_Mailing_Address2" [(ngModel)]="SelectedInsurance.Claim_Mailing_Address2">
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Claim Mailing City</label>
+            <input type="text" class="form-control" maxlength="50" name="Claim_Mailing_City" [(ngModel)]="SelectedInsurance.Claim_Mailing_City">
+          </div>
+        </div>
+        <div class="col-md-3 p-0 pl-10">
+          <div class="form-group mr-0">
+            <label class="label-std control-label p-0 b-600">Claim Mailing State</label>
+            <input type="text" class="form-control" maxlength="50" name="Claim_Mailing_State" [(ngModel)]="SelectedInsurance.Claim_Mailing_State">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 ">
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Claim Mailing Zipcode</label>
+            <input type="text" class="form-control" maxlength="50" name="Claim_Mailing_Zipcode" [(ngModel)]="SelectedInsurance.Claim_Mailing_Zipcode">
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Fax No</label>
+            <input type="text" class="form-control" maxlength="50" name="Fax_No" [(ngModel)]="SelectedInsurance.Fax_No">
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Insurance Name Gebbs</label>
+            <input type="text" class="form-control" maxlength="100" name="Insurance_Name_Gebbs" [(ngModel)]="SelectedInsurance.Insurance_Name_Gebbs">
+          </div>
+        </div>
+        <div class="col-md-3 p-0 pl-10">
+          <div class="form-group mr-0">
+            <label class="label-std control-label p-0 b-600">Appeal Mailing FaxNo</label>
+            <input type="text" class="form-control" maxlength="20" name="Appeal_Mailing_FaxNo" [(ngModel)]="SelectedInsurance.Appeal_Mailing_FaxNo">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Claim Mailing FaxNo</label>
+            <input type="text" class="form-control" maxlength="20" name="Claim_Mailing_FaxNo" [(ngModel)]="SelectedInsurance.Claim_Mailing_FaxNo">
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Appeal Mailing Contact No</label>
+            <input type="text" class="form-control" maxlength="50" name="Appeal_Mailing_Contact_No" [(ngModel)]="SelectedInsurance.Appeal_Mailing_ContactNo">
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Claim Mailing Contact No</label>
+            <input type="text" class="form-control" maxlength="50" name="Claim_Mailing_Contact_No" [(ngModel)]="SelectedInsurance.Claim_Mailing_ContactNo">
+          </div>
+        </div>
+        <div class="col-md-3 p-0 pl-10">
+          <div class="form-group mr-0">
+            <label class="label-std control-label p-0 b-600">Insurance Name for Appeal</label>
+            <input type="text" class="form-control" maxlength="100" name="Insurance_Name_for_Appeal" [(ngModel)]="SelectedInsurance.Insurance_Name_for_Appeal">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Insurance Name for Mail</label>
+            <input type="text" class="form-control" maxlength="100" name="Insurance_Name_for_Mail" [(ngModel)]="SelectedInsurance.Insurance_Name_for_Mail">
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Insurance Code</label>
+            <input type="text" class="form-control" maxlength="50" name="Insurance_Code" [(ngModel)]="SelectedInsurance.Insurance_Code">
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Insurance State</label>
+            <input type="text" class="form-control" maxlength="50" name="Insurance_State" [(ngModel)]="SelectedInsurance.Insurance_State">
+          </div>
+        </div>
+        <div class="col-md-3 p-0 pl-10">
+          <div class="form-group mr-0">
+            <label class="label-std control-label p-0 b-600">Is IVR</label>
+            <select class="form-control" type="text" [(ngModel)]="SelectedInsurance.Is_IVR" name="Is_IVR">
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Is Voice</label>
+            <select class="form-control" name="Is_Voice" type="text" [(ngModel)]="SelectedInsurance.Is_Voice">
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">Email Id</label>
+            <input type="text" class="form-control" maxlength="100" name="Email_Id" [(ngModel)]="SelectedInsurance.Email_Id">
+          </div>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group ml-0">
+            <label class="label-std control-label p-0 b-600">CSR Fax</label>
+            <input type="text" class="form-control" maxlength="50" name="CSR_Fax" [(ngModel)]="SelectedInsurance.CSR_Fax">
+          </div>
+        </div>
+        <div class="col-md-3 p-0 pl-10">
+          <div class="form-group mr-0">
+            <label class="label-std control-label p-0 b-600">Attention To</label>
+            <input type="text" class="form-control" maxlength="100" name="Attention_To" [(ngModel)]="SelectedInsurance.Attention_To">
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="col-md-12 mb-10 text-left mt-10">
+        <button [disabled]="DisableSubmit" class="btn blue square-btn blue-hover btn-txt">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div>
+
+  <div class="pop-bg">
+  </div>
+  <div class="pop-position">
+    <div class="modal fade readview-count-popup in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+      style="display: block;">
+      <div class="modal-dialog modal-sm modal-bottom popup-width white count-list-popup-b" role="document">
+        <div class="modal-content white mb-0 pb-0" style="width:100%">
+          <div class="col-md-12 p-0 grey">
+            <span class="col-md-10 col-sm-10 p-0">
+              <div class="heading-panel sT-hight pl-10">
+                <span class="text-sm text-ellipsis heading-txt flex">Count List</span>
+              </div>
+            </span>
+            <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="toggleModel()">
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </span>
+          </div>
+          <div class="col-md-12 col-sm-12 col-xs-12 mt-5 mb-5 p-0">
+            <label class="export-btn label blue btn-text label-info square-btn cursor mt-0 pull-right mr-5" (click)="ExportToExcel()">
+              <i class="fa fa-file-excel-o mr-5" aria-hidden="true"></i>Export To Excel</label>
+          </div>
+          <div class="col-md-12 p-0">
+
+            <div class="sticky-table sticky-ltr-cells popup-table-height">
+              <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [enableFilter]="true" [pagination]="true"
+                [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
+                [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true"
+                [rowSelection]="rowSelection" (gridReady)="onGridReady($event)" [suppressColumnVirtualisation]="true"
+               ></ag-grid-angular>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

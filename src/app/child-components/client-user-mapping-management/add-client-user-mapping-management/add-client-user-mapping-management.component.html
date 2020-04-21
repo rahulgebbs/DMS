@@ -1,0 +1,87 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position" id="addUserModal">
+  <div class="col-md-12 p-0 grey">
+    <span class="col-md-10 col-sm-10 p-0">
+      <div class="heading-panel pl-10">
+        <span class="text-sm text-ellipsis heading-txt flex">Add Client User Mapping
+        </span>
+      </div>
+    </span>
+    <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="closeModal()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div id="addFormContainer">
+    <div class="container" style="padding-top: 1rem;">
+      <div class="">
+
+        <ng-container *ngFor="let field of fieldArray; let i = index">
+          <div [id]="field.key" class="col-md-6 form-group" *ngIf="field.type=='question'">
+
+            <label>{{field.label || "N/A"}} : </label>
+            <select class="form-control" data-live-search="true" [(ngModel)]="field.value"
+              (change)="validateQuestion(field)">
+              <option *ngFor="let question of questionList" value={{question.Security_Question}}>
+                {{question.Security_Question}} </option>
+            </select>
+            <span class="text-danger"
+              *ngIf="field.required==true && submitted==true && (field.value==null || field.value.length==0)">
+              {{field.label}} is required
+            </span>
+            <span class="text-danger" *ngIf="field.required==true && field.duplicate==true">
+              {{field.label}} is Duplicate, Please select another
+            </span>
+
+          </div>
+
+          <div [id]="field.key" class="col-md-6 form-group" *ngIf="field.type=='Text'"
+            [ngClass]="{'text-danger' : (field.required==true && submitted==true && (field.value==null || field.value.length==0)) ? true:false}">
+            <label>{{field.label || "N/A"}} <span *ngIf="field.required==true" style="color: red">*</span></label>
+            <input [disabled]="field.editable==false" [ngClass]="{'disableInput':field.required==false ? true:false}"
+              type="text" [(ngModel)]="field.value" class="form-control" (blur)="checkOriginalECN(field)">
+            <span class="text-danger"
+              *ngIf="field.required==true && submitted==true && (field.value==null || field.value.length==0)">
+              {{field.label}} is required
+            </span>
+          </div>
+
+          <div [id]="field.key" class="col-md-6 form-group" *ngIf="field.type=='Number'"
+            [ngClass]="{'text-danger' : (field.required==true && submitted==true && (field.value==null || field.value.length==0)) ? true:false}">
+            <label>{{field.label || "N/A"}} <span *ngIf="field.required==true" style="color: red">*</span></label>
+            <input [disabled]="field.editable==false" [ngClass]="{'disableInput':field.required==false ? true:false}"
+              type="number" [(ngModel)]="field.value" class="form-control" (blur)="getECNInfo(field)">
+            <span class="text-danger"
+              *ngIf="field.required==true && submitted==true && (field.value==null || field.value.length==0)">
+              {{field.label}} is required
+            </span>
+          </div>
+
+          <div [id]="field.key" class="col-md-6 form-group" *ngIf="field.type=='Drop Down'"
+            [ngClass]="{'text-danger' : (field.required==true && submitted==true && (field.value==null || field.value.length==0)) ? true:false}">
+            <label>{{field.label || "N/A"}}
+              <span *ngIf="field.required==true" style="color: red">*</span>
+            </label>
+            <select name="" id="" [(ngModel)]="field.value" class="form-control">
+              <option value="">Please Select</option>
+              <option *ngFor="let item of field.options" [value]="item">{{item}}</option>
+            </select>
+            <span class="text-danger"
+              *ngIf="field.required==true && submitted==true && (field.value==null || field.value.length==0)">
+              {{field.label}} is required
+            </span>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 p-0" id="footerSection">
+    <div class="row p-0">
+      <button class="btn btn-danger " (click)="closeModal()" [disabled]="httpStatus==true">Cancel</button>
+      <button class="btn btn-primary" (click)="submit()" [disabled]="httpStatus==true">Submit
+        <i *ngIf="httpStatus==true" class="fa fa-circle-o-notch fa-spin" style="font-size:1.5rem"></i>
+      </button>
+    </div>
+  </div>
+
+</div>

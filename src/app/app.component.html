@@ -1,0 +1,5 @@
+<router-outlet (activate)="ChangeRouteName($event)"></router-outlet>
+<app-menu (Toggle)="ToggleMenu($event)" [MenuName]="MenuName" [DisplayMenu]="DisplayMenu" *ngIf="ShowElement && DisplayMenu"></app-menu>
+<app-footer [DisplayMenu]="DisplayMenu" (Toggle)="ToggleMenuFromFooter($event)" *ngIf="ShowElement"></app-footer>
+
+<app-notification></app-notification>

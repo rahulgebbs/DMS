@@ -1,0 +1,22 @@
+/*================================================================================================================================
+                                                 redirect page of css                                                  
+==================================================================================================================================*/
+.redirect-pge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin: 0 auto;
+  height: 84.4vh;
+}
+.redirect-midd {
+  max-width: 50%;
+  text-align: center;
+}
+.redirect-midd h4 {
+  font-weight: bold;
+  font-size: 16px;
+  color: #666;
+}
+
+/*end css*/

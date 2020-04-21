@@ -1,0 +1,624 @@
+<div class="modal left fadeInUp bg-color2" (click)="CloseMenu()" style="display: block;bottom:42px" id="leftmenu2">
+
+
+</div>
+<div [@fadeInOut] class="model-menu bg-color" style="display: block;bottom: 42px;">
+  <div class="model-m-body" style="margin-top: 50px;">
+    <aside class="sidebar2">
+
+      <div class="col-md-12 p-0">
+        <div class="col-md-4 blue-seprator1">
+          <img src="../../../assets/images/iAR.png" class="img-responsive">
+        </div>
+        <div class="col-md-8">
+          <div class="middle-align1">
+            <div class="col-md-12 p-0">
+              <span class="u-name">{{UserData.Full_Name}}</span>
+            </div>
+            <div class="col-md-12 p-0">
+              <span class="u-type">{{UserData.Role}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 p-0 mt-10">
+        <div class="m-leftsidebar bdr-t pt-0" style="margin-top: 28%;">
+
+          <div class="menu">
+            <div *ngIf="UserData.Role!='Client User' && UserData.Role!='Client Supervisor'"
+              class="panel-group menu-small" id="accordionMenu" role="tablist" aria-multiselectable="true">
+
+              <div *ngIf="checkMenu('user-menu-mapping')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingClientUserMappingManagement">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('user-menu-mapping')"
+                      [ngClass]="[MenuName == '/user-menu-mapping' ? 'menu-active1': '' ]">
+                      User Menu Mapping
+                    </a>
+                  </h4>
+                </div>
+              </div>
+              <div *ngIf="checkMenu('client-user-mapping-management')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingClientUserMappingManagement">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('client-user-mapping-management')"
+                      [ngClass]="[MenuName == '/client-user-mapping-management' ? 'menu-active1': '' ]">
+                      Client User Mapping Management
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+              <div *ngIf="checkMenu('productivity-report')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingProductivity">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('productivity-report')"
+                      [ngClass]="[MenuName == '/productivity-report' ? 'menu-active1': '' ]">
+                      Productivity Report
+                    </a>
+                  </h4>
+                </div>
+              </div>
+              <div *ngIf="checkMenu('agent-productivity-report')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingAgentProductivity">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('agent-productivity-report')"
+                      [ngClass]="[MenuName == '/agent-productivity-report' ? 'menu-active1': '' ]">
+                      Agent Productivity Report
+                    </a>
+                  </h4>
+                </div>
+              </div>
+              <div *ngIf="checkMenu('client-configuration')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('client-configuration')"
+                      [ngClass]="[MenuName == '/client-configuration' ? 'menu-active1': '' ]">
+                      Client Configuration
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+              <div *ngIf="checkMenu('citra-employee-mapping')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('citra-employee-mapping')"
+                      [ngClass]="[MenuName == '/citra-employee-mapping' ? 'menu-active1': '' ]">
+                      Citra Employee Mapping
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+              <div *ngIf="checkMenu('user-management')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingtwo">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('user-management')"
+                      [ngClass]="[MenuName == '/user-management' ? 'menu-active1': '']">
+                      User Management
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+
+
+              <div *ngIf="checkMenu('global-insurance') || checkMenu('global-mapping')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingFour">
+                  <h4 class="acc-title">
+                    <a [ngClass]="[MenuName == '/global-insurance' || MenuName == '/global-insurance' ? '' : 'collapsed']"
+                      role="button" data-toggle="collapse" data-parent="#accordionMenu" aria-controls="collapseOne"
+                      href="#collapseOne"
+                      [attr.aria-expanded]="[MenuName == '/global-insurance' || MenuName == '/global-mapping' ? 'true' : 'false']">
+                      Manage Insurance
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseOne"
+                  [attr.aria-expanded]="[MenuName == '/global-insurance' || MenuName == '/global-mapping' ? 'true' : 'false']"
+                  class="panel-collapse collapse"
+                  [ngClass]="[MenuName == '/global-insurance' || MenuName == '/global-mapping' ? 'in' : '']"
+                  role="tabpanel" aria-labelledby="headingOne">
+                  <div class="accordianbody">
+                    <ul class="nav">
+                      <li>
+                        <a (click)="OpenMenu('global-insurance')"
+                          [ngClass]="[MenuName == '/global-insurance' ? 'menu-active1': '']">
+                          Global Insurance</a>
+                      </li>
+                      <li>
+                        <a (click)="OpenMenu('global-mapping')"
+                          [ngClass]="[ MenuName == '/global-mapping' ? 'menu-active1': '']">Global
+                          Insurance Mapping</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="checkMenu('auto-allocation')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingFive">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('auto-allocation')"
+                      [ngClass]="[ MenuName == '/auto-allocation' ? 'menu-active1': '']">
+                      Auto-Q Configuration
+                    </a>
+                  </h4>
+                </div>
+              </div>
+              <div *ngIf="checkMenu('bucket-mapping')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingSix">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('bucket-mapping')"
+                      [ngClass]="[MenuName == '/bucket-mapping' ? 'menu-active1': '']">
+                      AR Skills Mapping
+                    </a>
+                  </h4>
+                </div>
+              </div>
+              <div *ngIf="checkMenu('data-upload')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingSeven">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('data-upload')"
+                      [ngClass]="[MenuName == '/data-upload' ? 'menu-active1': '']">
+                      Data Upload
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+              <div *ngIf="checkMenu('supervisor-agent') || checkMenu('agent-deallocation') ||checkMenu('de-allocation')"
+                class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingEight">
+                  <h4 class="acc-title">
+                    <a [ngClass]="[MenuName == '/supervisor-agent'|| MenuName == '/agent-deallocation'  || MenuName == '/de-allocation' ? '' : 'collapsed']"
+                      role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapseThree"
+                      [attr.aria-expanded]="[MenuName == '/supervisor-agent'|| MenuName == '/agent-deallocation' || MenuName == '/de-allocation' ? 'true' : 'false']"
+                      aria-controls="collapseThree">
+                      Supervisor
+                    </a>
+                  </h4>
+                </div>
+
+                <div id="collapseThree"
+                  [attr.aria-expanded]="[MenuName == '/supervisor-agent' || MenuName == '/agent-deallocation' || MenuName == '/de-allocation' ? 'true' : 'false']"
+                  class="panel-collapse collapse"
+                  [ngClass]="[MenuName == '/supervisor-agent'|| MenuName == '/agent-deallocation' || MenuName == '/de-allocation' ? 'in' : '']"
+                  role="tabpanel" aria-labelledby="headingThree">
+                  <div class="accordianbody">
+                    <ul class="nav">
+
+                      <li><a role="button" (click)="OpenMenu('supervisor-dashboard')"
+                          [ngClass]="[MenuName == '/supervisor-dashboard' ? 'menu-active1': '']">Dashboard</a></li>
+
+                      <li><a role="button" (click)="OpenMenu('supervisor-agent')"
+                          [ngClass]="[MenuName == '/supervisor-agent' ? 'menu-active1': '']">
+                          Edit Record</a></li>
+
+                      <li><a role="button" (click)="OpenMenu('de-allocation')"
+                          [ngClass]="[MenuName == '/de-allocation' ? 'menu-active1': '']">De-allocation</a></li>
+
+                      <li><a role="button" (click)="OpenMenu('agent-deallocation')"
+                          [ngClass]="[MenuName == '/agent-deallocation' ? 'menu-active1': '']">Agent Deallocation</a>
+                      </li>
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="checkMenu('agent')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingNine">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('agent')"
+                      [ngClass]="[MenuName == '/agent' ? 'menu-active1': '']">
+                      Agent
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+              <div *ngIf="checkMenu('simple-report') || checkMenu('mis-report') || checkMenu('citra-audit-report')"
+                class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingTen">
+                  <h4 class="acc-title">
+                    <a [ngClass]="[MenuName == '/simple-report' || MenuName == '/mis-report' || MenuName =='/tl-deny-report' || MenuName =='/citra-audit-report' ? '' : 'collapsed']"
+                      role="button" data-toggle="collapse" data-parent="#accordionMenu" aria-controls="collapseThree"
+                      href="#collapseReport"
+                      [attr.aria-expanded]="[MenuName == '/simple-report' || MenuName == '/mis-report' || MenuName =='/tl-deny-report' || MenuName =='/citra-audit-report' ? 'true' : 'false']">
+                      Reports
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseReport"
+                  [attr.aria-expanded]="[MenuName == '/simple-report' || MenuName == '/mis-report' || MenuName =='/tl-deny-report'|| MenuName == '/ageing-dashboard-report' || MenuName =='/citra-audit-report' ? 'true' : 'false']"
+                  class="panel-collapse collapse"
+                  [ngClass]="[MenuName == '/simple-report' || MenuName == '/mis-report'  || MenuName =='/tl-deny-report' || MenuName == '/ageing-dashboard-report' || MenuName =='/citra-audit-report' ? 'in' : '']"
+                  role="tabpanel" aria-labelledby="headingReport">
+                  <div class="accordianbody">
+                    <ul class="nav">
+                      <li><a (click)="OpenMenu('simple-report')"
+                          [ngClass]="[MenuName == '/simple-report' ? 'menu-active1': '']">Simple Report</a></li>
+                      <li><a (click)="OpenMenu('mis-report')"
+                          [ngClass]="[MenuName == '/mis-report' ? 'menu-active1': '']">MIS Report</a></li>
+
+                      <li><a (click)="OpenMenu('unworked-accounts-report')"
+                          [ngClass]="[MenuName == '/unworked-accounts-report' ? 'menu-active1': '']">Unworked Allocation
+                          A/C Report</a></li>
+                      <li><a (click)="OpenMenu('production-report')"
+                          [ngClass]="[MenuName == '/production-report' ? 'menu-active1': '']">Production Report</a></li>
+                      <li *ngIf="checkMenu('tl-deny-report')"><a (click)="OpenMenu('tl-deny-report')"
+                          [ngClass]="[MenuName == '/tl-deny-report' ? 'menu-active1': '']">Deny Report</a></li>
+
+                      <li *ngIf="checkMenu('ageing-dashboard-report')"><a (click)="OpenMenu('ageing-dashboard-report')"
+                          [ngClass]="[MenuName == '/ageing-dashboard-report' ? 'menu-active1': '']">Ageing Dashboard
+                          Report</a></li>
+                      <li><a (click)="OpenMenu('citra-audit-report')"
+                          [ngClass]="[MenuName == '/citra-audit-report' ? 'menu-active1': '']">Citra Audit Report</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="checkMenu('upload-file') || checkMenu('view-file')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingThree">
+                  <h4 class="acc-title">
+                    <a [ngClass]="[MenuName == '/upload-file' || MenuName == '/view-file' ? '' : 'collapsed']"
+                      role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapseFile"
+                      aria-controls="collapseThree"
+                      [attr.aria-expanded]="[MenuName == '/upload-file' || MenuName == '/view-file' ? 'true' : 'false']">
+                      AR KMS
+                    </a>
+                  </h4>
+                </div>
+                <div [attr.aria-expanded]="[MenuName == '/upload-file' || MenuName == '/view-file' ? 'true' : 'false']"
+                  id="collapseFile" [ngClass]="[MenuName == '/upload-file' || MenuName == '/view-file' ? 'in' : '']"
+                  class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFile">
+                  <div class="accordianbody">
+                    <ul class="nav">
+                      <li *ngIf="checkMenu('upload-file')"><a (click)="OpenMenu('upload-file')"
+                          [ngClass]="[MenuName == '/upload-file' ? 'menu-active1': '']">Upload AR KMS</a></li>
+                      <li *ngIf="checkMenu('view-file')"><a (click)="OpenMenu('view-file')"
+                          [ngClass]="[MenuName == '/view-file' ? 'menu-active1': '']">View AR KMS</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="checkMenu('client-instruction')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('client-instruction')"
+                      [ngClass]="[MenuName == '/client-instruction' ? 'menu-active1': '']">
+                      Client Instruction
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+              <!-- <div *ngIf="checkMenu('concluder-report') || checkMenu('concluder-report')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingThree">
+                  <h4 class="acc-title">
+                    <a [ngClass]="[MenuName == '/concluder-report' || MenuName == '/concluder-report' ? '' : 'collapsed']"
+                      role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapseFileConcluder"
+                      aria-controls="collapseThree"
+                      [attr.aria-expanded]="[MenuName == '/concluder-report' || MenuName == '/concluder-report' ? 'true' : 'false']">
+                      Concluder
+                    </a>
+                  </h4>
+                </div>
+                <div
+                  [attr.aria-expanded]="[MenuName == '/concluder-report' || MenuName == '/concluder-report' ? 'true' : 'false']"
+                  id="collapseFileConcluder"
+                  [ngClass]="[MenuName == '/concluder-report' || MenuName == '/concluder-report' ? 'in' : '']"
+                  class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFile">
+                  <div class="accordianbody">
+                    <ul class="nav">
+                      <li *ngIf="checkMenu('concluder-report')"><a (click)="OpenMenu('concluder-report')"
+                          [ngClass]="[MenuName == '/concluder-report' ? 'menu-active1': '']">
+                          Concluder Report</a>
+                      </li>
+                      <li *ngIf="checkMenu('deallocate-concluder')"><a (click)="OpenMenu('deallocate-concluder')"
+                        [ngClass]="[MenuName == '/deallocate-concluder' ? 'menu-active1': '']">
+                        De-Allocate Concluder</a>
+                    </li>
+                     
+                    </ul>
+                  </div>
+                </div>
+              </div> -->
+
+              <div *ngIf="checkMenu('client-instruction-report') || checkMenu('client-dashboard-report')"
+                class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingThree">
+                  <h4 class="acc-title">
+                    <a [ngClass]="[MenuName == '/client-instruction-report' || MenuName == '/client-dashboard-report' ? '' : 'collapsed']"
+                      role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapseFile"
+                      aria-controls="collapseThree"
+                      [attr.aria-expanded]="[MenuName == '/client-instruction-report' || MenuName == '/client-dashboard-report' ? 'true' : 'false']">
+                      Reports
+                    </a>
+                  </h4>
+                </div>
+                <div
+                  [attr.aria-expanded]="[MenuName == '/client-instruction-report' || MenuName == '/client-dashboard-report' ? 'true' : 'false']"
+                  id="collapseFile"
+                  [ngClass]="[MenuName == '/client-instruction-report' || MenuName == '/client-dashboard-report' ? 'in' : '']"
+                  class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFile">
+                  <div class="accordianbody">
+                    <ul class="nav">
+                      <li *ngIf="checkMenu('client-instruction-report')"><a
+                          (click)="OpenMenu('client-instruction-report')"
+                          [ngClass]="[MenuName == '/client-instruction-report' ? 'menu-active1': '']">
+                          Client Instruction
+                          Report</a>
+                      </li>
+                      <li *ngIf="checkMenu('client-dashboard-report')"><a (click)="OpenMenu('client-dashboard-report')"
+                          [ngClass]="[MenuName == '/client-dashboard-report' ? 'menu-active1': '']">Client Dashboard
+                          Report</a>
+                      </li>
+                      <li *ngIf="checkMenu('ageing-dashboard-report')"><a (click)="OpenMenu('ageing-dashboard-report')"
+                          [ngClass]="[MenuName == '/ageing-dashboard-report' ? 'menu-active1': '']">Ageing Dashboard
+                          Report</a></li>
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="checkMenu('client-approval')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('client-approval')"
+                      [ngClass]="[MenuName == '/client-approval' ? 'menu-active1': '']">
+                      Exceptions
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+              <div *ngIf="checkMenu('client-user')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('client-user')"
+                      [ngClass]="[MenuName == '/client-user' ? 'menu-active1': '']">
+                      Exceptions
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+              <div *ngIf="checkMenu('client-assistance')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('client-assistance')"
+                      [ngClass]="[MenuName == '/client-assistance' ? 'menu-active1': '']">
+                      Client Assistance
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+              <div *ngIf="checkMenu('denial-code')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('denial-code')"
+                      [ngClass]="[MenuName == '/denial-code' ? 'menu-active1': '']">
+                      Denial Code
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+              <div *ngIf="checkMenu('standard-comment')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('standard-comment')"
+                      [ngClass]="[MenuName == '/standard-comment' ? 'menu-active1': '']">
+                      Standard Comment
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+
+              <div *ngIf="checkMenu('agent-correspondence')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('agent-correspondence')"
+                      [ngClass]="[MenuName == '/agent-correspondence' ? 'menu-active1': '']">
+                      Correspondence Entry
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+
+              <div *ngIf="checkMenu('exception-entry')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('exception-entry')"
+                      [ngClass]="[MenuName == '/exception-entry' ? 'menu-active1': '']">
+                      Add New Exception
+                    </a>
+                  </h4>
+                </div>
+              </div>
+              <div *ngIf="checkMenu('bi-report')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingEight">
+                  <h4 class="acc-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionMenu"
+                      href="#collapseThree_1" aria-expanded="false" aria-controls="collapseThree">
+                      BI Reports
+                    </a>
+                  </h4>
+                </div>
+
+                <div id="collapseThree_1" class="panel-collapse collapse" role="tabpanel"
+                  aria-labelledby="headingThree">
+                  <div class="accordianbody">
+                    <ul class="nav">
+                      <li *ngFor="let menu of biReportMenu">
+                        <a role="button" (click)="openBIReport(menu)">
+                          <!-- [ngClass]="[MenuName == '/kyi-report' ? 'menu-active1': '']" -->
+                          {{menu.Menu_Name}}
+                        </a>
+                      </li>
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="checkMenu('bcbs-data-upload')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('bcbs-data-upload')"
+                      [ngClass]="[MenuName == '/bcbs-data-upload' ? 'menu-active1': '']">
+                      Upload BCBS Assistance
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+              <div *ngIf="checkMenu('citra-audit')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('citra-audit')"
+                      [ngClass]="[MenuName == '/citra-audit' ? 'menu-active1': '']">
+                      Citra Audits
+                    </a>
+                  </h4>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingthree">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('change-password')"
+                      [ngClass]="[MenuName == '/change-password' ? 'menu-active1': '']">
+                      Reset Password
+                    </a>
+                  </h4>
+                </div>
+              </div>
+              <div class="panel panel-default" [ngClass]="{'disableDiv': btndis}">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="Logout()">
+                      Logout
+                    </a>
+                  </h4>
+                </div>
+              </div>
+
+            </div>
+            <!-- Dynamic menus for Client User and Client Supervisor -->
+            <div *ngIf="UserData.Role=='Client User' || UserData.Role=='Client Supervisor'"
+              class="panel-group menu-small" role="tablist" aria-multiselectable="true">
+              <ng-container *ngFor="let menu of clientUserMenuList;let index=index">
+                <div id="accordionMenu"
+                  *ngIf="menu.subMenus.length==0 &&  checkMenu(menu.Route) || checkMenu(menu.Route)"
+                  class="panel panel-default">
+                  <div class="acc-heading" role="tab" id="menu{{index}}">
+                    <h4 class="acc-title">
+                      <a style="text-transform: capitalize" *ngIf="menu.subMenus==null || menu.subMenus.length==0"
+                        role="button" (click)="OpenMenu(menu.Route)"
+                        [ngClass]="[MenuName == '/'+menu.Route ? 'menu-active1': '']">
+                        {{menu.Menu_Name}}
+                      </a>
+                      <!-- <a *ngIf="menu.subMenus!=null && menu.subMenus.length>0"
+                        [ngClass]="[MenuName == '/'+menu.Route || MenuName == '/'+menu.Route ? '' : 'collapsed']"
+                        role="button" data-toggle="collapse" data-parent="#accordionMenu" href="'#collapseFile{{index}}"
+                        aria-controls="collapseThree"
+                        [attr.aria-expanded]="[MenuName == '/'+menu.Route || MenuName == '/'+menu.Route ? 'true' : 'false']">
+                        {{menu.Menu_Name}}
+                      </a> -->
+                    </h4>
+                  </div>
+                  <!-- <div *ngIf="menu.subMenus.length>0"
+                    [attr.aria-expanded]="[MenuName == '/'+menu.Route || MenuName == '/'+menu.Route ? 'true' : 'false']"
+                    id="collapseFile{{index}}"
+                    [ngClass]="[MenuName == '/'+menu.Route || MenuName == '/'+menu.Route ? 'in' : '']"
+                    class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFile">
+                    <div class="accordianbody">
+                      <ul class="nav">
+                        <ng-container *ngFor="let subMenu of menu.subMenus">
+                          <li *ngIf="checkMenu(subMenu.Route)"><a (click)="OpenMenu(subMenu.Route)"
+                              [ngClass]="[MenuName == '/'+subMenu.Route ? 'menu-active1': '']">
+                              {{subMenu.Submenu_Name}}
+                            </a>
+                          </li>
+                        </ng-container>
+                      </ul>
+                    </div>
+                  </div> -->
+                </div>
+                <div id="accordionMenu" *ngIf="menu.subMenus.length>0 && checkMenu(menu.subMenus[0].Route)"
+                  class="panel panel-default">
+                  <div class="acc-heading" role="tab" id="menu{{index}}">
+                    <h4 class="acc-title">
+                      <!-- <a *ngIf="menu.subMenus==null || menu.subMenus.length==0" role="button"
+                        (click)="OpenMenu(menu.Route)" [ngClass]="[MenuName == '/'+menu.Route ? 'menu-active1': '']">
+                        {{menu.Menu_Name}}
+                      </a> -->
+                      <a style="text-transform: capitalize" *ngIf="menu.subMenus!=null && menu.subMenus.length>0"
+                        [ngClass]="[matchedMenu(menu.subMenus) ? 'menu-active1': '']" role="button"
+                        data-toggle="collapse" data-parent="#accordionMenu" href="'#collapseFile{{index}}"
+                        aria-controls="collapseThree"
+                        [attr.aria-expanded]="[matchedMenu(menu.subMenus) ? 'true' : 'false']">
+                        {{menu.Menu_Name}}
+                      </a>
+                    </h4>
+                  </div>
+                  <div *ngIf="menu.subMenus.length>0"
+                    [attr.aria-expanded]="[MenuName == '/'+menu.Route || MenuName == '/'+menu.Route ? 'true' : 'false']"
+                    id="collapseFile{{index}}" [ngClass]="[matchedMenu(menu.subMenus)? 'in' : '']"
+                    class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFile">
+                    <div class="accordianbody">
+                      <ul class="nav">
+                        <ng-container *ngFor="let subMenu of menu.subMenus">
+                          <li *ngIf="checkMenu(subMenu.Route)"><a (click)="openDynamicMenu(subMenu)"
+                              [ngClass]="[MenuName == '/'+subMenu.Route ? 'menu-active1': '']">
+                              {{subMenu.Submenu_Name}}
+                            </a>
+                          </li>
+                        </ng-container>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+
+
+
+              <div class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingthree">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('change-password')"
+                      [ngClass]="[MenuName == '/change-password' ? 'menu-active1': '']">
+                      Reset Password
+                    </a>
+                  </h4>
+                </div>
+              </div>
+              <div class="panel panel-default" [ngClass]="{'disableDiv': btndis}">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="Logout()">
+                      Logout
+                    </a>
+                  </h4>
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+
+
+
+    </aside>
+  </div>
+</div>

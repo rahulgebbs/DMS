@@ -1,0 +1,235 @@
+<app-header [title]="Title"></app-header>
+<div class="col-md-12 col-sm-12 col-sm-12 p-0">
+  <div class="col-md-12 pt-8 border-b pb-10">
+    <div class="search-grid" [formGroup]="ActionForm">
+      <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client</span>
+      <span class="pull-left mr-10 pt-3 wt-15">
+        <select (change)="ClientListOnChange($event)" formControlName='client' [ngModel]="ClientId" #selectedelem
+          class="form-control">
+          <option [selected]="ClientList.length == 0 ||  ClientList.length > 1" disabled>Select</option>
+          <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">{{c.Client_Name}}</option>
+        </select>
+      </span>
+    </div>
+    <div class="search-grid" [formGroup]="ActionForm">
+      <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Standard Field</span>
+      <span class="pull-left mr-10 pt-3 wt-15">
+        <select class="form-control" (change)="StandardFieldOnChange($event)" formControlName="standerdField"
+          [(ngModel)]="SelectedStandardField">
+          <option [selected]="StandardFieldList.length == 0 || StandardFieldList.length " disabled>Select </option>
+          <option *ngFor="let s of StandardFieldList" [value]="s.Header_Name" [selected]="(s.selected==true )">
+            {{s.Display_Name}}</option>
+        </select>
+      </span>
+    </div>
+    <div class="search-grid">
+      <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">value</span>
+      <span class="pull-left mr-10 pt-3">
+        <input type="text" class="form-control" (keyup)="OnStandardValueChange()" name="StandardValue"
+          [(ngModel)]="StandardValue">
+      </span>
+    </div>
+    <div class="search-grid">
+      <button class="mt-3 btn blue square-btn blue-hover btn-txt mr-10" [disabled]="!EnableSearch"
+        (click)="EnableSearch && GetAccounts()">Search</button>
+      <!-- data-toggle="modal" data-target=".account-list" -->
+      <span class="pull-right bell-group">
+        <a class="bell-a" *ngIf="ShowBellIcon" (click)="GetClientInstructions()">
+          <span>
+            <i class="fas fa-bell bell-f"></i>
+          </span>
+          <span class="not-cl bell-cir">
+            <b class="badge b-bell badge-sm badge-pill bell-badge-back">{{InstructionCount}}</b>
+          </span>
+        </a>
+      </span>
+    </div>
+  </div>
+  <div *ngIf="DisplayFields" class="col-md-12 p-0">
+    <div class="col-md-3 p-0 blue-seprator serpartion-h">
+      <div class="col-md-12 col-sm-12 p-0">
+        <div class="heading-panel sT-hight">
+          <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Standard Fields</span>
+        </div>
+      </div>
+      <div class="col-md-12 p-0 auto-scroll-section">
+        <form>
+          <ng-container *ngFor="let f of AllFields">
+            <div class="form-group mh-15 " [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-i' : 'border-b']"
+              *ngIf="f.Is_Standard_Field && f.Is_View_Allowed_Agent && f.Display_Name != 'Notes'">
+              <label for="f.Id" class="label-std control-label p-0 b-600">{{f.Display_Name}}</label>
+              <span [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-label-t border-b' : '']">
+                <label for="f.Id" class="control-label w-80 label-s text-color">{{f.FieldValue}}</label>
+                <span *ngIf="f.Display_Name.indexOf('Payer') != -1" class="text-right payor-label-ins"
+                  title="Insurance Master" (click)="ToggleInsuranceMaster()">
+                  <i class="fa fa-book ft-22" aria-hidden="true"></i>
+                </span>
+              </span>
+
+            </div>
+          </ng-container>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-6 p-0 blue-seprator serpartion-h">
+      <div class="col-md-12 col-sm-12 p-0">
+        <div class="heading-panel sT-hight">
+          <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Input Fields</span>
+        </div>
+      </div>
+      <div class="col-md-12 p-0  auto-scroll-section">
+        <div class="col-md-12 p-0">
+          <ng-container *ngFor="let f of AllFields">
+            <div class="col-md-6" *ngIf="!f.Is_Standard_Field  && !f.Is_Correspondence && f.Is_View_Allowed_Agent">
+              <div class="form-group" [ngClass]="[!f.Is_Edit_Allowed_Agent ? 'border-b' : '']">
+                <label for="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
+                <ng-container *ngIf="f.Is_Edit_Allowed_Agent; else readonly">
+                  <ng-container [ngSwitch]="f.Column_Datatype">
+                    <ng-container *ngSwitchCase="'Text'">
+                      <ng-container *ngIf="f.Is_Dropdown_Field; else textinput">
+                        <select class="form-control" [(ngModel)]="f.FieldValue" name="{{f.FieldValue}}">
+                          <option *ngFor="let item of f.DropdownList" value="{{item.Dropdown_Value}}">
+                            {{item.Dropdown_Value}}</option>
+                        </select>
+                      </ng-container>
+                      <ng-template #textinput>
+                        <ng-container *ngIf="f.SetFormula; else elseTemplate">
+                          <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                          <input type="text" class="form-control" [maxlength]="f.Field_Limit" id="f.Id" placeholder=""
+                            [(ngModel)]="f.FieldValue">
+                        </ng-template>
+
+
+                      </ng-template>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'Date'">
+                      <div class="input-group date col-md-12" id='datetimepicker1'>
+                        <input autocomplete="off" [min]="MinDate" [(ngModel)]="f.FieldValue"
+                          (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1"
+                          class="owl-dp" name="date" [owlDateTime]="dt1">
+                        <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                        <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+                <ng-template #readonly>
+                  <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                </ng-template>
+
+
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 p-0">
+      <div class="col-md-12 p-0">
+        <form [formGroup]="ActionForm" (ngSubmit)="SubmitForm()">
+          <div class="col-md-12 col-sm-12 p-0">
+            <div class="heading-panel sT-hight">
+              <span class="text-sm text-ellipsis heading-txt flex t-uppercase blue-text">ACTION</span>
+            </div>
+          </div>
+          <div class="col-md-12 col-sm-12 p-0 lbl-txt auto-scroll-section">
+            <div class="form-group mh-15">
+              <label for="inputEmail3" class="label-std  control-label p-0 b-600">Status
+                <span class="asteric">*</span>
+                <!-- <span class="pull-right text-right cursor" title="iDecision Tree" data-toggle="modal" data-target=".iDecision-tree">
+                              <i class="mr-5 fa fa-pagelines" aria-hidden="true"></i>iDecision Tree</span> -->
+              </label>
+              <select class="form-control" formControlName="Status" name="Status" (change)="OnStatusChange($event)">
+                <option value="">Select</option>
+                <option value="{{item}}" *ngFor="let item of StatusList">{{item}}</option>
+              </select>
+              <div class="error" *ngIf="ActionForm.get('Status').hasError('required') && Validated">
+                Status Required
+                <!-- // {{ActionForm.setErrors({ 'invalid': true })}} -->
+              </div>
+            </div>
+            <div class="form-group mh-15">
+              <label for="inputEmail3" class="label-std  control-label p-0 b-600">Sub Status
+                <span class="asteric">*</span>
+              </label>
+              <select class="form-control" name="SubStatus" formControlName="SubStatus"
+                (change)="OnSubStatusChange($event)">
+                <option value="" [selected]="SubStatusList.length == 0 ">Select</option>
+                <option value="{{item}}" *ngFor="let item of SubStatusList" [selected]="SubStatusList.length==1">
+                  {{item}}</option>
+              </select>
+              <div class="error" *ngIf="ActionForm.get('SubStatus').hasError('required') && Validated">
+                Sub Status Required
+
+              </div>
+            </div>
+            <div class="form-group mh-15">
+              <label for="inputEmail3" class="label-std  control-label p-0 b-600">Action Code
+                <span class="asteric">*</span>
+              </label>
+              <select class="form-control" name="actioncode" formControlName="ActionCode" name="ActionCode">
+                <option value="">Select</option>
+                <option value="{{item}}" *ngFor="let item of ActionCodeList">{{item}}</option>
+              </select>
+              <div class="error" *ngIf="ActionForm.get('ActionCode').hasError('required')  && Validated">
+                Action Code Required
+
+              </div>
+            </div>
+            <div class="form-group mh-15">
+              <label for="inputEmail3" class="label-std  control-label p-0 b-600">Work Status
+                <span class="asteric">*</span>
+              </label>
+              <select class="form-control" name="workstatus" formControlName="WorkStatus">
+                <option value="">Select</option>
+                <option value="To Call">To Call</option>
+                <option value="Done">Done</option>
+              </select>
+              <div class="error" *ngIf="ActionForm.get('WorkStatus').hasError('required') && Validated">
+                Work Status Required
+                {{ActionForm.setErrors({ 'invalid': true })}}
+              </div>
+            </div>
+            <div class="form-group mh-15">
+              <label for="inputEmail3" class="label-std  control-label p-0 b-600">Notes
+                <span class="asteric">*</span>
+                <span class="pull-right text-right cursor" (click)="ToggleNotesGenerator(false)">
+                  <i class="mr-5 fa fa-sticky-note-o" aria-hidden="true"></i>Notes Generator</span>
+              </label>
+              <textarea formControlName="Notes" name="notes" rows="8" class="form-control textarea-resize"
+                placeholder="Write Notes.."></textarea>
+              <div class="error" *ngIf="ActionForm.get('Notes').hasError('required') && Validated">
+                Notes is required
+              </div>
+            </div>
+            <div class="form-group mh-15">
+              <div class="col-md-12 text-center p-0">
+                <!-- data-toggle="modal" data-target=".skip-ac" -->
+                <button type="submit" [disabled]="DisableSubmit"
+                  class="btn blue square-btn blue-hover btn-txt mr-10">Submit</button>
+                <button type="button" (click)="ClearForm()" [disabled]="DisableSubmit"
+                  class="btn blue square-btn blue-hover btn-txt">Clear</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<app-log-popup [StandardLogs]="StandardLogs" (SendLogId)="GetInventoryLog($event)" [(SelectedLogId)]="InventoryLogId"
+  (CloseLogPopup)="ToggleLogsPopup($event)" *ngIf="OpenLogsPopup"></app-log-popup>
+<app-insurance-master [SelectedGlobal]="InsuranceData" (CloseInsMaster)="ToggleInsuranceMaster($event)"
+  *ngIf="OpenInsuranceMaster"></app-insurance-master>
+<app-notes-generator (CloseNotesGen)="ToggleNotesGenerator($event)" *ngIf="OpenNotesGenerator"></app-notes-generator>
+<app-client-instructions-modal *ngIf="DisplayClientUpdate" (CloseModal)="ToggleClientModal($event)"
+  [(ClientUpdateData)]="ClientUpdateData">
+</app-client-instructions-modal>

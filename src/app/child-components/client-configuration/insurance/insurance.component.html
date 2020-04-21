@@ -1,0 +1,63 @@
+<div role="tabpanel" class="tab-pane nav-tab-content" id="step-3">
+  <div class="col-md-12 p-0">
+    <div class="provider-process">
+      <div class="col-md-9">
+        <span class="form-group file-provider mt-10">
+          <div class="file-upload-wrapper" [attr.data-text]="Filename">
+            <input name="file-upload-field" #filedata type="file" accept=".xlsx" class="file-upload-field"
+              (onclick)="filedata.value = null" (change)="handleFileSelect($event)">
+          </div>
+          <label class="error mt-0" *ngIf="validated && !validFile">Please select the file</label>
+        </span>
+        <span (click)="uploadClientInsuranceData()">
+          <button type="button" [disabled]="uploadBtnDisable"
+            class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-10" style="border: none;">
+            <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</button>
+
+        </span>
+        <div class="p-0 mt-10" (click)="downloadFile()">
+          <button [disabled]="disableDownloadTemplate" style="border: none;"
+            class="export-btn btn label grey lg-text label-info square-btn cursor mt-0  mr-10">
+            <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
+        </div>
+        <span (click)="exportAsXLSX()">
+          <button [disabled]="exportToBtnDisable"
+            class="export-btn btn label grey lg-text label-info square-btn cursor mr-10 mtb-10">
+            <i class="fa fa-file-excel-o mr-5" aria-hidden="true"></i>Export To Excel</button>
+        </span>
+        <span (click)="onAddClicked()">
+          <label class="export-btn label grey lg-text label-info square-btn cursor mtb-10">
+            <i class="fa fa-plus mr-5 lg-text" aria-hidden="true"></i>Add</label>
+        </span>
+      </div>
+      <div class="col-md-3 p-0">
+        <span class="pull-right pt-8  w-auto">
+          <b>Client Name :- {{ClientData.Client_Name}}</b>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="right-most mr-5">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
+  <div class="col-md-12 p-0">
+
+    <div class="insurance-sticky-tbl sticky-table sticky-ltr-cells border-0 table-hight">
+      <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [enableFilter]="true" [pagination]="true"
+        [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
+        [rowSelection]="rowSelection" [suppressColumnVirtualisation]="true" [suppressDragLeaveHidesColumns]="true"
+        [suppressDragLeaveHidesColumns]="true" (gridReady)="onGridReady($event)" (rowClicked)='onRowClicked($event)'
+        (cellClicked)='onCellClicked($event)'>
+      </ag-grid-angular>
+    </div>
+    <div class="col-md-12 text-right p-0">
+      <button type="button" class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5"
+        (click)="navigate()">Next</button>
+    </div>
+  </div>
+</div>
+
+<app-insurance-modal *ngIf="DisplayModal" (Toggle)="ToggleModal($event)" [ClientData]="ClientData"
+  (getInsuranceDatas)="getInsuranceDetail($event)" [selectedClientRow]="selectedClientRow" [onAdd]="onAdd"
+  [onEdit]="onEdit"></app-insurance-modal>
+
+<app-setting-template-modal [ClientData]="ClientData" [InsuranceId]="selectedClientRowId" (Toggle)="TogglePopup($event)"
+  *ngIf="displaypopup"></app-setting-template-modal>

@@ -1,0 +1,193 @@
+<div class="pop-bg"></div>
+<div class="pop-position">
+  <form #f="ngForm" (ngSubmit)="f.form.valid && Submit()">
+    <div class="col-md-12 p-0 grey">
+      <span class="col-md-10 col-sm-10 p-0">
+        <div class="heading-panel pl-10">
+          <span class="text-sm text-ellipsis heading-txt flex">{{HeaderStatus}}
+            <span class="buckets-list-cl">
+              <b class="badge circle-buget  badge-sm badge-pill baget-p">{{InventoryCount}}</b>
+            </span></span>
+        </div>
+      </span>
+      <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
+        <i class="fa fa-times"></i>
+      </span>
+    </div>
+
+    <div class="col-md-12 p-0">
+      <div class="sticky-table sticky-ltr-cells border-0 table-hight popup-table-height">
+
+        <table class="table">
+          <thead>
+            <tr class="sticky-header">
+              <th>
+                <div class="mt-0">
+                  <label class="custom-control">
+                    <input type="checkbox" id="check-all" [disabled]="TLAction != 'Done'" name="check-all"
+                      (click)="ToggleCheckAll($event)" [(ngModel)]="AllChecked" />
+                    <label for="check-all"></label>
+                  </label>
+                  <!-- <input class="d-block w-100" type="checkbox" [(ngModel)]="AllChecked" (change)="ToggleCheckAll()"
+                  id="inlineCheckbox1" value="option1"> -->
+
+                </div>
+              </th>
+              <th>Action</th>
+              <th>Standard Comments</th>
+              <th>Comments</th>
+              <th>Attach File</th>
+              <th>Status</th>
+              <th>Sub Status</th>
+              <th>Action Code</th>
+              <th [ngClass]="[HideList.indexOf(h.Header_Name) > -1 ? 'hidden' : '']" *ngFor="let h of Inventories[0]">
+                {{h.Header_Name}}
+              </th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <tr *ngFor="let i of Inventories;let int of index"> -->
+            <tr *ngFor="let i of Inventories; let int=index">
+              <td>
+                <div class="form-check text-center">
+                  <label class="custom-control">
+                    <input type="checkbox" id="check-{{int}}" name="check-{{int}}" #check="ngModel"
+                      (change)="OnInventoryCheckboxChange(int)" [disabled]="TLAction != 'Done'"
+                      [(ngModel)]="i.IsChecked" />
+                    <label for="check-{{int}}"></label>
+                  </label>
+                  <!-- <input class="form-check-input custom-control-input" [(ngModel)]="i.IsChecked" type="checkbox"
+                  id={{i}}-{{int}}> -->
+                </div>
+              </td>
+              <td>
+                <ng-container *ngIf="TLAction == 'Done'; else readOnlyAction">
+                  <select name="action-{{int}}" #Action="ngModel" [(ngModel)]="i.Action" (change)="OnActionChange(int)"
+                    class="form-control w-120">
+                    <option value="">Select</option>
+                    <option *ngFor="let a of ActionList" [disabled]="TLAction == a.Value" [value]="a.Value">{{a.Key}}
+                    </option>
+                  </select>
+                  <div class="error" *ngIf="f.submitted && Action.value == '' && check.value == true">
+                    {{f.form.setErrors({ 'invalid': true })}}
+                    required
+                  </div>
+                </ng-container>
+                <ng-template #readOnlyAction>
+                  <label>{{i.Action}}</label>
+                </ng-template>
+              </td>
+              <td>
+                <ng-container *ngIf="TLAction == 'Done'; else readOnlyStandardComments">
+                  <select name="Stdcomments-{{int}}" #StdComments="ngModel" [(ngModel)]="i.Standard_Comments"
+                    class="form-control w-120">
+                    <option value="">Select</option>
+                    <option *ngFor="let s of StandardComments" [value]="s.Comment">{{s.Comment}}</option>
+                  </select>
+                  <div class="error" *ngIf="f.submitted && StdComments.value == '' && check.value == true">
+                    {{f.form.setErrors({ 'invalid': true })}}
+                    required
+                  </div>
+                </ng-container>
+                <ng-template #readOnlyStandardComments>
+                  <label>{{i.Standard_Comments}}</label>
+                </ng-template>
+              </td>
+              <td>
+                <textarea [disabled]="TLAction != 'Done'" class="form-control textarea-resize w-120"
+                  [(ngModel)]="i.Comments" rows="" name="comments" placeholder="Write Comments.."></textarea>
+              </td>
+              <td>
+                <ng-container *ngIf="TLAction == 'Done'; else downloadFile">
+                  <span class="form-group upload-signature">
+                    <form class="form w-120">
+                      <div class="upload-provider-signature" [attr.data-text]="i.FileName">
+                        <input name="file-upload-signature" type="file"
+                          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                          class="file-upload-field" (change)="OnFileChange($event,int)">
+                      </div>
+                    </form>
+                  </span>
+                </ng-container>
+                <ng-template #downloadFile>
+                  <ng-container *ngIf="i.FileName == 'No File Uploaded'; else downloadFile">
+                    <label>{{i.FileName}}</label>
+                  </ng-container>
+                  <ng-template #downloadFile>
+                    <button type="button" class="btn grey" [disabled]="DisableDownload"
+                      (click)="GetReferenceFile(i.FileName)">Download</button>
+                  </ng-template>
+
+
+                </ng-template>
+              </td>
+              <td>
+                <ng-container *ngIf="i.IsSAAGEditable; else noneditstatus">
+                  <select #status="ngModel" name="status-{{int}}" (change)="OnStatusChange(int)" type="text"
+                    class="form-control w-200" [(ngModel)]="i.Status">
+                    <option value="">Select</option>
+                    <ng-container *ngIf="i.Action == 'Gebbs Close'; else nonClose">
+                      <option *ngFor="let s of CloseStatusList">{{s}}</option>
+                    </ng-container>
+                    <ng-template #nonClose>
+                      <option *ngFor="let s of StatusList">{{s}}</option>
+                    </ng-template>
+                  </select>
+                </ng-container>
+                <ng-template #noneditstatus>
+                  <span>{{i.Status}}</span>
+                </ng-template>
+              </td>
+              <td>
+                <ng-container *ngIf="i.IsSAAGEditable; else noneditsubstatus">
+                  <select #sub_status="ngModel" name="sub_status-{{int}}" (change)="OnSubStatusChange(int)" type="text"
+                    class="form-control w-200" [(ngModel)]="i.Sub_Status">
+                    <option value="">Select</option>
+                    <ng-container *ngIf="i.Action == 'Gebbs Close'; else nonClose">
+                      <option *ngFor="let s of CloseSubStatusList">{{s}}</option>
+                    </ng-container>
+                    <ng-template #nonClose>
+                      <option *ngFor="let s of SubStatusList">{{s}}</option>
+                    </ng-template>
+
+                  </select>
+                </ng-container>
+                <ng-template #noneditsubstatus>
+                  <span>{{i.Sub_Status}}</span>
+                </ng-template>
+              </td>
+              <td>
+                <ng-container *ngIf="i.IsSAAGEditable; else noneditaction">
+                  <select #action_code="ngModel" name="action_code-{{int}}" type="text" class="form-control w-200"
+                    [(ngModel)]="i.Action_Code">
+                    <option value="">Select</option>
+                    <ng-container *ngIf="i.Action == 'Gebbs Close'; else nonClose">
+                      <option *ngFor="let s of CloseActionCodeList">{{s}}</option>
+                    </ng-container>
+                    <ng-template #nonClose>
+                      <option *ngFor="let s of ActionCodeList">{{s}}</option>
+                    </ng-template>
+                  </select>
+                </ng-container>
+                <ng-template #noneditaction>
+                  <span>{{i.Action_Code}}</span>
+                </ng-template>
+              </td>
+              <td [ngClass]="[HideList.indexOf(iv.Header_Name) > -1 ? 'hidden' : '']" *ngFor="let iv of i">
+                {{iv.Field_Value}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    <div class="col-md-12">
+      <span class="pull-right">
+        <button class="btn blue square-btn blue-hover btn-txt mr-0 mt-10 mb-10 w-51" [disabled]="DisableSubmit"
+          *ngIf="TLAction == 'Done'">Save</button>
+      </span>
+    </div>
+  </form>
+</div>

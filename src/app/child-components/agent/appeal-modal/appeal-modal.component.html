@@ -1,0 +1,84 @@
+<!-- appeal popup -->
+<div class="pop-bg">
+</div>
+<div class="pop-position">
+  <div class="col-md-12 p-0 grey">
+    <span class="col-md-10 col-sm-10 p-0">
+      <div class="heading-panel">
+        <span class="text-sm text-ellipsis heading-txt flex">Appeal</span>
+      </div>
+    </span>
+    <span *ngIf="!DisableAll" class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div class="col-md-12 p-0 mt-10 mb-10">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="form-group">
+        <label for="inputEmail3" class="label-std  control-label p-0 b-600">Cover Letter</label>
+        <ng-container *ngFor="let t of AppealLetterList">
+          <ng-container *ngIf="t.Template_Name == 'CoverLetter' || t.Template_Name == 'FaxCoverLetter'">
+            <label class="radio-inline">
+              <input type="radio" name="optradio" [(ngModel)]="IdentityProofList.CoverLetter" [value]="t.Display_Name"
+                [disabled]="t.Disabled || DisableAll" (change)="checkcoverletter()">{{t.Display_Name}}</label>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div *ngIf="DisplayAppealTab" class="form-group">
+        <label for="inputEmail3" class="label-std  control-label p-0 b-600">Appeal Letter</label>
+        <ng-container *ngFor="let t of AppealLetterList">
+          <ng-container *ngIf="t.Template_Name != 'CoverLetter' && t.Template_Name != 'FaxCoverLetter'">
+            <label class="radio-inline">
+              <input type="radio" name="appealletter" [(ngModel)]="IdentityProofList.AppealLetter"
+                [value]="t.Display_Name" [disabled]="t.Disabled || DisableAll"
+                (change)="checkcoverletter()">{{t.Display_Name}}</label>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div class="col-md-12 col-sm-12 col-xs-12 p-0">
+        <span class="form-group mt-10 line-ht">
+          <label class="label-idp control-label p-0 b-600">Identity proof</label>
+        </span>
+      </div>
+
+      <div class="col-md-12 col-sm-12 col-xs-12 p-0">
+        <div *ngFor="let item of IdentityProofList.TemplateList;let i = index"
+          class="col-md-12 col-sm-12 col-xs-12 p-0">
+          <label class="w-100 font-normal">{{item.Display_Name}}</label>
+          <span class="form-group  mt-10">
+            <form class="form">
+              <div class="file-upload-wrapper letter-upload-file" [attr.data-text]="item.Filename">
+                <input [disabled]="DisableAll" #file onclick="file.value = null" name="file-upload-field" type="file"
+                (change)="OnInputFileChanged($event,i,item.Template_Name)" accept="application/pdf"
+                  class="file-upload-field">
+              </div>
+            </form>
+          </span>
+          <span>
+            <button [disabled]="item.FileBase64 == '' || DisableAll || item.Upload_URL != ''"
+              (click)="UploadFile(item.Template_Name,i)"
+              class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-0">
+              Upload</button>
+            <button (click)="ViewPdf(item.Upload_URL)" [disabled]="item.Upload_URL == '' || DisableAll"
+              class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-0">
+              View</button>
+            <button (click)="DeleteFile(i,item)" [disabled]="item.Upload_URL == '' || DisableAll"
+              class="btn pr-upl label grey lg-text label-info square-btn cursor mr-0 mt-0">
+              Delete</button>
+          </span>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 p-0">
+          <span>
+            <button [disabled]="DisableMerge || DisableAll" (click)="ReviewMergePdf()"
+              class="pull-right btn pr-upl label blue blue-hover btn-txt reviewpdf-btn square-btn cursor mr-0 mt-10">
+              Review Merge PDF</button>
+            <button (click)="Generate()" [disabled]="disb || DisableAll"
+              class="pull-right btn pr-upl label blue blue-hover btn-txt reviewpdf-btn square-btn cursor mr-5 mt-10">
+              Generate</button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-pdf-viewer (ClosePopup)="TogglePdfViewer()" *ngIf="DisplayPdf" [InputUrl]="PdfUrl"></app-pdf-viewer>

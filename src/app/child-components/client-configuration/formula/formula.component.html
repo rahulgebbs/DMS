@@ -1,0 +1,62 @@
+<!-- <div class="tab-content nav-tab-content"> -->
+<!-- <form [formGroup]="addDropdown" (ngSubmit)="submitFrom()"> -->
+<div role="tabpanel" class="tab-pane nav-tab-content" id="step-7">
+  <div class="col-md-12 p-0">
+    <span class="pull-right pt-8 w-auto">
+      <b>Client Name :-
+
+        {{ClientData.Client_Name}}</b>
+    </span>
+  </div>
+  <div class="right-most mr-5">Total Rows:- <b>{{formula == null ? '0' : formula.length}}</b></div>
+  <div class="col-md-12 p-0">
+    <div class="formula-sticky-tbl sticky-table sticky-ltr-cells border-0 table-hight" style="padding-bottom:0px !important;">
+      <table class="table">
+        <thead>
+          <tr class="sticky-header">
+            <th width="40%">Column Name</th>
+            <th width="25%">Generate Formula</th>
+            <th>Formula Expression</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of formula">
+            <td>
+              {{i.Display_Name}}
+            </td>
+            <td>
+              <label class="label grey lg-text label-info square-btn cursor mb-0 wt-120" (click)="creatFormula(i)">
+                <i class="fa fa-plus mr-5 lg-text" aria-hidden="true"></i>Create Formula</label>
+              <!-- <i class="fa fa-plus grey-text ft-18 mr-5" aria-hidden="true" ></i> -->
+            </td>
+            <td>
+              <span *ngIf="i.Expression">{{i.Expression}}</span>
+              <span colspan="11" *ngIf="!i.Expression" style="text-align:center;">
+                No Expression Found
+              </span>
+
+
+            </td>
+
+          </tr>
+          <tr *ngIf="formula == ''">
+            <td colspan="11" style="text-align:center;">
+              <span *ngIf="formula == '' || !formula">
+                No Formula field found for current Client
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-12 text-right p-0">
+    <button id="step-7-next" type="submit" class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5"
+      data-toggle="modal" data-target=".finish-setup" (click)="navigate()">Next</button>
+  </div>
+</div>
+<!-- </div> -->
+
+
+<app-formula-modal *ngIf="showPopup" (Toggle)="ToggleModal($event)" [(ClientData)]="ClientData" [data]="data"
+  [FormulaValues]="FormulaValues" (getFormulaLookup)="getFormulaLookup($event)"></app-formula-modal>

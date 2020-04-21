@@ -1,0 +1,107 @@
+<div class="white container-fluid">
+    <div class="lock-screen">
+        <div class="animate fadeIn text-center">
+            <div class="col-md-12 p-0">
+                <div class="col-md-8 blue-seprator">
+                    <img src="../../../assets/images/RCM_1.jpg" class="img-responsive">
+                </div>
+                <div class="col-md-4 p-0 bottom-align">
+
+                    <div class="col-md-12">
+                        <div class="col-md-12 mb-10 p-0">
+                            <span class="col-md-6 pl-0">
+                                <div>
+                                    <img src="../../../assets/images/logo_156.png" class="img-responsive">
+                                </div>
+                            </span>
+                            <span class="col-md-6 blue-seprator-l pr-0">
+                                <div>
+                                    <img src="../../../assets/images/iAR.png" class="img-responsive img-100">
+                                </div>
+                            </span>
+                        </div>
+                        <div class="col-md-12 text-center version-text">Version: 2.0</div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-12 p-0">
+                            <div class="heading-panel sT-hight p-0">
+                                <span class="text-sm text-ellipsis heading-txt blue-text h-height title-border">Sign
+                                    In</span>
+                            </div>
+                        </div>
+                    </div>
+                    <form [formGroup]="MyForm" (ngSubmit)="FormSubmit()" novalidate>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="username" class="label-std control-label p-0 b-600">Username</label>
+                                <input required type="text" maxlength="20" class="form-control"
+                                    formControlName="username" name="username" id="username" placeholder="Username">
+                                <div class="error" *ngIf="MyForm.get('username').hasError('required') && DisplayError">
+                                    Username is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-6">
+                            <div class="form-group">
+                                <label for="Password" class="label-std control-label p-0 b-600">Password</label>
+                                <input maxlength="20" required type="password" name="password" class="form-control"
+                                    id="Password" placeholder="Password" formControlName="password">
+                                <div class="error" *ngIf="MyForm.get('password').hasError('required') && DisplayError">
+                                    Password is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-10 text-left">
+                            <div class="col-md-6 pl-0 pr-10">
+                                <button [disabled]="DisableSubmit"
+                                    class="btn blue square-btn blue-hover btn-txt w-100">Sign
+                                    in</button>
+                            </div>
+                            <div class="col-md-6 pr-0 pl-10 plr-0">
+                                <button type="submit" [disabled]="DisableSubmit" routerLink="/forgot-password"
+                                    class="btn blue square-btn blue-hover btn-txt w-100">Forgot
+                                    password?</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- <div class="col-md-12 text-center">
+                        <br />
+                        <b>
+                            UNAUTHORIZED ACCESS TO THIS SERVICE IS PROHIBITED.<br />
+                        </b>
+                        <p style="font-size:11px;"> iAR is confidential and proprietary, and is for authorized users
+                            only. All authorized users are subject
+                            to contractual use restrictions and nondisclosure requirements that prevent giving access to
+                            third parties.
+                            Unauthorized users are subject to prosecution, lawsuits, and penalties under state and
+                            federal law. All
+                            system
+                            activities are monitored, recorded and reviewed by system personnel. Anyone using this
+                            system expressly
+                            consents to such monitoring and is advised that if such monitoring reveals possible evidence
+                            of criminal
+                            activity, system personnel may present the evidence to law enforcement officials.
+                        </p>
+                    </div> -->
+                    <div class="col-md-12 mt-15 text-center copy-text">
+                        <span>Copyright &copy; {{CurrentYear}} GeBBS Healthcare Solutions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 text-center">
+        <b>
+            UNAUTHORIZED ACCESS TO THIS SERVICE IS PROHIBITED.<br />
+        </b>
+        <span> iAR is confidential and proprietary, and is for authorized users only. All authorized users are subject
+            to contractual use restrictions and nondisclosure requirements that prevent giving access to third parties.
+            Unauthorized users are subject to prosecution, lawsuits, and penalties under state and federal law. All
+            system
+            activities are monitored, recorded and reviewed by system personnel. Anyone using this system expressly
+            consents to such monitoring and is advised that if such monitoring reveals possible evidence of criminal
+            activity, system personnel may present the evidence to law enforcement officials.
+        </span>
+    </div>
+
+</div>

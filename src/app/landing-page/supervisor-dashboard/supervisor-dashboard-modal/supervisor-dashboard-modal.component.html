@@ -1,0 +1,45 @@
+<div class="pop-bg">
+</div>
+
+<div class="pop-position">
+
+
+  <div class="col-md-12 grey p-0">
+    <span class="col-md-10 col-sm-10 p-0">
+      <div class="heading-panel">
+        <span class="text-sm text-ellipsis heading-txt flex ">Allocated Count</span>
+      </div>
+    </span>
+    <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor">
+      <i class="fa fa-times" (click)="dismissModel()"></i>
+    </span>
+  </div>
+  <div class="col-md-12 p-0">
+      <div class="sticky-table sticky-ltr-cells border-0 table-hight">
+          <ag-grid-angular [enableSorting]="true" [enableFilter]="true" [pagination]="true" [paginationPageSize]="15" class="ag-theme-balham grid-w"
+            [rowData]="rowData" [columnDefs]="columnDefs" [rowSelection]="rowSelection" [suppressColumnVirtualisation]="true"
+            [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true" (gridReady)="onGridReady($event)"
+           >
+          </ag-grid-angular>
+        </div>
+    <!-- <div class="table-responcive">
+      <div class="sticky-table sticky-ltr-cells border-0 table-hight">
+        <table class="table ">
+          <thead>
+            <tr class="sticky-header">
+              <th class="dark text-left">Allocated To</th>
+              <th class="dark text-left">Account count</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of xan; let i=index">
+              <td>{{data.Allocated_To}} </td>
+              <td>{{data.Account_Count}} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div> -->
+  </div>
+</div>

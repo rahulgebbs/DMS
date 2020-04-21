@@ -1,0 +1,12 @@
+.grid-w{
+    height:100%;
+}
+
+.ag-cell{
+    white-space: nowrap !important;
+}
+
+.total-p{
+    position: absolute;
+    right: 43px;
+}

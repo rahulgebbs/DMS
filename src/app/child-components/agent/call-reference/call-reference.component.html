@@ -1,0 +1,47 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position">
+  <div class="fade mystats in">
+    <div class=" white popup-tableScroll">
+      <div class="content white">
+        <div class="col-md-12 p-0 grey">
+          <span class="col-md-10 col-sm-10 p-0">
+            <div class="heading-panel pl-10">
+              <span class="text-sm text-ellipsis heading-txt flex">Call Reference Accounts</span>
+            </div>
+          </span>
+          <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="closeModel()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+
+        </div>
+        <div class="col-md-12 p-0">
+          <div id="inventoryFormContainer" class="row" style="margin: 0 10px;">
+            <div class="col-md-4">
+              <div class="form-group mt-10">
+                <label class=" label-std control-label p-0 b-600 pl-0" for="">Reference Number</label>
+                <input type="text" class="form-control" [(ngModel)]="reference" placeholder="Enter Reference Number">
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <div class="form-group mt-10">
+                <button id="inventorySearchBtn" [disabled]="reference==null || reference.length==0" type="button"
+                  class="btn blue square-btn blue-hover btn-txt" (click)="searchInventoryList()">Search</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <ag-grid-angular style="height: 50vh;" [enableSorting]="true" [enableColResize]="true" [enableFilter]="true"
+              (rowClicked)="rowClick($event)" [pagination]="true" [paginationPageSize]="15"
+              class="ag-theme-balham grid-w" [rowData]="inventoryList" [columnDefs]="columnDefs"
+              [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true"
+              [suppressColumnVirtualisation]="true" [gridOptions]="gridOptions">
+            </ag-grid-angular>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

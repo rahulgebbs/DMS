@@ -1,0 +1,19 @@
+.showSpinner{
+    // border: 1px solid red;
+    display: flex;
+    flex: 1;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    i{
+        font-size:15rem;
+    }
+    p{
+        margin: 1rem 0;
+    }
+    .danger{
+        color:#e74c3c;
+    }
+}

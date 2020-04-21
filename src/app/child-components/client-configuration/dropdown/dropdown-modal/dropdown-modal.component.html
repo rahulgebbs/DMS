@@ -1,0 +1,93 @@
+<div *ngIf="showPopup">
+
+  <div class="pop-bg">
+  </div>
+  <div class="pop-position drpodwn-value-pop">
+
+
+    <div class="modal-content  white">
+      <div class="col-md-12 grey p-0">
+        <span class="col-md-10 col-sm-10 p-0">
+          <div class="heading-panel">
+            <span class="text-sm text-ellipsis heading-txt flex">Dropdown Values</span>
+          </div>
+        </span>
+        <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="closeModel()">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </span>
+      </div>
+      <div class="col-md-12 mt-10">
+        <div class="col-md-12 p-0 mb-15">
+          <div class="form-group">
+            <label for="inputEmail3" class="label-std control-label p-0 b-600">Column Name</label>
+            <label for="inputEmail3" class="control-label label-s text-color">{{singleDropDown.Display_Name}}</label>
+          </div>
+          <div class="form-group">
+            <label for="inputEmail3" class="label-std  control-label p-0 b-600">Add Dropdown Values</label>
+            <div class="controls">
+
+              <form [formGroup]="addDropdown" (ngSubmit)="submitFrom()" autocomplete="off">
+                <div class="entry col-md-12 p-0">
+                  <input class="form-control" type="hidden" formControlName="Client_Id" placeholder="Add Dropdown Values"
+                    [(ngModel)]="Client_Id" />
+                  <input class="form-control" type="hidden" formControlName="Client_Inventory_Id" placeholder="Add Dropdown Values"
+                    [(ngModel)]="Client_Inventory_Id" />
+                  <input class="form-control" type="hidden" formControlName="Is_Active" placeholder="Add Dropdown Values"
+                    [(ngModel)]="Is_Active" />
+                  <input class="form-control" type="hidden" formControlName="Updated_Date" placeholder="Add Dropdown Values"
+                    [(ngModel)]="Updated_Date" />
+                  <input class="form-control" type="hidden" formControlName="Id" placeholder="Add Dropdown Values"
+                    [(ngModel)]="Id" />
+
+
+                  <input class="form-control" type="text" formControlName="Dropdown_Value" placeholder="Add Dropdown Values"
+                    [(ngModel)]="valueDropdown" class="add-drop-input" (focusin)="enableBtn()"/>
+                  <label class="error" *ngIf="checkvalidation && addDropdown.get('Dropdown_Value').hasError('required') && validated">Dropdown
+                    value is require</label>
+                  <label class="error" *ngIf=" addDropdown.get('Dropdown_Value').hasError('maxlength') && validated">maximum
+                    50 charcter allowed</label>
+                  <span class="ml-10">
+                    <button class="btn blue btn-add square-btn save-txt-btn mr-5" type="submit"  [disabled]="saveBtnDisable">
+                      <!-- <span class="glyphicon glyphicon-plus"></span> -->Save
+                    </button>
+                    <span class="">
+                      <button class="btn blue btn-add square-btn save-txt-btn" type="button"  [disabled]="resetBtnDisable" (click)="updateCancel()">
+                        <!-- <span class="glyphicon glyphicon-plus"></span> -->Reset
+                      </button>
+                    </span>
+                  </span>
+
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 p-0 mb-15">
+          <div class="sticky-table sticky-ltr-cells border-0 table-hight" style="padding-bottom:0px !important;height: 260px;">
+            <table class="table">
+              <thead>
+                <tr class="sticky-header">
+                  <th>Value</th>
+                  <!-- <th width="1%"></th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let i of values;let k = index">
+                  <td (click)="selectValue(i,k)">{{i.values}}</td>
+
+                </tr>
+                <tr *ngIf="values==''">
+                  <td>No Values Found</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+</div>

@@ -1,0 +1,70 @@
+.clientnames{
+    background-color: #ffffcc;
+}
+
+.restbar{
+    background-color: #e6e6ff;
+}
+
+.voice{
+    background-color: #99ff99;
+    color: #333;
+}
+.sticky-table tbody>tr:hover td{
+    background: transparent;
+}
+
+.dark-b-grey{
+    background:#666 !important;
+}
+.nvoice{
+    background-color: #e6e6ff;
+    color: #333;
+}
+
+.shortfall{
+    color:red
+}
+
+.bord{
+    border: #ddd;
+    border-style: solid;
+    border-width: 1px   
+}
+
+.borderright{
+    border: #ddd;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.vnv{
+    border: #ddd;
+    border-right-style: solid;
+    border-right-width: 0.5px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    width: 250px;
+    /* overflow-y: hidden; */
+}
+.floor{
+    border-bottom-style: solid;
+    border-bottom-width: 0.5px
+}
+.floright{
+    border: #ddd;
+    border-right-style: solid;
+    border-right-width: 0.5px;
+    border-bottom-style: solid;
+    border-bottom-width: 0.5px
+}
+
+.onv{
+    border: #ddd;
+    border-right-style: solid;
+    border-right-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    width: 250px;
+    /* overflow-y: hidden; */
+}

@@ -1,0 +1,33 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position">
+  <div class=" fade saag in">
+    <div class="" >
+      <div class="content white">
+        <div class="col-md-12 p-0 grey">
+          <span class="col-md-10 col-sm-10 p-0">
+            <div class="heading-panel pl-10">
+              <span class="text-sm text-ellipsis heading-txt flex">Denial Code</span>
+            </div>
+          </span>
+          <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="toggleModel()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+        </div>
+
+        <div class="col-md-12 p-0">
+
+
+          <div class="sticky-table sticky-ltr-cells border-0 table-hight popup-table-height">
+            <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [enableFilter]="true" [pagination]="true"
+              [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="DenialCodes" [columnDefs]="columnDefs"
+              [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true" [rowSelection]="rowSelection"
+              (gridReady)="onGridReady($event)" [suppressColumnVirtualisation]="true"></ag-grid-angular>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

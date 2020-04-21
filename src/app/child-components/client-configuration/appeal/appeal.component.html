@@ -1,0 +1,61 @@
+
+
+<div role="tabpanel" class="tab-pane nav-tab-content" id="step-7" >
+
+  <div >
+    <form [formGroup]="AppealForm" (ngSubmit)="SubmitForm()" novalidate>
+      <div class="col-md-12 p-0">
+        <span class="pull-right pt-8 w-auto">
+          <b>Client Name :-
+
+            {{ClientData.Client_Name}}</b>
+        </span>
+      </div>
+
+      <app-loading-page *ngIf="showLoading"></app-loading-page>
+      <!-- <div class="right-most mr-5">Total Rows:- <b>{{formula == null ? '0' : formula.length}}</b></div> -->
+      <div class="col-md-12 p-0 appeal-auto-h" *ngIf="!showLoading">
+        <div *ngFor="let t of TemplateNameList" class="col-md-4 mb-30">
+          <!-- <h3>{{Placeholders.CoverLetter[0].Template_Name}}</h3> -->
+          <span class="appeal-header-style">{{t.split("_").join(" ")}}</span>
+          <div class="sticky-table sticky-ltr-cells border-0 table-hight"
+            style="padding-bottom:0px !important;max-height: 25vh !important;">
+            <table class="table appeal-mgmt-table" [formArrayName]="t">
+              <thead>
+                <tr class="sticky-header">
+                  <th width="" class="border-ar">Appeal Column</th>
+                  <th width="">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of Placeholders[t]; let i=index" [formGroupName]="i">
+                  <td>{{p.Placeholder_Name}}</td>
+                  <td>
+                    <select class="form-control" formControlName="Column_Name" name="columns_list-{{i}}" required
+                      (change)="OnCoverLetterChange($event,p)" style="max-width: 300px">
+                      <option value>Select</option>
+                      <ng-container *ngFor="let opt of Headers">
+                        <optgroup [id]="opt.Table_Name" [label]="opt.Display_Name" formControlname="Table_Name">
+                          <option *ngFor="let h of opt.Header_List" [value]="h">{{h}}</option>
+                        </optgroup>
+                      </ng-container>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 text-right p-0 border-t">
+        <button type="submit" [disabled]="DisableSubmit"
+          class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5">Save</button>
+        <button type="button" (click)="navigate()" [disabled]="DisableSubmit"
+          class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5">Finish</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- 
+<div *ngIf="!ShowMain || Loading" class="pop-bg"></div>
+<div class="loader" *ngIf="!ShowMain || Loading"></div> -->

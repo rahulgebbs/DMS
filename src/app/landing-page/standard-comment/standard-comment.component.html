@@ -1,0 +1,64 @@
+<body class="theme4">
+  <app-header [title]="title"></app-header>
+
+
+
+    <div class="col-md-12 col-sm-12 col-sm-12 p-0">
+        <div class="">
+            <div class="col-md-12 col-sm-12 white p-0 sdt-cmt ">
+                <form [formGroup]="AddStandardComment" (ngSubmit)="SubmitForm();">
+                    <div class="col-md-3 p-0 blue-seprator serpartion-htg">
+                        <div class="col-md-12 col-sm-12 mt-10">
+                            <div class="heading-panel pt-0 pl-0">
+                                <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Add Comments</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-0">
+                            <div class="form-group  mh-15">
+                                <label class=" label-std control-label p-0 b-600 pl-0" for="">Client </label>
+                                <select class="form-control" formControlName="Client_Id"  [(ngModel)]="StandardComment.Client_Id" (change)="ClientOnChange($event)">
+                                  <option [selected]="ClientList.length>1" disabled>Select</option>
+                                  <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">{{c.Client_Name}}</option>
+                                </select>
+                                <label class="error  mt-0" *ngIf="AddStandardComment.get('Client_Id').hasError('required') && validated">Client is required</label>
+                            </div>
+                            <div class="form-group mh-15">
+                                <label for="inputEmail3" class="label-std  control-label p-0 b-600">Comment
+                                </label>
+                                <textarea rows="6" formControlName="Comment" [(ngModel)]="StandardComment.Comment" class="form-control textarea-resize" placeholder=""></textarea>
+                                <label class="error  mt-0" *ngIf="AddStandardComment.get('Comment').hasError('required') && validated">Comment is
+                                  required</label>
+                                <label class="error  mt-0" *ngIf="AddStandardComment.get('Comment').hasError('maxlength') && validated">Maxmium 500
+                                  charcter allowed</label>
+                              </div>
+                              <div class="form-group mh-15">
+                                <div class="col-md-12 text-center p-0">
+                              <button type="submit" class="btn blue square-btn blue-hover btn-txt mr-10 mt-10 mb-0 w-51"
+                              [disabled]="submitBtnDisable">Save</button>
+                            <button type="button" class="btn blue square-btn blue-hover btn-txt mt-10 mb-0 w-51"
+                              (click)="clearForm()">Clear</button>
+                            </div>
+                              </div>
+                        </div>
+                    </div>
+                  </form>
+                    <div class="col-md-9">
+                        <div class="col-md-12 col-sm-12 p-0 mt-10">
+                            <div class="heading-panel pt-0 pl-0">
+                                <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text"> Standard Comments</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 p-0">
+                            <div class="standard-tbl sticky-table sticky-ltr-cells border-0 table-hight">
+                              <ag-grid-angular [enableSorting]="true" [enableFilter]="true" [pagination]="true"
+                              [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
+                             [suppressDragLeaveHidesColumns]="true"     [suppressColumnVirtualisation]="true" [rowSelection]="RowSelection" (firstDataRendered)="autoSizeAll()"
+                              (gridReady)="onGridReady($event)" (rowClicked)="OnRowClicked($event)">
+                            </ag-grid-angular>
+                            </div>
+                        </div>
+                    </div>
+              
+            </div>
+        </div>
+    </div>  

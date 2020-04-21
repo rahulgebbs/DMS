@@ -1,0 +1,359 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position edit-provider-pop">
+
+
+  <div class="col-md-12 grey p-0">
+    <span class="col-md-4 col-sm-2 p-0">
+
+      <div class="heading-panel">
+        <span class="text-sm text-ellipsis heading-txt flex mt-5"> Edit Provider Master</span>
+      </div>
+    </span>
+    <span class="pull-right text-right col-md-8 col-sm-1 cursor mt-5 p-0">
+      <div class="col-md-2 pull-right padding-cross">
+        <i class="fa fa-times" aria-hidden="true" (click)="ToggleModal()"></i>
+      </div>
+    </span>
+  </div>
+  <div class="col-md-12 p-0 mt-10">
+    <form [formGroup]="editProvider" (ngSubmit)="submitForm()">
+      <div class="edit-provider-field col-md-12 p-0">
+        <div class="col-md-12 p-0">
+          <div class="form-group col-md-3">
+            <label for="Practice_Code" class="label-std  control-label p-0 b-600">Practice Code</label>
+            <input class="form-control" type="text" formControlName="Practice_Code"
+              [(ngModel)]="SelectedProvider.Practice_Code" placeholder="" value="" maxlength="50">
+            <label class="error  mt-0" *ngIf="editProvider.get('Practice_Code').hasError('required')">This
+              field is Required</label>
+            <label class="error  mt-0" *ngIf="editProvider.get('Practice_Code').hasError('maxlength')">Exceeded length
+            </label>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="Practice_Name" class="label-std  control-label p-0 b-600">Practice Name</label>
+            <input class="form-control" type="text" formControlName="Practice_Name"
+              [(ngModel)]="SelectedProvider.Practice_Name" placeholder="" value="" maxlength="100">
+
+            <label class="error  mt-0" *ngIf="editProvider.get('Practice_Name').hasError('maxlength')">Exceeded length
+            </label>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label for="Provider_Code" class="label-std  control-label p-0 b-600"> Provider Code </label>
+            <input class="form-control" type="text" formControlName="Provider_Code"
+              [(ngModel)]="SelectedProvider.Provider_Code" placeholder="" value="" maxlength="50">
+            <div class="error" *ngIf="editProvider.get('Provider_Code').hasError('pattern')">
+              Numbers only upto 365
+            </div>
+            <div class="error" *ngIf="editProvider.get('Provider_Code').hasError('required') ">
+              This field is required
+            </div>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="Provider_Legal_LastName" class="label-std  control-label p-0 b-600">Provider Legal Last
+              Name</label>
+            <input class="form-control" type="text" formControlName="Provider_Legal_LastName"
+              [(ngModel)]="SelectedProvider.Provider_Legal_LastName" placeholder="" value="" maxlength="100">
+            <label class="error  mt-0"
+              *ngIf="editProvider.get('Provider_Legal_LastName').hasError('maxlength')">Exceeded
+              length </label>
+          </div>
+
+        </div>
+        <div class="col-md-12 p-0">
+
+          <div class="form-group col-md-3">
+            <label for="Provider_Legal_FirstName" class="label-std  control-label p-0 b-600">Provider Legal
+              FirstName</label>
+            <input class="form-control" type="text" maxlength="100" formControlName="Provider_Legal_FirstName"
+              [(ngModel)]="SelectedProvider.Provider_Legal_FirstName" placeholder="" value="" maxlength="100">
+            <div class="error" *ngIf="editProvider.get('Provider_Legal_FirstName').hasError('required') ">
+              This field is required
+            </div>
+            <label class="error  mt-0"
+              *ngIf="editProvider.get('Provider_Legal_FirstName').hasError('maxlength')">Exceeded
+              length </label>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="Provider_Type" class="label-std  control-label p-0 b-600">Provider Type</label>
+            <input class="form-control" type="text" formControlName="Provider_Type"
+              [(ngModel)]="SelectedProvider.Provider_Type" placeholder="" value="" maxlength="100">
+            <label class="error  mt-0" *ngIf="editProvider.get('Provider_Type').hasError('maxlength')">Exceeded length
+            </label>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="Provider_Group_Name" class="label-std  control-label p-0 b-600">Provider Group Name</label>
+            <input class="form-control" type="text" maxlength="200" formControlName="Provider_Group_Name"
+              [(ngModel)]="SelectedProvider.Provider_Group_Name" placeholder="" value="" maxlength="100">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="TAX_ID" class="label-std  control-label p-0 b-600">TAX ID</label>
+            <input class="form-control" type="text" formControlName="TAX_ID" [(ngModel)]="SelectedProvider.TAX_ID"
+              placeholder="">
+            <div class="error" *ngIf="editProvider.get('TAX_ID').hasError('pattern')">
+              Numbers only
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 p-0">
+
+          <div class="form-group col-md-3">
+            <label for="Individual_NPI" class="label-std  control-label p-0 b-600">Individual NPI</label>
+            <input class="form-control" type="text" formControlName="Individual_NPI"
+              [(ngModel)]="SelectedProvider.Individual_NPI" placeholder="" value="">
+            <div class="error" *ngIf="editProvider.get('Individual_NPI').hasError('pattern')">
+              Numbers only
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="Group_NPI" class="label-std  control-label p-0 b-600">Group NPI</label>
+            <input class="form-control" type="text" formControlName="Group_NPI" [(ngModel)]="SelectedProvider.Group_NPI"
+              placeholder="" value="">
+            <div class="error" *ngIf="editProvider.get('Group_NPI').hasError('pattern')">
+              Numbers only
+            </div>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="Medicare_PTAN" class="label-std  control-label p-0 b-600">Medicare PTAN</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="Medicare_PTAN"
+              [(ngModel)]="SelectedProvider.Medicare_PTAN" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('Medicare_PTAN').hasError('maxlength')">Exceeded length
+            </label>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="MID_TID_TPG" class="label-std  control-label p-0 b-600">MID TID TPG</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="MID_TID_TPG"
+              [(ngModel)]="SelectedProvider.MID_TID_TPG" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('MID_TID_TPG').hasError('maxlength')">Exceeded length
+            </label>
+          </div>
+        </div>
+        <div class="col-md-12 p-0">
+
+          <div class="form-group col-md-3 ">
+            <label for="Physical_AddressLine1" class="label-std  control-label p-0 b-600">Physical AddressLine1</label>
+            <input class="form-control" type="text" maxlength="100" formControlName="Physical_AddressLine1"
+              [(ngModel)]="SelectedProvider.Physical_AddressLine1" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('Physical_AddressLine1').hasError('maxlength')">Exceeded
+              length </label>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="Physical_AddressLine2" class="label-std  control-label p-0 b-600">Physical AddressLine2</label>
+            <input class="form-control" type="text" maxlength="100" formControlName="Physical_AddressLine2"
+              [(ngModel)]="SelectedProvider.Physical_AddressLine2" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('Physical_AddressLine2').hasError('maxlength')">Exceeded
+              length </label>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="Physical_City" class="label-std  control-label p-0 b-600">Physical City</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="Physical_City"
+              [(ngModel)]="SelectedProvider.Physical_City" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('Physical_City').hasError('maxlength')">Exceeded length
+            </label>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="Physical_State" class="label-std  control-label p-0 b-600">Physical State</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="Physical_State"
+              [(ngModel)]="SelectedProvider.Physical_State" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('Physical_State').hasError('maxlength')">Exceeded length
+            </label>
+
+          </div>
+        </div>
+        <div class="col-md-12 p-0">
+
+          <div class="form-group col-md-3 ">
+            <label for="Physical_Zip" class="label-std  control-label p-0 b-600">Physical Zip</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="Physical_Zip"
+              [(ngModel)]="SelectedProvider.Physical_Zip" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('Physical_Zip').hasError('maxlength')">Exceeded length
+            </label>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="Physical_Phone" class="label-std  control-label p-0 b-600">Physical Phone</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="Physical_Phone"
+              [(ngModel)]="SelectedProvider.Physical_Phone" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('Physical_Phone').hasError('maxlength')">Exceeded length
+            </label>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="Physical_Fax_No" class="label-std  control-label p-0 b-600">Physical Fax No</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="Physical_Fax_No"
+              [(ngModel)]="SelectedProvider.Physical_Fax_No" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('Physical_Fax_No').hasError('maxlength')">Exceeded length
+            </label>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="PayToAdd_AddressLine1" class="label-std  control-label p-0 b-600">PayToAdd AddressLine1</label>
+            <input class="form-control" type="text" maxlength="100" formControlName="PayToAdd_AddressLine1"
+              [(ngModel)]="SelectedProvider.PayToAdd_AddressLine1" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('PayToAdd_AddressLine1').hasError('maxlength')">Exceeded
+              length </label>
+
+          </div>
+        </div>
+        <div class="col-md-12 p-0">
+
+          <div class="form-group col-md-3">
+            <label for="PayToAdd_AddressLine2" class="label-std  control-label p-0 b-600">PayToAdd AddressLine2</label>
+            <input class="form-control" type="text" maxlength="100" formControlName="PayToAdd_AddressLine2"
+              [(ngModel)]="SelectedProvider.PayToAdd_AddressLine2" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('PayToAdd_AddressLine2').hasError('maxlength')">Exceeded
+              length </label>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="PayToAdd_City" class="label-std  control-label p-0 b-600">PayToAdd City</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="PayToAdd_City"
+              [(ngModel)]="SelectedProvider.PayToAdd_City" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('PayToAdd_City').hasError('maxlength')">Exceeded length
+            </label>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="PayToAdd_State" class="label-std  control-label p-0 b-600">PayToAdd State</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="PayToAdd_State"
+              [(ngModel)]="SelectedProvider.PayToAdd_State" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('PayToAdd_State').hasError('maxlength')">Exceeded length
+            </label>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="PayToAdd_Zip" class="label-std  control-label p-0 b-600">PayToAdd Zip</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="PayToAdd_Zip"
+              [(ngModel)]="SelectedProvider.PayToAdd_Zip" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('PayToAdd_Zip').hasError('maxlength')">Exceeded length
+            </label>
+
+          </div>
+        </div>
+        <div class="col-md-12 p-0">
+
+          <div class="form-group col-md-3 ">
+            <label for="PayToAdd_Phone" class="label-std  control-label p-0 b-600">PayToAdd Phone</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="PayToAdd_Phone"
+              [(ngModel)]="SelectedProvider.PayToAdd_Phone" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('PayToAdd_Phone').hasError('maxlength')">Exceeded length
+            </label>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="PayToAdd_Fax" class="label-std  control-label p-0 b-600">PayToAdd Fax</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="PayToAdd_Fax"
+              [(ngModel)]="SelectedProvider.PayToAdd_Fax" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('PayToAdd_Fax').hasError('maxlength')">Exceeded length
+            </label>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="IsEnrolled_For_EDI" class="label-std  control-label p-0 b-600">IsEnrolled For EDI</label>
+            <select class="form-control" formControlName="IsEnrolled_For_EDI"
+              [(ngModel)]="SelectedProvider.IsEnrolled_For_EDI">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-3 ">
+            <label for="Enrollment_Date" class="label-std  control-label p-0 b-600">Enrollment Date</label>
+            <input class="form-control" type="text" maxlength="100" formControlName="Enrollment_Date"
+              [(ngModel)]="SelectedProvider.Enrollment_Date" placeholder="" value=""
+              pattern="(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4}">
+            <label class="error  mt-0" *ngIf="editProvider.get('Enrollment_Date').hasError('maxlength')">Exceeded length
+            </label>
+            <div class="error  mt-0" *ngIf="editProvider.get('Enrollment_Date').hasError('pattern')">Invalid Date
+            </div>
+            <label *ngIf="editProvider.get('Enrollment_Date').hasError('required')" class="error">Enrollment Date is
+              required</label>
+          </div>
+        </div>
+        <div class="col-md-12 p-0">
+
+          <div class="form-group col-md-3 ">
+            <label for="Line_of_Business" class="label-std  control-label p-0 b-600">Line of Business</label>
+            <input class="form-control" type="text" formControlName="Line_of_Business"
+              [(ngModel)]="SelectedProvider.Line_of_Business" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('Line_of_Business').hasError('maxlength')">Exceeded
+              length
+            </label>
+
+          </div>
+          <div class="form-group col-md-3 ">
+            <label for="Vendor_Name" class="label-std  control-label p-0 b-600">Vendor Name</label>
+            <input class="form-control" type="text" maxlength="100" formControlName="Vendor_Name"
+              [(ngModel)]="SelectedProvider.Vendor_Name" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('Vendor_Name').hasError('maxlength')">Exceeded length
+            </label>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="Enrollment_Helpdesk_Email" class="label-std  control-label p-0 b-600">Enrollment Helpdesk
+              Email</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="Enrollment_Helpdesk_Email"
+              [(ngModel)]="SelectedProvider.Enrollment_Helpdesk_Email" placeholder="" value="">
+            <label class="error  mt-0"
+              *ngIf="editProvider.get('Enrollment_Helpdesk_Email').hasError('maxlength')">Exceeded length </label>
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="Enrollment_Helpdesk_PH_No" class="label-std  control-label p-0 b-600">Enrollment Helpdesk PH
+              No</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="Enrollment_Helpdesk_PH_No"
+              [(ngModel)]="SelectedProvider.Enrollment_Helpdesk_PH_No" placeholder="" value="">
+            <label class="error  mt-0"
+              *ngIf="editProvider.get('Enrollment_Helpdesk_PH_No').hasError('maxlength')">Exceeded length </label>
+
+
+          </div>
+        </div>
+        <div class="col-md-12 p-0">
+
+          <div class="form-group col-md-3">
+            <label for="Contact_Person_Name" class="label-std  control-label p-0 b-600">Contact Person Name</label>
+            <input class="form-control" type="text" maxlength="100" formControlName="Contact_Person_Name"
+              [(ngModel)]="SelectedProvider.Contact_Person_Name" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('Contact_Person_Name').hasError('maxlength')">Exceeded
+              length </label>
+
+          </div>
+
+          <div class="form-group col-md-3">
+            <label for="Contact_Person_Address" class="label-std  control-label p-0 b-600">Contact Person
+              Address</label>
+            <input class="form-control" type="text" maxlength="100" formControlName="Contact_Person_Address"
+              [(ngModel)]="SelectedProvider.Contact_Person_Address" placeholder="" value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('Contact_Person_Address').hasError('maxlength')">Exceeded
+              length </label>
+
+
+          </div>
+          <div class="form-group col-md-3">
+            <label for="Contact_Person_CallBack_No" class="label-std  control-label p-0 b-600">Contact Person
+              CallBackNo</label>
+            <input class="form-control" type="text" maxlength="50" formControlName="Contact_Person_CallBack_No"
+              [(ngModel)]="SelectedProvider.Contact_Person_CallBack_No" plContact_Person_CallBack_Noaceholder=""
+              value="">
+            <label class="error  mt-0" *ngIf="editProvider.get('Physical_State').hasError('maxlength')">Exceeded length
+            </label>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-12 border-t">
+        <div class="form-group mb-0">
+          <button type="submit" class="mt-0 ml-15 btn blue square-btn blue-hover btn-txt"
+            [disabled]="saveDisabled">Add</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

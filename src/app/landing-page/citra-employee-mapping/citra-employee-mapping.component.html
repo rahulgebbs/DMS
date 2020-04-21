@@ -1,0 +1,111 @@
+<div class="col-md-12 pt-8">
+  <!-- <div class="col-md-12 pt-8">
+    <span class="col-md-12 pull-left pl-7"> -->
+  <form [formGroup]="dashboard" (ngSubmit)="SubmitForm()">
+    <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
+    <span class="pull-left mr-10 pt-3 wt-15">
+      <select class="form-control" (change)="onClientChange($event)" formControlName="ClientId" [(ngModel)]="ClientId"
+        placeholder="d.ff">
+        <option [selected]="ClientList.length >1" disabled>Select</option>
+        <option *ngFor="let Client of ClientList" [value]="Client.Client_Id" [selected]="Client.selected">
+          {{Client.Client_Name}}
+        </option>
+      </select>
+    </span>
+    <!-- </span>
+  </div> -->
+
+    <div *ngIf="show">
+      <div>
+        <span class="col-md-2 col-sm-2 p-0">
+          <div class="heading-panel">
+            <span class="text-sm text-ellipsis heading-txt flex">Supervisor List</span>
+          </div>
+        </span>
+
+      </div>
+      <div>
+        <div>
+          <div class="col-md-1 mb-1" *ngFor="let j of SupervisorList; let k = index;">
+            <label class="custom-control">
+              <input type="checkbox" id="{{k}}" [checked]=" ( j.old == true )" (click)="changeCheckbox(k,$event)"
+                formControlName="vals" />
+              <label for="{{k}}">{{j.Full_Name}}</label>
+            </label>
+          </div>
+          <!-- (click)="changeCheckbox(k,$event)" -->
+        </div>
+      </div>
+      <div></div>
+      <div class="form-group mh-15">
+        <div class="col-md-2 text-center p-0">
+          <!-- data-toggle="modal" data-target=".skip-ac" -->
+          <button type="submit" [disabled]="DisableSubmit" class="btn blue square-btn blue-hover btn-txt mr-10"
+            (click)="getFinalSelectedClient()">Submit</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showfields" class="container">
+      <div class="row">
+        <form [formGroup]="configdetail" (ngSubmit)="SubmitForm1()">
+          <div class="col-sm-3">
+            <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto"><label for="inputEmail3" class="label-std  control-label p-0 b-600">Client Name</label>
+            </span>
+            <span class="pull-left mr-10 pt-3">
+            <input type="text" class="form-control" id="Client_Name" disabled placeholder="" [(ngModel)]="Client_Name"
+              formControlName="Client_Name">
+            </span>
+          </div>
+          <div class="col-sm-3">
+              <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">
+            <label for="inputEmail3" class="label-std  control-label p-0 b-600">Supervisor Name</label>
+            </span>
+            <span class="pull-left mr-10 pt-3" style="width:46%">
+            <input type="text" class="form-control" id="Supervisor_Name" disabled placeholder=""
+              [(ngModel)]="Supervisor_Name" formControlName="Supervisor_Name">
+            </span>
+          </div>
+          <div class="col-sm-2">
+            <form [formGroup]="citramappingForm" (ngSubmit)="submitFrom()">
+              <span class="col-md-12 p-0 text-left">
+                <label class="custom-control client-conf pt-4">
+                  <input type="checkbox" formControlName="isChecked" id="ac-active" (change)="function($event)"
+                    [(ngModel)]="isChecked">
+                  <label for="ac-active" class="pt-4">Is Active</label>
+                </label>
+              </span>
+            </form>
+          </div>
+          <div class="col-md-1 text-center p-0">
+            <!-- data-toggle="modal" data-target=".skip-ac" -->
+            <button type="submit" [disabled]="DisableSubmit"
+              class="btn blue square-btn blue-hover btn-txt mr-10">Update</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 col-xs-12 userlist-stickytable">
+      <div class="col-md-12 col-sm-12 p-0">
+        <div class="heading-panel sT-hight p-0">
+          <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Citra Employee Mapping</span>
+          <div class="right-most">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
+        </div>
+      </div>
+      <div class="col-md-20 col-sm-20 p-0">
+        <div class="table-responcive">
+
+          <div class="sticky-table sticky-ltr-cells border-0 table-hight">
+            <ag-grid-angular [enableColResize]="true" [enableSorting]="true" [enableFilter]="true" [pagination]="true"
+              [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
+              (cellClicked)='onCellClicked($event)' [suppressDragLeaveHidesColumns]="true"
+              [suppressColumnVirtualisation]="true" [rowSelection]="rowSelection" (gridReady)="onGridReady($event)">
+            </ag-grid-angular>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

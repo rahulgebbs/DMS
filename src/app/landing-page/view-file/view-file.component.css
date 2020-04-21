@@ -1,0 +1,12 @@
+.file-name{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    }
+    .mt-3{
+        margin-top: 3px;
+    }
+
+    .hover{
+        cursor: pointer;
+    }

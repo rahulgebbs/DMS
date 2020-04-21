@@ -1,0 +1,110 @@
+.pop-bg{
+    background: #000000b8;
+    /* position: absolute; */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    opacity: 1;
+    padding-right: 6px;
+    overflow-x: hidden;
+    z-index: 1000;
+    overflow-y: inherit;
+    /* z-index: 1050; */
+}
+.pop-position{
+    /* height: 570px;
+    background: white;
+    margin: auto;
+    width: 65%;
+    position: absolute;
+    -webkit-transform: translate(0, 50%);
+    z-index: 20000;
+    left: 0px;
+    right: 0;
+    bottom: 326px; */
+    height: auto;
+    background: white;
+    margin: auto;
+    width: 50%;
+    position: fixed;
+    /* -webkit-transform: translate(0, 50%); */
+    z-index: 1000;
+    left: 0px;
+    right: 0;
+    bottom: 43px;
+}
+.grey{
+    background: #ddd;
+    color: #000;
+}
+.p-0 {
+    padding: 0px !important;
+}
+.heading-panel {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: .5em 1em;
+}
+.heading-txt {
+    font-size: 18px;
+    font-weight: 600;
+    height: 20px;
+}
+.pv-10 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+.pt-7{
+    padding-top: 7px;
+}
+.mr-20{
+    margin-right: 20px;
+}
+.mb-5{
+    margin-bottom: 5px;
+}
+.map-pos{
+    background: white;
+    position: fixed;
+    bottom: 37px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    width: 66%;
+    padding-right: 20px;
+}
+.mb-40{
+    margin-bottom: 40px;
+}
+.owl-dp{
+    width: 100%;
+    height: 25px;
+    border: 1px solid #2431403b;
+    padding: 5px 5px;
+}
+.input-group.date .input-group-addon{
+    cursor:pointer;
+    color: #666;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    padding: 0px 8px;
+    font-size: 12px;
+    height: 25px;
+    border-radius: 0px;
+}
+
+input {
+    color: black !important;
+}

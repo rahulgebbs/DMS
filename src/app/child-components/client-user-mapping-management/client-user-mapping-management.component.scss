@@ -1,0 +1,190 @@
+#tableContainer {
+  // max-height: 425px !important;
+  height: 64vh !important;
+  font: 13px "open sans";
+  // overflow: auto;
+  overflow-y: auto;
+  // overflow-x: scroll;
+  color: #333333;
+  //   overflow-y: auto;
+}
+tr {
+  font: 13px "open sans";
+  font-weight: 700;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: #666;
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 1.3rem 0;
+  vertical-align: middle !important;
+  text-align: left;
+}
+
+td {
+  min-width: 200px !important;
+  text-align: left;
+}
+
+/* Action icons*/
+.actionIcons {
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.toolTip {
+  position: absolute;
+  z-index: 999;
+  background-color: #fff;
+  color: #000;
+  min-width: 230px;
+  min-height: 50vh;
+  max-height: 70vh;
+  // min-height: 100px;
+  padding: 0.5rem;
+  // border: 1px solid;
+  border: 1px solid #cfcfcf;
+}
+
+/* override dropdown placeholder style*/
+.multiselect-dropdown {
+  color: #000 !important;
+  font-weight: 300;
+}
+
+.addBtnContainer {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex: 1;
+  // height: 100%;
+  min-height: 100px;
+}
+
+.confirmFilter {
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+  padding-bottom: 0.5rem;
+  margin: auto 4%;
+}
+
+.filterContainer {
+  float: right !important;
+}
+.filterIcon {
+  cursor: pointer !important;
+}
+
+.lockswitch {
+  position: relative;
+  min-width: 100px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  float: right;
+}
+.lockswitch-checkbox {
+  display: none;
+}
+.lockswitch-label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 0px solid #999999;
+  border-radius: 20px;
+}
+.lockswitch-inner {
+  display: block;
+  width: 200%;
+  margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+  font-size: 13px;
+  font-family: sans-serif;
+}
+.lockswitch-inner:before,
+.lockswitch-inner:after {
+  display: block;
+  float: left;
+  width: 50%;
+  height: 30px;
+  padding: 0;
+  line-height: 30px;
+  font-size: 14px;
+  color: white;
+  font-family: Trebuchet, Arial, sans-serif;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+.lockswitch-inner:before {
+  content: "Inactive";
+  padding-left: 10px;
+  background-color: #666;
+  /* background-color: #0078ae; */
+  color: #ffffff;
+  text-align: left;
+  line-height: 20px;
+  height: 20px;
+  font-weight: normal;
+  font-size: 13px;
+
+}
+.lockswitch-inner:after {
+  // content: "Activate";
+  // padding-right: 5px;
+  // /* background-color: #666; */
+  // background-color: #0078ae;
+  // color: #fff;
+  // text-align: right;
+  // line-height: 21px;
+  // font-weight: normal;
+  // height: 20px;
+  content: "Activate";
+  padding-left: 20px;
+  background-color: #0078ae;
+  color: #fff;
+  text-align: left;
+  line-height: 21px;
+  font-weight: normal;
+  height: 20px;
+  font-size: 13px;
+}
+.lockswitch-switch {
+  display: block;
+  width: 10px;
+  margin: 5px;
+  background: #ffffff;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 60px;
+  border: 0px solid #999999;
+  border-radius: 13px;
+  transition: all 0.3s ease-in 0s;
+}
+.lockswitch-checkbox:checked + .lockswitch-label .lockswitch-inner {
+  margin-left: 0;
+}
+.lockswitch-checkbox:checked .lockswitch-label .lockswitch-switch {
+  right: 0px;
+}
+.lockswitch-label::before {
+  display: none;
+}
+.lockswitch-label::after {
+  display: none;
+}
+.lockswitch [type="checkbox"]:not(:checked) + label,
+.lockswitch [type="checkbox"]:checked + label {
+  padding-left: 0px;
+  height: 20px;
+  margin-bottom: 0;
+}
+.lockswitch-checkbox:checked + .lockswitch-label .lockswitch-switch {
+  right: 0px;
+}

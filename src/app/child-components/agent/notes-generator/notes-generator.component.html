@@ -1,0 +1,301 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position">
+  <div class="col-md-12 p-0 grey">
+    <span class="col-md-10 col-sm-10 p-0">
+      <div class="heading-panel pl-10">
+        <span class="text-sm text-ellipsis heading-txt flex">Notes Generator
+        </span>
+      </div>
+    </span>
+    <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div class="col-md-12 p-0 generate-field">
+    <div class="dark dark-formelement generate-blue-sep">
+      <form>
+        <div class="col-md-12 p-0">
+        <div class="col-md-9 p-0  blue-seprator serpartion-h">
+          <div class="col-md-12 p-0 mt-10 mb-0">
+            <!-- <div class="col-md-4 p-0 pt-10"> -->
+              <div class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="inputEmail3" class="label-std  control-label p-0">PRE Analysis</label>
+                  <textarea class="form-control" name="preanalysis" (change)="CreatePreview()"
+                    [(ngModel)]="NotesModel.PreAnalysis" style="resize: none !important"></textarea>
+                </div>
+              </div>
+              <div class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="usertype" class="label-std  control-label p-0">User Type</label>
+                  <select name="usertype" (change)="OnUserTypeChanged()" class="form-control" id="usertype"
+                    [(ngModel)]="NotesModel.UserType">
+                    <option value="">Select</option>
+                    <option value="1">Analysis</option>
+                    <option value="2">Web</option>
+                    <option value="3">EOB</option>
+                    <option value="4">IVR</option>
+                    <option value="5">Call</option>
+                    <option value="6">Email</option>
+                  </select>
+                </div>
+              </div>
+              <div *ngIf="NotesModel.InsuranceName.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="inputEmail3" class="label-std  control-label p-0">Insurance Name</label>
+                  <input name="insname" (blur)="CreatePreview()" [(ngModel)]="NotesModel.InsuranceName.Value"
+                    class="form-control" type="text">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.Phone.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="inputEmail3" class="label-std  control-label p-0">Phone</label>
+                  <input name="phone" (blur)="CreatePreview()" class="form-control" type="text"
+                    [(ngModel)]="NotesModel.Phone.Value">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.OperatorName.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="inputEmail3" class="label-std  control-label p-0">Operator Name</label>
+                  <input name="operatorname" (blur)="CreatePreview()" class="form-control" type="text"
+                    [(ngModel)]="NotesModel.OperatorName.Value">
+                </div>
+              </div>
+              <div class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="calltype" class="label-std  control-label p-0 b-600">Call Type</label>
+                  <select name="calltype" [(ngModel)]="NotesModel.CallType" (change)="OnCallTypeChange()" id="calltype" class="form-control">
+                    <option value="">Select</option>
+                    <option value="1">Paid To Provider</option>
+                    <option value="2">Claim In Process</option>
+                    <option value="3">Denied</option>
+                    <option value="4">Paid to Patient</option>
+                    <option value="5">Pending</option>
+                    <option value="6">Rejected</option>
+                    <option value="7">Voice Mail</option>
+                    <option value="8">Pt Can't Ident</option>
+                    <option value="9">CNOF</option>
+                  </select>
+                </div>
+              </div>
+              <div *ngIf="NotesModel.ClaimProcessDate.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="ClaimProcessDate" class="label-std  control-label p-0">Claim Process Date</label>
+                  <div class="input-group date col-md-12" id='datetimepicker1'>
+                    <input (dateTimeInput)="CreatePreview()" autocomplete="off" [(ngModel)]="NotesModel.ClaimProcessDate.Value"
+                      (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1"
+                      class="owl-dp" name="ClaimProcessDate" [owlDateTime]="dt1">
+                    <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="NotesModel.ClaimReceiveDate.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="claimreceivedate" class="label-std  control-label p-0">Claim Received Date</label>
+                  <div class="input-group date col-md-12" id='datetimepicker2'>
+                    <input (dateTimeInput)="CreatePreview()" autocomplete="off" [(ngModel)]="NotesModel.ClaimReceiveDate.Value"
+                      (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt2"
+                      class="owl-dp" name="claimreceivedate" [owlDateTime]="dt2">
+                    <span class="input-group-addon" [owlDateTimeTrigger]="dt2">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="NotesModel.ClaimDeniedDate.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="claimdenieddate" class="label-std  control-label p-0">Claim Denied Date</label>
+                  <div class="input-group date col-md-12" id='datetimepicker3'>
+                    <input (dateTimeInput)="CreatePreview()" autocomplete="off" [(ngModel)]="NotesModel.ClaimDeniedDate.Value"
+                      (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt3"
+                      class="owl-dp" name="claimdenieddate" [owlDateTime]="dt3">
+                    <span class="input-group-addon" [owlDateTimeTrigger]="dt3">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="NotesModel.EffectiveDate.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="effectivedate" class="label-std  control-label p-0">Effective Date</label>
+                  <div class="input-group date col-md-12" id='datetimepicker5'>
+                    <input (dateTimeInput)="CreatePreview()" autocomplete="off" [(ngModel)]="NotesModel.EffectiveDate.Value"
+                      (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt5"
+                      class="owl-dp" name="effectivedate" [owlDateTime]="dt5">
+                    <span class="input-group-addon" [owlDateTimeTrigger]="dt5">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt5></owl-date-time>
+                  </div>
+                </div>
+              </div>
+            <!-- </div> -->
+            <!-- <div class="col-md-4 p-0 pt-10"> -->
+              <div *ngIf="NotesModel.TerminationDate.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="terminationdate" class="label-std  control-label p-0">Termination Date</label>
+                  <div class="input-group date col-md-12" id='datetimepicker6'>
+                    <input (dateTimeInput)="CreatePreview()" autocomplete="off" [(ngModel)]="NotesModel.TerminationDate.Value"
+                      (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt6"
+                      class="owl-dp" name="terminationdate" [owlDateTime]="dt6">
+                    <span class="input-group-addon" [owlDateTimeTrigger]="dt6">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt6></owl-date-time>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="NotesModel.ClaimRejectedDate.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="claimrejecteddate" class="label-std  control-label p-0">Claim Rejected Date</label>
+                  <div class="input-group date col-md-12" id='datetimepicker3'>
+                    <input (dateTimeInput)="CreatePreview()" autocomplete="off" [(ngModel)]="NotesModel.ClaimRejectedDate.Value"
+                      (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt4"
+                      class="owl-dp" name="claimrejecteddate" [owlDateTime]="dt4">
+                    <span class="input-group-addon" [owlDateTimeTrigger]="dt4">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="NotesModel.ClaimRejectedReason.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="rejectedreason" class="label-std  control-label p-0">Claim Rejected Reason</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="rejectedreason" type="text"
+                    [(ngModel)]="NotesModel.ClaimRejectedReason.Value">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.AllowedAmount.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="allowedamt" class="label-std  control-label p-0">Allowed Amt</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="allowedamt" type="text"
+                    [(ngModel)]="NotesModel.AllowedAmount.Value">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.PaidAmount.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="paidamt" class="label-std  control-label p-0">Paid Amt</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="paidamt" [(ngModel)]="NotesModel.PaidAmount.Value" type="text">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.PtRespo.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="ptrespo" class="label-std  control-label p-0">Pt Respo</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="ptrespo" type="text" [(ngModel)]="NotesModel.PtRespo.Value">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.ClaimPaidThrough.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="claimpaidthrough" class="label-std  control-label p-0">Claim was paid through
+                  </label>
+                  <input (blur)="CreatePreview()" class="form-control" name="claimpaidthrough" type="text" placeholder="CHK/EFT/CC"
+                    [(ngModel)]="NotesModel.ClaimPaidThrough.Value">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.BulkSingle.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="bulksingle" class="label-std  control-label p-0">Bulk / Single</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="bulksingle" type="text" [(ngModel)]="NotesModel.BulkSingle.Value">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.CashedOutstanding.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="cashedout" class="label-std  control-label p-0">Cashed / Outstanding</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="cashedout" type="text"
+                    [(ngModel)]="NotesModel.CashedOutstanding.Value">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.OtherPayerResponse.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="otherpayerres" class="label-std  control-label p-0">Other Payer Response</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="otherpayerres" type="text"
+                    [(ngModel)]="NotesModel.OtherPayerResponse.Value">
+                </div>
+              </div>
+            <!-- </div> -->
+            <!-- <div class="col-md-4 p-0 pt-10"> -->
+              <div *ngIf="NotesModel.TFLSubmitClaim.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="tflsubmitclaim" class="label-std  control-label p-0">TFL to submit the claim</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="tflsubmitclaim" type="text"
+                    [(ngModel)]="NotesModel.TFLSubmitClaim.Value">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.MailingAddress.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="mailingadd" class="label-std  control-label p-0">Mailing Address</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="mailingadd" type="text"
+                    [(ngModel)]="NotesModel.MailingAddress.Value">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.Fax.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="fax" class="label-std  control-label p-0">Fax</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="fax" type="text" [(ngModel)]="NotesModel.Fax.Value">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.CallRefrence.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="mailingadd" class="label-std  control-label p-0">Call Reference</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="mailingadd" type="text" [(ngModel)]="NotesModel.CallRefrence.Value">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.Claim.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="claim" class="label-std  control-label p-0">Claim</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="claim" type="text" [(ngModel)]="NotesModel.Claim.Value">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.ProcessingLimit.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="processinglimit" class="label-std  control-label p-0">Processing Limit</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="processinglimit" type="text"
+                    [(ngModel)]="NotesModel.ProcessingLimit.Value">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.WhenCallBack.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="whencallback" class="label-std  control-label p-0">When shall we call back</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="whencallback" type="text"
+                    [(ngModel)]="NotesModel.WhenCallBack.Value">
+                </div>
+              </div>
+              <div *ngIf="NotesModel.WhyClaimPending.IsActive" class="col-md-4 mb-10 p-0">
+                <div class="form-group mh-15">
+                  <label for="WhyClaimPending" class="label-std  control-label p-0">Why Claim is Pending</label>
+                  <input (blur)="CreatePreview()" class="form-control" name="WhyClaimPending" type="text"
+                    [(ngModel)]="NotesModel.WhyClaimPending.Value">
+                </div>
+              </div>
+            </div>
+      </div>
+          
+        <!-- </div> -->
+        <div class="col-md-3 p-0">
+          <div class="col-md-12 mb-0 p-0 pt-10 mt-10">
+            <div class="form-group mh-15">
+              <label for="inputEmail3" class="label-std  control-label p-0">Preview</label>
+              <textarea  contentEditable="true" class="form-control preview-textarea prv-gen-ht" rows="10" name="preview" [(ngModel)]="NotesModel.Preview"
+                placeholder="Generated notes.." ></textarea>
+               
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="col-md-12 text-center border-t">
+          <div class="form-group mh-15">
+            <button class="btn btn-txt blue square-btn blue-hover mr-10" (click)="Generate()">Generate</button>
+            <button class="btn btn-txt blue square-btn blue-hover" (click)="Clear()">Clear</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

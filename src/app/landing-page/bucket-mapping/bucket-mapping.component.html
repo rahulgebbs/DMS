@@ -1,0 +1,75 @@
+<app-header [title]="Title"></app-header>
+
+
+<!-- Midd content -->
+<div class="col-md-12 col-sm-12 col-sm-12 p-0">
+  <div class="col-md-12 pt-8">
+        <form [formGroup]="Bucket" class="" role="form">
+    <span class="col-md-12 pull-left pl-7">
+      <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
+      <span class="pull-left mr-10 pt-3 wt-15">
+        <select (change)="ClientListOnChange($event)" formControlName="Client_Id" [(ngModel)]="ClientId" #selectedelem
+          class="form-control">
+          <option [selected]="ClientList.length>1" value="" disabled>Select</option>
+          <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">{{c.Client_Name}}
+          </option>
+        </select>
+      </span>
+      <span>
+        <button [disabled]="DisableClientList" (click)="GetAgentList()"
+          class="btn blue square-btn blue-hover btn-txt mr-10 mt-4">Search</button>
+      </span>
+    </span>
+    </form>
+  </div>
+  <div class="col-md-12 p-0 border-t agent-buk-map-sticky">
+    <div class="col-md-7 col-sm-6 blue-seprator serpartion-h">
+      <div class="col-md-12 col-sm-12 p-0 mt-10">
+        <div class="heading-panel pt-0 pl-0">
+          <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">AR Skills Mapping</span>
+        </div>
+      </div>
+      <div class="col-md-12 p-0">
+        <div class="table-responsive agnt-map-sticky-tbl">
+          <div class="sticky-table sticky-ltr-cells border-0 table-hight">
+            <ag-grid-angular style="width:100%" [rowSelection]="RowSelection" [enableColResize]="true"
+              [enableFilter]="true" (columnResized)="onColumnResized($event)" (gridReady)="onGridReady($event)"
+              class="ag-theme-balham grid-w" [enableSorting]="true" [rowData]="rowData"
+              (rowClicked)="OnRowClicked($event)" [columnDefs]="columnDefs">
+            </ag-grid-angular>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5 col-sm-6 p-0 map-bucket-field">
+      <div class="Col-md-12 mt-15">
+        <div class="col-md-12 col-sm-12 p-0">
+          <div class="heading-panel pt-0">
+            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">AR Skill-Set</span>
+          </div>
+        </div>
+        <div class="col-md-12 list-h">
+          <div class="col-md-12 p-0">
+            <div class="col-md-6 p-0 mt-10" *ngFor="let item of DisplayBuckets">
+              <label class="custom-control">
+                <input [disabled]="DisableMap" type="checkbox" name="Bucket-{{item.key}}" id="Bucket-{{item.key}}"
+                  [(ngModel)]="item.value" />
+                <label for="Bucket-{{item.key}}">{{item.key.split("_").join(" ")}}</label>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-12 mt-10 p-0 text-left">
+            <div class="error" *ngIf="DisplayError">
+              {{DisplayMessage}}
+            </div>
+            <button class="btn blue square-btn blue-hover btn-txt" [disabled]="DisableMap"
+              (click)="SubmitForm()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

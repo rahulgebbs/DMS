@@ -1,0 +1,121 @@
+<app-header [title]="Title"></app-header>
+
+<div class="col-md-12 pull-left mt-10 border-b pb-10">
+  <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client</span>
+  <span class="mr-10 pt-5 pull-left">
+    {{Client_Name}}
+    <!-- <select class="form-control" (change)="ClientListOnChange()" [(ngModel)]="ClientId">
+      <option value="0">Select</option>
+      <option *ngFor="let c of ClientList" [value]="c.Id" [selected]="c.selected">{{c.Client_Name}}
+      </option>
+    </select> -->
+  </span>
+  <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Status</span>
+  <span class="pull-left mr-10 pt-3">
+    <select class="form-control" (change)="OnActionChange()" [(ngModel)]="Action">
+      <option *ngFor="let a of ActionList" [value]="a.Value">{{a.Key}}
+      </option>
+    </select>
+  </span>
+  <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">From Date</span>
+  <span class="wt-120 pull-left mr-10">
+
+    <div class="input-group date wt-120" id="datetimepicker1">
+      <input autocomplete="off" [min]="MinDate" [(ngModel)]="FromDate" (dateTimeInput)="FromDateOnChange()"
+        (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1" class="owl-dp"
+        name="date" [owlDateTime]="dt1">
+      <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+      <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+    </div>
+
+  </span>
+  <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">To Date</span>
+  <span class="wt-120 pull-left mr-10">
+
+    <div class="input-group date wt-120" id="datetimepicker2">
+      <input autocomplete="off" [min]="MinDate" [(ngModel)]="ToDate" (dateTimeInput)="ToDateOnChange()"
+        (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt2" class="owl-dp"
+        name="date" [owlDateTime]="dt2">
+      <span class="input-group-addon" [owlDateTimeTrigger]="dt2">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+      <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+    </div>
+
+  </span>
+  <span>
+    <button class="btn blue square-btn blue-hover btn-txt mr-10 mt-0" [disabled]="DisableSearch || ClientId == 0"
+      (click)="Search()">Search</button>
+  </span>
+</div>
+<div *ngIf="ShowMain" class="col-md-3 p-0 blue-seprator">
+  <div class="col-md-12 col-sm-12 p-0">
+    <div class="heading-panel ptb-0">
+      <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Summary</span>
+    </div>
+    <div class="d-block summary-text-subt mt-10 col-md-12 col-sm-12 col-xs-12 ">Client summary view
+      <div class="col-md-12 p-0 summary-text">
+        <table class="" width="100%">
+          <tbody>
+            <tr *ngFor="let s of Summary">
+              <td>{{s.Status_Name}}</td>
+              <td class="text-right">{{s.Count}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div *ngIf="ShowMain" class="col-md-9">
+  <div class="col-md-12 col-sm-12 p-0">
+    <div class="heading-panel sT-hight p-0">
+      <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Client Approval</span>
+    </div>
+  </div>
+
+  <div *ngIf="ShowAging" class="col-md-12 col-sm-12 mb-5 p-0">
+    <button (click)="GetInventories(a)" *ngFor="let a of AgingData" [ngClass]="[SelectedAging == a ? 'blue' : 'grey']"
+      class="btn square-btn blue-hover btn-txt mr-5"> {{a.AgeingName}}
+      <span class="buckets-list-cl d-unset">
+        <b class="badge circle-buget  badge-sm badge-pill">{{a.Count}}</b>
+      </span>
+    </button>
+  </div>
+  <div class="col-md-12 col-sm-12 p-0">
+    <div class="table-responcive">
+      <div class="sticky-table sticky-ltr-cells border-0 table-hight">
+        <table class="table">
+          <thead>
+            <tr class="sticky-header">
+              <th class="dark">Standard Comments</th>
+              <th class="dark">Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="Comments.length == 0; else showRows">
+              <tr>
+                <td style="text-align: center" colspan="2">
+                  No Comments For available for Selected Action
+                </td>
+              </tr>
+            </ng-container>
+            <ng-template #showRows>
+              <tr *ngFor="let s of Comments" (click)="GetAging(s)">
+                <td [ngClass]="[SelectedComment == s.StandardComment ? 'tr-active' : '']">{{s.StandardComment}}</td>
+                <td [ngClass]="[SelectedComment == s.StandardComment ? 'tr-active' : '']">{{s.Count}}</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end midd content -->
+<app-client-user-approval-modal [TLAction]="Action" [Inventories]="Inventories" [Client_Id]="ClientId"
+  [HeaderStatus]="SelectedHeader" [InventoryCount]="CommentCount" [Standard_Comment]="SelectedComment"
+  (ClosePopup)="ToggleApprovalModal($event)" *ngIf="ShowInventories"></app-client-user-approval-modal>

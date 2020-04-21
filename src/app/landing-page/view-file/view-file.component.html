@@ -1,0 +1,69 @@
+<div class="container-fluid p-0 white">
+
+
+  <app-header [title]="title"></app-header>
+
+  <div class="col-md-12 col-sm-12 col-sm-12 p-0">
+    <div class="">
+
+      <form [formGroup]="submit" (ngSubmit)="submitFrom()">
+        <div class="col-md-12 mt-10">
+          <div class="search-grid">
+            <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
+            <span class="pull-left mr-10 pt-3 wt-15">
+              <select (change)="ClientListOnChange($event)" class="form-control" formControlName="ClientId"
+                [(ngModel)]="data">
+                <option [selected]="ClientList.length >1" disabled >Select</option>
+                <option *ngFor="let c of ClientList; let i = index" [value]="c.Id" [selected]="c.selected">{{c.Client_Name}}
+                </option>
+              </select>
+              <div class="error" *ngIf="selecterror">
+                Please select the client
+              </div>
+            </span>
+            <span class="pull-left mr-10 pt-3 wt-15">
+              <input type="text" autocomplete="off" #file class="form-control" placeholder="File Name" (focus)="setBtn()">
+            </span>
+            <span class="pull-left mr-10 pt-3">
+              <button (click)="GetAllReferenceFile(file.value);" class="btn blue square-btn blue-hover btn-txt mr-10"
+              data-toggle="modal" [disabled]="searchBtnDisable" data-target=".account-list">Search</button>
+            </span>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-12 pt-8">
+                <span class="pull-left">
+                    <span class="pull-left mr-10 pt-3 label-std control-label b-600 w-auto pl-7">Client List : AutoQueue_Demo</span>
+                   
+                </span>
+            </div> -->
+        <div class="col-md-12 mt-10 p-0">
+          <div class="col-md-2 pr-0" (click)="downloadDocument(list);" *ngFor="let list of referencefileList">
+
+            <div class="li-box ul-box hover">
+              <span class="">
+                <i class="{{CheckFormat(list.File_Format)}} fas r-icon-c file-icon"></i>
+
+              </span>
+              <div class=" mt-5">
+                <label class="wrap-text label-std hover file-name" title="{{list.Display_File_Name}}">
+                  {{list.Display_File_Name}}
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </form>
+
+
+
+
+    </div>
+  </div>
+
+
+</div>

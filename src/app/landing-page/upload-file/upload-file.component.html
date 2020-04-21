@@ -1,0 +1,166 @@
+<app-header [title]="title"></app-header>
+
+<div class="container-fluid p-0 white">
+  <div class="col-md-12 col-sm-12 col-sm-12 p-0">
+    <div class="">
+      <div class="col-md-12 mt-10">
+        <div class="search-grid">
+          <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
+          <span class="pull-left mr-10 pt-3 wt-15">
+            <select (change)="ClientListOnChange($event)" #selectedelem class="form-control">
+              <option [selected]="ClientList.length >1" disabled >Select</option>
+              <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">{{c.Client_Name}}</option>
+            </select>
+            <div class="error" *ngIf="selecterror">
+              Please select the client
+            </div>
+          </span>
+          <span class="pull-left mr-10 pt-3 wt-15">
+            <input type="text" #filename autocomplete="off" class="form-control" placeholder="File Name" (focus)="setBtn()">
+          </span>
+          <span class="pull-left pt-3">
+            <button (click)="GetSelectedReferenceFile(filename.value);"   [disabled]="searchBtnDisable" class="btn blue square-btn blue-hover btn-txt mr-10"
+            data-toggle="modal" data-target=".account-list">Search</button>
+          </span>
+          <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Upload File</span>
+          <span class="form-group referance-up pt-3">
+            <div class="file-upload-wrapper" [attr.data-text]="Filename">
+              <input (change)="GetUploadFileData($event)" name="file-upload-field" type="file" accept=".jpeg,.pdf,.xlsx,.png,.doc,.txt"
+                class="file-upload-field" value="" onclick="this.value = null">
+            </div>
+            <!-- data-text="No file chosen"  -->
+            <div class="error" *ngIf="DisplayFileError">
+              Please select the file
+            </div>
+            <div class="error" *ngIf="DisplaySizeError">
+              Please select the file less than 5MB
+            </div>
+          </span>
+          <span class="pull-left mr-10 pt-3"> 
+            <button (click)="ReferenceFileUpload()" [disabled]="uploadBtnDisable" style="border: none;height: 24px;" class="btn blue square-btn blue-hover btn-txt mr-10"
+              data-toggle="modal" data-target=".file-success">
+              <!-- mr-10 mt-5 label grey lg-text label-info square-btn cursor mr-1 -->
+              <i class="fa fa-upload mr-5" aria-hidden="true"></i>Upload </button>
+          </span>
+        </div>
+       
+        <!-- [disabled]="DisableFileList" -->
+        <!-- <div class="search-grid1"></div> -->
+      </div>
+      <div class="col-md-12 p-0 mt-10">
+        <div class="col-md-2 pr-0" *ngFor="let file of referencefiles">
+          <div class="li-box ul-box">
+            <span class="m-l-19">
+              <i class="fas {{CheckFileFormat(file.File_Format)}} r-icon-c file-icon"></i>
+              <!-- fa-file-excel -->
+              <span class="chk-icon-bg yes-bg">
+                <i class="{{CheckIs_Active(file.Is_Active)}} r-icon-c chk-icon-txt tic-color" aria-hidden="true"></i>
+                <!-- fa fa-check  -->
+              </span>
+            </span>
+            <div class=" mt-5">
+              <label class="wrap-text label-std file-name" title="{{file.Display_File_Name}}">
+                {{file.Display_File_Name}}
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    
+    </div>
+
+  </div>
+
+  <!-- Search popup -->
+  <div class="modal fade Search in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+
+    <div class="modal-dialog modal-lg  modal-bottom modal-sm dark" role="document" style="height: 200px;">
+      <div class="modal-content white" style="width: 100%;">
+        <div class="col-md-12 p-0 grey">
+          <span class="col-md-10 col-sm-10 p-0">
+            <div class="heading-panel">
+              <span class="text-sm text-ellipsis heading-txt flex">Search</span>
+            </div>
+          </span>
+          <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" data-dismiss="modal">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="col-md-12 p-0">
+          <div class="form-group mh-15">
+            <label for="inputEmail3" class="label-std mt-10 control-label p-0 b-600">Client Name</label>
+            <select class="form-control">
+              <option>Batch Status CP JU</option>
+              <option>CP Comment</option>
+              <option>Batch Status CP JU</option>
+              <option>Batch Status CP JU</option>
+              <option>Batch Status CP JU</option>
+              <option>Batch Status CP JU</option>
+
+            </select>
+          </div>
+          <div>
+
+          </div>
+          <div class="col-md-12 mt-10 text-left">
+            <a href="#" class="btn blue square-btn blue-hover btn-txt ">Search</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- upload file form popup -->
+  <div class="modal fade upload-file-form in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg  modal-bottom modal-sm white" role="document" style="height: 230px;">
+      <div class="modal-content  white" style="width: 100%;">
+        <div class="col-md-12 grey p-0">
+          <span class="col-md-10 col-sm-10 p-0">
+            <div class="heading-panel">
+              <span class="text-sm text-ellipsis heading-txt flex ">Reference Document Upload</span>
+            </div>
+          </span>
+          <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" data-dismiss="modal">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="col-md-12 p-0">
+          <div class="form-group mh-15">
+            <label for="inputEmail3" class="label-std mt-10 control-label p-0 b-600">Client Name</label>
+            <select class="form-control">
+              <option>Batch Status CP JU</option>
+              <option>CP Comment</option>
+              <option>Batch Status CP JU</option>
+              <option>Batch Status CP JU</option>
+              <option>Batch Status CP JU</option>
+              <option>Batch Status CP JU</option>
+
+            </select>
+          </div>
+          <!-- <div class="form-group mh-15">
+                                <label for="inputEmail3" class="label-std control-label p-0 b-600">Document Name</label>
+                                <input type="text" class="form-control" id="lastname" placeholder="Document Name" value="">
+                       </div>  -->
+          <div>
+            <div class=" mh-15">
+              <span class="form-group file-upl w-100">
+                <form class="form">
+                  <div class="file-upload-wrapper" data-text="No file chosen">
+                    <input name="file-upload-field" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                      class="file-upload-field" value="" onclick="this.value = null">
+                  </div>
+                </form>
+              </span>
+            </div>
+
+          </div>
+          <div class="col-md-12 mt-10 text-left">
+            <a href="#" class="btn blue square-btn blue-hover btn-txt">Upload</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,45 @@
+<div class="container-fluid p-0 white">
+  <app-header [title]="title"></app-header>
+
+  <div class="col-md-12 col-sm-12 col-sm-12 p-0">
+    <div class="col-md-12 col-sm-12 p-0 super-deallocation">
+      <form class="form-horizontal" role="form">
+        <div class="deallocation-bucket text-center pv-10">
+          <div class="col-md-12 p-0">
+            <div class="form-group mb-0" (change)="ClientSelectDropdown($event)">
+              <form [formGroup]="AgentdeallocationForm" (ngSubmit)="submitFrom()">
+                <div >
+                    <label class=" label-std control-label p-0 b-600 pl-0" for="">Client</label>
+                    <select class="form-control" formControlName="ClientId" [(ngModel)]="ClientId" placeholder="d.ff" (change)="ClientListOnChange($event)">
+                      <option [selected]="ClientList[0].selected == false || !ClientList" value="" disabled >Select</option>
+                      <option *ngFor="let Client of ClientList" [selected]="Client.selected == true" [value]="Client.Client_Id"  >{{Client.Client_Name}} </option>
+                    </select>
+                </div>
+               
+              </form>
+            </div>
+            <div class="form-group" *ngIf="showOptionButtons">
+                <label class=" label-std control-label p-0 b-600 pl-0" for="">Check Option</label>
+                <div class="radioBorder">
+                  <label class="radio-inline">
+                    <input type="radio" name="checklist" value="byBucket"  [(ngModel)]="checklist" (change)="OpenByBucket($event)" >
+                    By Bucket
+                  </label>
+                  <label class="radio-inline">
+                    <input  type="radio" name="checklist" value="byAgent" [(ngModel)]="checklist"  (change)="OpenByAgent($event)">
+                    By Agent
+                  </label>
+                </div>
+              </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- 
+<app-employee-selector-deallocate-modal *ngIf="ShowModal" [AllEmployees]="Employees" (SendSelectedEmp)="SetSelectedEmp($event)"
+  (CloseModal)="CloseModal($event)"></app-employee-selector-deallocate-modal> -->
+  <app-by-bucket-deallocation-modal *ngIf="ShowBucketModal" (CloseModal)="CloseBucketModal($event)"  [AllBucket]="bucketList" [AllEmployee]="empList" [clientId]="ClientId"  ></app-by-bucket-deallocation-modal>
+  <app-by-agent-deallocation-modal *ngIf="ShowAgentModal" (CloseModal)="CloseAgentModal($event)"   [AllEmployeeList]="GetEmployeeName" [AllBucketByEmp]="AllBucketByEmpList" [clientId]="ClientId"></app-by-agent-deallocation-modal>

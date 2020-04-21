@@ -1,0 +1,834 @@
+<app-header [title]="title"></app-header>
+
+<div class="col-md-12 col-sm-12 col-sm-12 p-0 box-heightSD">
+    <div class="col-md-12 pt-8">
+        <span class="col-md-12 pull-left pl-7">
+            <form [formGroup]="dashboard">
+                <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
+                <span class="pull-left mr-10 pt-3 wt-15">
+                    <select class="form-control" formControlName="ClientId" [(ngModel)]="ClientId" placeholder="d.ff"
+                        (change)="onClientChange($event)">
+
+                        <option [selected]="ClientList.length >1" disabled>Select</option>
+                        <option *ngFor="let Client of ClientList" [value]="Client.Client_Id"
+                            [selected]="Client.selected">{{Client.Client_Name}}
+                        </option>
+
+                    </select>
+                </span>
+                <span>
+                    <button class="mt-3 btn blue square-btn blue-hover btn-txt mr-10" data-toggle="modal"
+                        data-target=".account-list" (click)="selectedClient()" [disabled]="disablebtn">Search</button>
+
+                </span>
+            </form>
+        </span>
+    </div>
+    <div class="col-md-12 supervisor-dash-tbl" *ngIf="show">
+        <!-- <label class="error" *ngIf="nodata">There is no Data for Client :- {{ Client_Name}}</label> -->
+        <!-- <div class="" style="border:0px solid #ddd;"> -->
+
+        <div class="sticky-table sticky-ltr-cells border-0 table-hight super-dash-table" *ngIf="!nodata">
+            <table class="table" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr class="bor">
+                        <th class="hg-header dark heading-txt " colspan="25"> Weekly Execution Plan
+                            Dashboard </th>
+                    </tr>
+                    <tr>
+                        <th class="restbar" width="250">{{uploaddate}}</th>
+                        <th class="restbar" width="250">Configuration</th>
+                        <th class="restbar" colspan="2" width="250">{{payerwise}}</th>
+                        <th class="restbar" colspan="2" width="250">Day - {{uploadInventory_date}} </th>
+                        <th class="clientnames " colspan="15" width="250">Client Name : {{Client_Name}}
+                        </th>
+                        <th class="restbar" width="250"> IM Edits</th>
+                        <th width="250" class="restbar" (click)="onImedit()" onmouseover="" style="cursor: pointer;">
+                            {{IM_edits_count}}
+                        </th>
+                    </tr>
+                    <!-- <tr>
+                                                            <th class="bor lighter-blue">Configuration</th>
+                                                            <th class="bor lighter-blue" colspan="3">{{payerwise}}</th>
+                                                            <th class="bor blue">Day - {{uploadInventory_date}} </th>
+                                                            <th colspan="10"></th>
+                                                            <th class="bor lighter-blue"> IM Edits</th>
+                                                            <th class="bor lighter-blue" (click)="onImedit()" onmouseover=""
+                                                                style="cursor: pointer;">{{IM_edits_count}}
+                                                            </th>
+                                                        </tr> -->
+                    <!-- <tr>
+                                                            <th class="dark"> Queue Name</th>
+                                                            <th class="dark">
+                                                                <table width="100%">
+                                                                    <tr>
+                                                                        <th colspan="2">Never Touched</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="voice vnv">V</th>
+                                                                        <th class="nvoice  onv borderright">NV</th>
+                                                                    </tr>
+                                                                </table>
+                                                            </th>
+                                                            <th class="dark">
+                                                                <table width="100%">
+                                                                    <tr>
+                                                                        <th colspan="2">Collectable Insurance</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="voice vnv">V</th>
+                                                                        <th class="nvoice  onv borderright">NV</th>
+                                                                    </tr>
+                                                                </table>
+                                                            </th>
+                                                            <th class="dark">
+                                                                <table width="100%">
+                                                                    <tr>
+                                                                        <th colspan="2">Collectable Patient</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="voice vnv">V</th>
+                                                                        <th class="nvoice  onv borderright">NV</th>
+                                                                    </tr>
+                                                                </table>
+                                                            </th>
+                                                            <th class="dark">
+                                                                <table width="100%">
+                                                                    <tr>
+                                                                        <th colspan="2">Cash In Bank</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="voice vnv">V</th>
+                                                                        <th class="nvoice  onv borderright">NV</th>
+                                                                    </tr>
+                                                                </table>
+                                                            </th>
+                                                            <th class="dark">
+                                                                <table width="100%">
+                                                                    <tr>
+                                                                        <th colspan="2">Call Banks</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="voice vnv">V</th>
+                                                                        <th class="nvoice  onv borderright">NV</th>
+                                                                    </tr>
+                                                                </table>
+                                                            </th>
+                                                            <th class="dark">
+                                                                <table width="100%">
+                                                                    <tr>
+                                                                        <th colspan="2">Closed</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th class="voice vnv">V</th>
+                                                                        <th class="nvoice  onv borderright">NV</th>
+                                                                    </tr>
+                                                                </table>
+                                                            </th>
+                                                            <th class="dark " width="">Special Queue</th>
+                                                            <th class="dark " width="">Public To call</th>
+                                                            <th class="dark " width="">Private To Call</th>
+                                                            <th class="dark " width="">Total</th>
+                                                        </tr> -->
+                    <tr class="border-t">
+                        <th class="dark " rowspan="2" width="250"> Queue Name</th>
+                        <th class="dark " colspan="2" width="250">Never Touched</th>
+                        <th class="dark " colspan="2" width="250">Collectable Insurance</th>
+                        <th class="dark " colspan="2" width="250">Collectable Patient</th>
+                        <th class="dark " colspan="2" width="250">Cash In Bank</th>
+                        <th class="dark " colspan="2" width="250">Call Banks</th>
+                        <th class="dark " colspan="2" width="250">closed</th>
+                        <th class="dark " rowspan="2" width="250">Special Queue</th>
+                        <th class="dark " rowspan="2" width="250">Manual Queue</th>
+                        <th class="dark " rowspan="2" width="250">Public To call</th>
+                        <th class="dark " rowspan="2" width="250">Private To Call</th>
+                        <th class="dark " rowspan="2" width="250" style="width:450px !important;">Appeal Follow Up</th>
+                        <th class="dark " rowspan="2" width="250">To Be Appeal</th>
+                        <th class="dark " rowspan="2" width="250">TL Deny</th>
+                        <th class="dark " rowspan="2" width="250">Client Response</th>
+                        <th class="dark " rowspan="2" width="250">Coding Helpdesk</th>
+                        <th class="dark " rowspan="2" width="250">Coding Response</th>
+                        <th class="dark " rowspan="2" width="250">CEX Uncollectible</th>
+                        <th class="dark " rowspan="2" width="250">Total</th>
+                    </tr>
+                    <tr class="border-t">
+                        <th class="voice vnv  ">v</th>
+                        <th class="nvoice  onv borderright">NV</th>
+                        <th class="voice vnv">v</th>
+                        <th class="nvoice   onv borderright">NV</th>
+                        <th class="voice vnv">V</th>
+                        <th class="nvoice borderright  onv">NV</th>
+                        <th class="voice vnv">V</th>
+                        <th class="nvoice   onv">NV</th>
+                        <th class="voice vnv">V</th>
+                        <th class="nvoice   onv">NV</th>
+                        <th class="voice vnv">V</th>
+                        <th class="nvoice   onv">NV</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="t-bold">
+                        <td class="borderright floor ">Opening AR_Dollars</td>
+                        <td class="">{{OpeningARdollars?.NeverTouched_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="">{{OpeningARdollars?.NeverTouched_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+
+
+                        <td class="">{{OpeningARdollars?.Collectible_Insurance_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="">{{OpeningARdollars?.Collectible_Insurance_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+
+
+                        <td class="">{{OpeningARdollars?.Collectible_Patient_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="">{{OpeningARdollars?.Collectible_Patient_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+
+
+                        <td class="">{{OpeningARdollars?.Cash_In_Bank_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td>{{OpeningARdollars?.Cash_In_Bank_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+
+
+                        <td>{{OpeningARdollars?.Call_Backs_Voice | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
+                        <td>{{OpeningARdollars?.Call_Backs_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+
+
+                        <td>{{OpeningARdollars?.Closed_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td>{{OpeningARdollars?.Closed_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+
+                        <td class="borderright floor ">{{OpeningARdollars?.Special_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{OpeningARdollars?.Manual_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{OpeningARdollars?.Public_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{OpeningARdollars?.Private_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{OpeningARdollars?.Appeal_Follow_Up | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{OpeningARdollars?.To_Be_Appeal | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{OpeningARdollars?.TL_Deny | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{OpeningARdollars?.Client_Response | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{OpeningARdollars?.Coding_Help_Desk | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{OpeningARdollars?.Coding_Responses | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{OpeningARdollars?.CEX_Uncollectible | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{OpeningARdollars?.Total | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                    </tr>
+
+
+                    <tr class="t-bold">
+                        <td class="borderright floor ">Opening AR_Count</td>
+                        <td class="floright">{{OpeningARcount?.NeverTouched_Voice}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.NeverTouched_NonVoice}}</td>
+                        <td class="floright">{{OpeningARcount?.Collectible_Insurance_Voice}}
+                        </td>
+                        <td class="borderright floor ">
+                            {{OpeningARcount?.Collectible_Insurance_NonVoice}}</td>
+                        <td class="floright">{{OpeningARcount?.Collectible_Patient_Voice}}
+                        </td>
+                        <td class="borderright floor ">{{OpeningARcount?.Collectible_Patient_NonVoice}}
+                        </td>
+                        <td class="floright">{{OpeningARcount?.Cash_In_Bank_Voice}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.Cash_In_Bank_NonVoice}}</td>
+                        <td class="floright">{{OpeningARcount?.Call_Backs_Voice}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.Call_Backs_NonVoice}}</td>
+                        <td class="floright">{{OpeningARcount?.Closed_Voice}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.Closed_NonVoice}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.Special_Queue}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.Manual_Queue}}</td>
+                        
+                        <td class="borderright floor ">{{OpeningARcount?.Public_To_Call}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.Private_To_Call}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.Appeal_Follow_Up}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.To_Be_Appeal}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.TL_Deny}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.Client_Response}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.Coding_Help_Desk}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.Coding_Responses}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.CEX_Uncollectible}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.Total}}</td>
+                    </tr>
+
+
+
+
+                    <tr class="t-bold">
+                        <td class="borderright floor ">Influx$$</td>
+                        <td class="floright">{{Influx$$?.NeverTouched_Voice| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.NeverTouched_NonVoice| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Influx$$?.Collectible_Insurance_Voice| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.Collectible_Insurance_NonVoice| currency : 'USD' : 'symbol' : '1.0-0'}}
+                        </td>
+                        <td class="floright">{{Influx$$?.Collectible_Patient_Voice| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.Collectible_Patient_NonVoice| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Influx$$?.Cash_In_Bank_Voice| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.Cash_In_Bank_NonVoice| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Influx$$?.Call_Backs_Voice| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.Call_Backs_NonVoice| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Influx$$?.Closed_Voice| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.Closed_NonVoice| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.Special_Queue| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.Manual_Queue| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+
+                        <td class="borderright floor ">{{Influx$$?.Public_To_Call| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.Private_To_Call| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.Appeal_Follow_Up| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.To_Be_Appeal| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.TL_Deny| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.Client_Response| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.Coding_Help_Desk| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.Coding_Responses| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.CEX_Uncollectible| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.Total | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                    </tr>
+
+
+                    <tr class="t-bold">
+                        <td class="borderright floor">Influx##</td>
+                        <td class="floright">{{Influxhash?.NeverTouched_Voice}}</td>
+                        <td class="borderright floor">{{Influxhash?.NeverTouched_NonVoice}}</td>
+                        <td class="floright">{{Influxhash?.Collectible_Insurance_Voice}}</td>
+                        <td class="borderright floor">{{Influxhash?.Collectible_Insurance_NonVoice}}
+                        </td>
+                        <td class="floright">{{Influxhash?.Collectible_Patient_Voice}}</td>
+                        <td class="borderright floor">{{Influxhash?.Collectible_Patient_NonVoice}}</td>
+                        <td class="floright">{{Influxhash?.Cash_In_Bank_Voice}}</td>
+                        <td class="borderright floor"> {{Influxhash?.Cash_In_Bank_NonVoice}}</td>
+                        <td class="floright">{{Influxhash?.Call_Backs_Voice}}</td>
+                        <td class="borderright floor">{{Influxhash?.Call_Backs_NonVoice}}</td>
+                        <td class="floright">{{Influxhash?.Closed_Voice}}</td>
+                        <td class="borderright floor">{{Influxhash?.Closed_NonVoice}}</td>
+                        <td class="borderright floor">{{Influxhash?.Special_Queue}}</td>
+                        <td class="borderright floor">{{Influxhash?.Manual_Queue}}</td>
+                        <td class="borderright floor">{{Influxhash?.Public_To_Call}}</td>
+                        <td class="borderright floor">{{Influxhash?.Private_To_Call}}</td>
+                        <td class="borderright floor ">{{Influxhash?.Appeal_Follow_Up}}</td>
+                        <td class="borderright floor ">{{Influxhash?.To_Be_Appeal}}</td>
+                        <td class="borderright floor ">{{Influxhash?.TL_Deny}}</td>
+                        <td class="borderright floor ">{{Influxhash?.Client_Response}}</td>
+                        <td class="borderright floor ">{{Influxhash?.Coding_Help_Desk}}</td>
+                        <td class="borderright floor ">{{Influxhash?.Coding_Responses}}</td>
+                        <td class="borderright floor ">{{Influxhash?.CEX_Uncollectible}}</td>
+                        <td class="borderright floor">{{Influxhash?.Total}}</td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="borderright floor">Pending AR_Dollars</td>
+                        <td class="floright">{{PendingARdollars?.NeverTouched_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{PendingARdollars?.NeverTouched_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{PendingARdollars?.Collectible_Insurance_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">
+                            {{PendingARdollars?.Collectible_Insurance_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{PendingARdollars?.Collectible_Patient_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">
+                            {{PendingARdollars?.Collectible_Patient_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{PendingARdollars?.Cash_In_Bank_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{PendingARdollars?.Cash_In_Bank_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{PendingARdollars?.Call_Backs_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{PendingARdollars?.Call_Backs_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{PendingARdollars?.Closed_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{PendingARdollars?.Closed_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{PendingARdollars?.Special_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{PendingARdollars?.Manual_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{PendingARdollars?.Public_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{PendingARdollars?.Private_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{PendingARdollars?.Appeal_Follow_Up | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{PendingARdollars?.To_Be_Appeal | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{PendingARdollars?.TL_Deny | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{PendingARdollars?.Client_Response | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{PendingARdollars?.Coding_Help_Desk | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{PendingARdollars?.Coding_Responses | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{PendingARdollars?.CEX_Uncollectible | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{PendingARdollars?.Total | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="borderright floor">Pending AR_Count</td>
+                        <td class="floright">{{PendingARcount?.NeverTouched_Voice}}</td>
+                        <td class="borderright floor">{{PendingARcount?.NeverTouched_NonVoice}}</td>
+                        <td class="floright">{{PendingARcount?.Collectible_Insurance_Voice}}</td>
+                        <td class="borderright floor">{{PendingARcount?.Collectible_Insurance_NonVoice}}
+                        </td>
+                        <td class="floright">{{PendingARcount?.Collectible_Patient_Voice}}</td>
+                        <td class="borderright floor">{{PendingARcount?.Collectible_Patient_NonVoice}}
+                        </td>
+                        <td class="floright">{{PendingARcount?.Cash_In_Bank_Voice}}</td>
+                        <td class="borderright floor"> {{PendingARcount?.Cash_In_Bank_NonVoice}}</td>
+                        <td class="floright">{{PendingARcount?.Call_Backs_Voice}}</td>
+                        <td class="borderright floor">{{PendingARcount?.Call_Backs_NonVoice}}</td>
+                        <td class="floright">{{PendingARcount?.Closed_Voice}}</td>
+                        <td class="borderright floor">{{PendingARcount?.Closed_NonVoice}}</td>
+                        <td class="borderright floor">{{PendingARcount?.denialInput}}</td>
+                        <td class="borderright floor">{{PendingARcount?.Special_Queue}}</td>
+                        <td class="borderright floor">{{PendingARcount?.Manual_Queue}}</td>
+                        <td class="borderright floor">{{PendingARcount?.Public_To_Call}}</td>
+                        <td class="borderright floor">{{PendingARcount?.Private_To_Call}}</td>
+                        <td class="borderright floor ">{{PendingARcount?.Appeal_Follow_Up}}</td>
+                        <td class="borderright floor ">{{PendingARcount?.To_Be_Appeal}}</td>
+                        <td class="borderright floor ">{{PendingARcount?.TL_Deny}}</td>
+                        <td class="borderright floor ">{{PendingARcount?.Client_Response}}</td>
+                        <td class="borderright floor ">{{PendingARcount?.Coding_Help_Desk}}</td>
+                        <td class="borderright floor ">{{PendingARcount?.Coding_Responses}}</td>
+                        <td class="borderright floor ">{{PendingARcount?.CEX_Uncollectible}}</td>
+                        <td class="borderright floor">{{PendingARcount?.Total}}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="borderright floor">Productivity Target </td>
+                        <td class="floright">{{Productivity_Target?.NeverTouched_Voice}}</td>
+                        <td class="borderright floor">{{Productivity_Target?.NeverTouched_NonVoice}}
+                        </td>
+                        <td class="floright">{{Productivity_Target?.Collectible_Insurance_Voice}}</td>
+                        <td class="borderright floor">
+                            {{Productivity_Target?.Collectible_Insurance_NonVoice}}</td>
+                        <td class="floright">{{Productivity_Target?.Collectible_Patient_Voice}}</td>
+                        <td class="borderright floor">
+                            {{Productivity_Target?.Collectible_Patient_NonVoice}}</td>
+                        <td class="floright">{{Productivity_Target?.Cash_In_Bank_Voice}}</td>
+                        <td class="borderright floor"> {{Productivity_Target?.Cash_In_Bank_NonVoice}}
+                        </td>
+                        <td class="floright">{{Productivity_Target?.Call_Backs_Voice}}</td>
+                        <td class="borderright floor">{{Productivity_Target?.Call_Backs_NonVoice}}</td>
+                        <td class="floright">{{Productivity_Target?.Closed_Voice}}</td>
+                        <td class="borderright floor">{{Productivity_Target?.Closed_NonVoice}}</td>
+                        <td class="borderright floor">{{Productivity_Target?.Special_Queue}}</td>
+                        <td class="borderright floor">{{Productivity_Target?.Manual_Queue}}</td>
+                        <td class="borderright floor">{{Productivity_Target?.Public_To_Call}}</td>
+                        <td class="borderright floor">{{Productivity_Target?.Private_To_Call}}</td>
+                        <td class="borderright floor ">{{Productivity_Target?.Appeal_Follow_Up}}</td>
+                        <td class="borderright floor ">{{Productivity_Target?.To_Be_Appeal}}</td>
+                        <td class="borderright floor ">{{Productivity_Target?.TL_Deny}}</td>
+                        <td class="borderright floor ">{{Productivity_Target?.Client_Response}}</td>
+                        <td class="borderright floor ">{{Productivity_Target?.Coding_Help_Desk}}</td>
+                        <td class="borderright floor ">{{Productivity_Target?.Coding_Responses}}</td>
+                        <td class="borderright floor ">{{Productivity_Target?.CEX_Uncollectible}}</td>
+                        <td class="borderright floor">{{Productivity_Target?.Total}}</td>
+                    </tr>
+
+                    <tr onmouseover="" style="cursor: pointer;">
+                        <td class="borderright floor ">Allocated Count</td>
+                        <td class="dark-text floright">
+                            <div class="t-n" (click)="function(11)">
+                                {{Allocated_Count?.NeverTouched_Voice}}</div>
+                          
+                        </td>
+                        <td class="dark-text borderright floor">
+                            <div class="t-n" (click)="function(10)">
+                                {{Allocated_Count?.NeverTouched_NonVoice}}</div>
+
+                           
+                        </td>
+                        <td class="dark-text floright">
+                            <div class="t-n" (click)="function(7)">
+                                {{Allocated_Count?.Collectible_Insurance_Voice}}</div>
+                          
+                        </td>
+                        <td class="dark-text borderright floor">
+                            <div class="t-n" (click)="function(6)">
+                                {{Allocated_Count?.Collectible_Insurance_NonVoice}}</div>
+                       
+                        </td>
+                        <td class="dark-text floright">
+                            <div class="t-n" (click)="function(9)">
+                                {{Allocated_Count?.Collectible_Patient_Voice}}</div>
+                         
+                        </td>
+                        <td class="dark-text borderright floor">
+                            <div class="t-n" (click)="function(8)">
+                                {{Allocated_Count?.Collectible_Patient_NonVoice}}</div>
+                      
+                        </td>
+                        <td class="dark-text floright">
+                            <div class="t-n" (click)="function(3)">
+                                {{Allocated_Count?.Cash_In_Bank_Voice}}</div>
+                        </td>
+                        <td class="dark-text borderright floor">
+                            <div class="t-n" (click)="function(2)">
+                                {{Allocated_Count?.Cash_In_Bank_NonVoice}}</div>
+                          
+                        </td>
+                        <td class="dark-text floright">
+                            <div class="t-n" (click)="function(1)">
+                                {{Allocated_Count?.Call_Backs_Voice}}</div>
+                        
+                        </td>
+                        <td class="dark-text borderright floor">
+                            <div class="t-n" (click)="function(0)">
+                                {{Allocated_Count?.Call_Backs_NonVoice}}</div>
+                           
+                        </td>
+                        <td class="dark-text floright">
+                            <div class="t-n" (click)="function(5)">
+                                {{Allocated_Count?.Closed_Voice}}</div>
+                          
+                        </td>
+                        <td class="dark-text borderright floor">
+                            <div class="t-n" (click)="function(4)">
+                                {{Allocated_Count?.Closed_NonVoice}}</div>
+                          
+                        </td>
+                        <td class="dark-text borderright floor">
+                            <div class="t-n" (click)="function(14)">
+                                {{Allocated_Count?.Special_Queue}}</div>
+                            
+                        </td>
+                        <td class="dark-text borderright floor">
+                                <div class="t-n" (click)="function(14)">
+                                    {{Allocated_Count?.Manual_Queue}}</div>
+                                
+                            </td>
+                        <td class="dark-text borderright floor">
+                            <div class="t-n" (click)="function(13)">
+                                {{Allocated_Count?.Public_To_Call}}</div>
+                           
+                        </td>
+                        <td class="dark-text borderright floor">
+                            <div class="t-n" (click)="function(12)">
+                                {{Allocated_Count?.Private_To_Call}}</div>
+                          
+                        </td>
+
+                        <td class="dark-text borderright floor">
+                            <div class="t-n" (click)="function(18)">
+                                {{Allocated_Count?.Appeal_Follow_Up}}</div>
+                         
+                        </td>
+
+
+                        <td class="dark-text borderright floor">
+                            <div class="t-n" (click)="function(17)">
+                                {{Allocated_Count?.To_Be_Appeal}}</div>
+                            
+                        </td>
+
+
+                        <td class="dark-text borderright floor">
+                            <div class="t-n" (click)="function(15)">
+                                {{Allocated_Count?.TL_Deny}}</div>
+                           
+                        </td>
+
+
+                        <td class="dark-text borderright floor">
+                            <div class="t-n" (click)="function(16)">
+                                {{Allocated_Count?.Client_Response}}</div>
+                           
+                        </td>
+
+                        <td class="dark-text borderright floor">
+                                <div class="t-n" (click)="function(19)">
+                                        {{Allocated_Count?.Coding_Help_Desk}} </div>
+                               
+                            </td>
+
+                            
+                        <td class="dark-text borderright floor">
+                                <div class="t-n" (click)="function(20)">
+                                        {{Allocated_Count?.Coding_Responses}}   </div>
+                               
+                            </td>
+
+
+                            <td class="dark-text borderright floor">
+                                <div class="t-n" (click)="function(20)">
+                                        {{Allocated_Count?.CEX_Uncollectible}}   </div>
+                               
+                            </td>
+                      
+                        <td class="dark-text borderright floor">
+                            <div class="" (click)="function()">
+                                {{Allocated_Count?.Total}}</div>
+                           
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="borderright floor">Allocated $ Value</td>
+                        <td class="floright">{{Allocated_$_Value?.NeverTouched_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Allocated_$_Value?.NeverTouched_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Allocated_$_Value?.Collectible_Insurance_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">
+                            {{Allocated_$_Value?.Collectible_Insurance_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Allocated_$_Value?.Collectible_Patient_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">
+                            {{Allocated_$_Value?.Collectible_Patient_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Allocated_$_Value?.Cash_In_Bank_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Allocated_$_Value?.Cash_In_Bank_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Allocated_$_Value?.Call_Backs_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Allocated_$_Value?.Call_Backs_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Allocated_$_Value?.Closed_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Allocated_$_Value?.Closed_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Allocated_$_Value?.Special_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Allocated_$_Value?.Manual_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Allocated_$_Value?.Public_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Allocated_$_Value?.Private_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Allocated_$_Value?.Appeal_Follow_Up | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Allocated_$_Value?.To_Be_Appeal | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Allocated_$_Value?.TL_Deny | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Allocated_$_Value?.Client_Response | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Allocated_$_Value?.Coding_Help_Desk | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Allocated_$_Value?.Coding_Responses | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Allocated_$_Value?.CEX_Uncollectible | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Allocated_$_Value?.Total | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td class="borderright floor">Staff Allocated</td>
+                        <td class="floright">{{Staff_Allocated?.NeverTouched_Voice}}</td>
+                        <td class="borderright floor">{{Staff_Allocated?.NeverTouched_NonVoice}}</td>
+                        <td class="floright">{{Staff_Allocated?.Collectible_Insurance_Voice}}</td>
+                        <td class="borderright floor">
+                            {{Staff_Allocated?.Collectible_Insurance_NonVoice}}</td>
+                        <td class="floright">{{Staff_Allocated?.Collectible_Patient_Voice}}</td>
+                        <td class="borderright floor">{{Staff_Allocated?.Collectible_Patient_NonVoice}}
+                        </td>
+                        <td class="floright">{{Staff_Allocated?.Cash_In_Bank_Voice}}</td>
+                        <td class="borderright floor"> {{Staff_Allocated?.Cash_In_Bank_NonVoice}}</td>
+                        <td class="floright">{{Staff_Allocated?.Call_Backs_Voice}}</td>
+                        <td class="borderright floor">{{Staff_Allocated?.Call_Backs_NonVoice}}</td>
+                        <td class="floright">{{Staff_Allocated?.Closed_Voice}}</td>
+                        <td class="borderright floor">{{Staff_Allocated?.Closed_NonVoice}}</td>
+                        <td class="borderright floor">{{Staff_Allocated?.Special_Queue}}</td>
+                        <td class="borderright floor">{{Staff_Allocated?.Manual_Queue}}</td>
+                        <td class="borderright floor">{{Staff_Allocated?.Public_To_Call}}</td>
+                        <td class="borderright floor">{{Staff_Allocated?.Private_To_Call}}</td>
+                        <td class="borderright floor ">{{Staff_Allocated?.Appeal_Follow_Up}}</td>
+                        <td class="borderright floor ">{{Staff_Allocated?.To_Be_Appeal}}</td>
+                        <td class="borderright floor ">{{Staff_Allocated?.TL_Deny}}</td>
+                        <td class="borderright floor ">{{Staff_Allocated?.Client_Response}}</td>
+                        <td class="borderright floor ">{{Staff_Allocated?.Coding_Help_Desk}}</td>
+                        <td class="borderright floor ">{{Staff_Allocated?.Coding_Responses}}</td>
+                        <td class="borderright floor ">{{Staff_Allocated?.CEX_Uncollectible}}</td>
+                        <td class="borderright floor">{{Staff_Allocated?.Total}}</td>
+                    </tr>
+
+
+
+
+                    <tr>
+                        <td class="borderright floor">Agents Required(+Shrkg)</td>
+                        <td class="floright">{{Agents_Required?.NeverTouched_Voice}}</td>
+                        <td class="borderright floor">{{Agents_Required?.NeverTouched_NonVoice}}</td>
+                        <td class="floright">{{Agents_Required?.Collectible_Insurance_Voice}}</td>
+                        <td class="borderright floor">
+                            {{Agents_Required?.Collectible_Insurance_NonVoice}}
+                        </td>
+                        <td class="floright">{{Agents_Required?.Collectible_Patient_Voice}}</td>
+                        <td class="borderright floor">{{Agents_Required?.Collectible_Patient_NonVoice}}
+                        </td>
+                        <td class="floright">{{Agents_Required?.Cash_In_Bank_Voice}}</td>
+                        <td class="borderright floor">{{Agents_Required?.Cash_In_Bank_NonVoice}}</td>
+                        <td class="floright">{{Agents_Required?.Call_Backs_Voice}}</td>
+                        <td class="borderright floor">{{Agents_Required?.Call_Backs_NonVoice}}</td>
+                        <td class="floright">{{Agents_Required?.Closed_Voice}}</td>
+                        <td class="borderright floor">{{Agents_Required?.Closed_NonVoice}}</td>
+                        <td class="borderright floor">{{Agents_Required?.Special_Queue}}</td>
+                        <td class="borderright floor">{{Agents_Required?.Manual_Queue}}</td>
+                        <td class="borderright floor">{{Agents_Required?.Public_To_Call}}</td>
+                        <td class="borderright floor">{{Agents_Required?.Private_To_Call}}</td>
+                        <td class="borderright floor ">{{Agents_Required?.Appeal_Follow_Up}}</td>
+                        <td class="borderright floor ">{{Agents_Required?.To_Be_Appeal}}</td>
+                        <td class="borderright floor ">{{Agents_Required?.TL_Deny}}</td>
+                        <td class="borderright floor ">{{Agents_Required?.Client_Response}}</td>
+                        <td class="borderright floor ">{{Agents_Required?.Coding_Help_Desk}}</td>
+                        <td class="borderright floor ">{{Agents_Required?.Coding_Responses}}</td>
+                        <td class="borderright floor ">{{Agents_Required?.CEX_Uncollectible}}</td>
+                        <td class="borderright floor">{{Agents_Required?.Total}}</td>
+                    </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="borderright floor">Shortfall</td>
+                        <td class="shortfall floright">{{Shortfall?.NeverTouched_Voice}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.NeverTouched_NonVoice}}
+                        </td>
+                        <td class="shortfall floright">{{Shortfall?.Collectible_Insurance_Voice}}</td>
+                        <td class="shortfall borderright floor">
+                            {{Shortfall?.Collectible_Insurance_NonVoice}}</td>
+                        <td class="shortfall floright">{{Shortfall?.Collectible_Patient_Voice}}</td>
+                        <td class="shortfall borderright floor">
+                            {{Shortfall?.Collectible_Patient_NonVoice}}</td>
+                        <td class="shortfall floright">{{Shortfall?.Cash_In_Bank_Voice}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.Cash_In_Bank_NonVoice}}
+                        </td>
+                        <td class="shortfall floright">{{Shortfall?.Call_Backs_Voice}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.Call_Backs_NonVoice}}</td>
+                        <td class="shortfall floright">{{Shortfall?.Closed_Voice}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.Closed_NonVoice}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.Special_Queue}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.Manual_Queue}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.Public_To_Call}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.Private_To_Call}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.Appeal_Follow_Up}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.To_Be_Appeal}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.TL_Deny}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.Client_Response}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.Coding_Help_Desk}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.Coding_Responses}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.CEX_Uncollectible}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.Total}}</td>
+                    </tr>
+                    <tr>
+                        <td class="dark-grey dark-b-grey">Daily Completion Tracker</td>
+                        <td class="bord" colspan="24"></td>
+
+                    </tr>
+                    <tr>
+                        <td class="borderright floor">Completed Accounts</td>
+                        <td class="floright">{{Completed_Accounts?.NeverTouched_Voice}}</td>
+                        <td class="borderright floor">{{Completed_Accounts?.NeverTouched_NonVoice}}</td>
+                        <td class="floright">{{Completed_Accounts?.Collectible_Insurance_Voice}}</td>
+                        <td class="borderright floor">
+                            {{Completed_Accounts?.Collectible_Insurance_NonVoice}}</td>
+                        <td class="floright">{{Completed_Accounts?.Collectible_Patient_Voice}}</td>
+                        <td class="borderright floor">
+                            {{Completed_Accounts?.Collectible_Patient_NonVoice}}</td>
+                        <td class="floright">{{Completed_Accounts?.Cash_In_Bank_Voice}}</td>
+                        <td class="borderright floor"> {{Completed_Accounts?.Cash_In_Bank_NonVoice}}
+                        </td>
+                        <td class="floright">{{Completed_Accounts?.Call_Backs_Voice}}</td>
+                        <td class="borderright floor">{{Completed_Accounts?.Call_Backs_NonVoice}}</td>
+                        <td class="floright">{{Completed_Accounts?.Closed_Voice}}</td>
+                        <td class="borderright floor">{{Completed_Accounts?.Closed_NonVoice}}</td>
+                        <td class="borderright floor">{{Completed_Accounts?.Special_Queue}}</td>
+                        <td class="borderright floor">{{Completed_Accounts?.Manual_Queue}}</td>
+                        <td class="borderright floor">{{Completed_Accounts?.Public_To_Call}}</td>
+                        <td class="borderright floor">{{Completed_Accounts?.Private_To_Call}}</td>
+                        <td class="borderright floor ">{{Completed_Accounts?.Appeal_Follow_Up}}
+                        </td>
+                        <td class="borderright floor ">{{Completed_Accounts?.To_Be_Appeal}}</td>
+                        <td class="borderright floor ">{{Completed_Accounts?.TL_Deny}}</td>
+                        <td class="borderright floor ">{{Completed_Accounts?.Client_Response}}</td>
+                        <td class="borderright floor ">{{Completed_Accounts?.Coding_Help_Desk}}</td>
+                        <td class="borderright floor ">{{Completed_Accounts?.Coding_Responses}}</td>
+                        <td class="borderright floor ">{{Completed_Accounts?.CEX_Uncollectible}}</td>
+                        <td class="borderright floor">{{Completed_Accounts?.Total}}</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td class="borderright floor">Dollar Addressed</td>
+                        <td class="floright">{{Dollar_Addressed?.NeverTouched_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Dollar_Addressed?.NeverTouched_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Dollar_Addressed?.Collectible_Insurance_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">
+                            {{Dollar_Addressed?.Collectible_Insurance_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Dollar_Addressed?.Collectible_Patient_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">
+                            {{Dollar_Addressed?.Collectible_Patient_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Dollar_Addressed?.Cash_In_Bank_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Dollar_Addressed?.Cash_In_Bank_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Dollar_Addressed?.Call_Backs_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Dollar_Addressed?.Call_Backs_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Dollar_Addressed?.Closed_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Dollar_Addressed?.Closed_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Dollar_Addressed?.Special_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Dollar_Addressed?.Manual_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Dollar_Addressed?.Public_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Dollar_Addressed?.Private_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Dollar_Addressed?.Appeal_Follow_Up | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Dollar_Addressed?.To_Be_Appeal | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Dollar_Addressed?.TL_Deny | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Dollar_Addressed?.Client_Response | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Dollar_Addressed?.Coding_Help_Desk | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Dollar_Addressed?.Coding_Responses | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Dollar_Addressed?.CEX_Uncollectible | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Dollar_Addressed?.Total | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="borderright floor">% Of Count Addressed</td>
+                        <td class="floright">{{poca?.NeverTouched_Voice}}%</td>
+                        <td class="borderright floor">{{poca?.NeverTouched_NonVoice}}%</td>
+                        <td class="floright">{{poca?.Collectible_Insurance_Voice}}%</td>
+                        <td class="borderright floor">{{poca?.Collectible_Insurance_NonVoice}}%</td>
+                        <td class="floright">{{poca?.Collectible_Patient_Voice}}%</td>
+                        <td class="borderright floor">{{poca?.Collectible_Patient_NonVoice}}%</td>
+                        <td class="floright">{{poca?.Cash_In_Bank_Voice}}%</td>
+                        <td class="borderright floor">{{poca?.Cash_In_Bank_NonVoice}}%</td>
+                        <td class="floright">{{poca?.Call_Backs_Voice}}%</td>
+                        <td class="borderright floor">{{poca?.Call_Backs_NonVoice}}%</td>
+                        <td class="floright">{{poca?.Closed_Voice}}%</td>
+                        <td class="borderright floor">{{poca?.Closed_NonVoice}}%</td>
+                        <td class="borderright floor">{{poca?.Special_Queue}}%</td>
+                        <td class="borderright floor">{{poca?.Manual_Queue}}%</td>
+                        <td class="borderright floor">{{poca?.Public_To_Call}}%</td>
+                        <td class="borderright floor">{{poca?.Private_To_Call}}%</td>
+                        <td class="borderright floor ">{{poca?.Appeal_Follow_Up}}%</td>
+                        <td class="borderright floor ">{{poca?.To_Be_Appeal}}%</td>
+                        <td class="borderright floor ">{{poca?.TL_Deny}}%</td>
+                        <td class="borderright floor ">{{poca?.Client_Response}}%</td>
+                        <td class="borderright floor ">{{poca?.Coding_Help_Desk}}%</td>
+                        <td class="borderright floor ">{{poca?.Coding_Responses}}%</td>
+                        <td class="borderright floor ">{{poca?.CEX_Uncollectible}}%</td>
+                        <td class="borderright floor">{{poca?.Total}}%</td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="borderright floor">% Of Dollars Addressed</td>
+                        <td class="floright">{{poda?.NeverTouched_Voice}}%</td>
+                        <td class="borderright floor">{{poda?.NeverTouched_NonVoice}}%</td>
+                        <td class="floright">{{poda?.Collectible_Insurance_Voice}}%</td>
+                        <td class="borderright floor">{{poda?.Collectible_Insurance_NonVoice}}%</td>
+                        <td class="floright">{{poda?.Collectible_Patient_Voice}}%</td>
+                        <td class="borderright floor">{{poda?.Collectible_Patient_NonVoice}}%</td>
+                        <td class="floright">{{poda?.Cash_In_Bank_Voice}}%</td>
+                        <td class="borderright floor">{{poda?.Cash_In_Bank_NonVoice}}%</td>
+                        <td class="floright">{{poda?.Call_Backs_Voice}}%</td>
+                        <td class="borderright floor">{{poda?.Call_Backs_NonVoice}}%</td>
+                        <td class="floright">{{poda?.Closed_Voice}}%</td>
+                        <td class="borderright floor">{{poda?.Closed_NonVoice}}%</td>
+                        <td class="borderright floor">{{poda?.Special_Queue}}%</td>
+                        <td class="borderright floor">{{poda?.Manual_Queue}}%</td>
+                        <td class="borderright floor">{{poda?.Public_To_Call}}%</td>
+                        <td class="borderright floor">{{poda?.Private_To_Call}}%</td>
+                        <td class="borderright floor ">{{poda?.Appeal_Follow_Up}}%</td>
+                        <td class="borderright floor ">{{poda?.To_Be_Appeal}}%</td>
+                        <td class="borderright floor ">{{poda?.TL_Deny}}%</td>
+                        <td class="borderright floor ">{{poda?.Client_Response}}%</td>
+                        <td class="borderright floor ">{{poda?.Coding_Help_Desk}}%</td>
+                        <td class="borderright floor ">{{poda?.Coding_Responses}}%</td>
+                        <td class="borderright floor ">{{poda?.CEX_Uncollectible}}%</td>
+                        <td class="borderright floor">{{poda?.Total}}%</td>
+                    </tr>
+
+                    <tr>
+                        <td class="borderright floor">Next Account</td>
+                        <td class="floright">{{Next_Account?.NeverTouched_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Next_Account?.NeverTouched_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Next_Account?.Collectible_Insurance_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Next_Account?.Collectible_Insurance_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}
+                        </td>
+                        <td class="floright">{{Next_Account?.Collectible_Patient_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Next_Account?.Collectible_Patient_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}
+                        </td>
+                        <td class="floright">{{Next_Account?.Cash_In_Bank_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Next_Account?.Cash_In_Bank_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Next_Account?.Call_Backs_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Next_Account?.Call_Backs_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="floright">{{Next_Account?.Closed_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Next_Account?.Closed_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Next_Account?.Special_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Next_Account?.Manual_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Next_Account?.Public_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Next_Account?.Private_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Next_Account?.Appeal_Follow_Up | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Next_Account?.To_Be_Appeal | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Next_Account?.TL_Deny | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Next_Account?.Client_Response | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Next_Account?.Coding_Help_Desk | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Next_Account?.Coding_Responses | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Next_Account?.CEX_Uncollectible | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Next_Account?.Total | currency : 'USD' : 'symbol' : '1.0-0'  }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<app-supervisor-dashboard-modal *ngIf="DisplayModal" (Toggle)="ToggleModal()"
+    [AllocatedCountsData]="AllocatedCountsData">
+</app-supervisor-dashboard-modal>
+<app-imedit *ngIf="DisplayModalIm" (Toggle)="ToggleModal()" [IMdata]="IM_edits_data" [IMdates]="IMdates">
+</app-imedit>

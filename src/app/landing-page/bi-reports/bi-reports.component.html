@@ -1,0 +1,11 @@
+<div *ngIf="!reportObj || !reportObj.link" class="showSpinner">
+    <div *ngIf="httpresponse==true && !reportObj.link">
+        <i  class="fa fa-spinner fa-spin fa-5x"></i>
+        <p>Please wait! Loading report</p>
+    </div>
+    <div *ngIf="httpresponse==false && !reportObj.link">
+            <i  class="fa fa-exclamation-triangle danger"></i>
+            <p>No report found !</p>
+    </div>
+</div>
+<iframe *ngIf="reportObj && reportObj.link" _ngcontent-irq-c2="" height="700px" [src]="reportObj.link"  width="100%"></iframe>

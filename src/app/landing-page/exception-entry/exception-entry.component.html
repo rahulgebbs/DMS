@@ -1,0 +1,96 @@
+<app-header [title]="Title"></app-header>
+<app-loading-page *ngIf="showLoading"></app-loading-page>
+<div class="container-fluid p-0 white" *ngIf="!showLoading">
+
+  <div class="col-md-12 col-sm-12 col-sm-12 p-0">
+    <div class="col-md-12 col-sm-12 white p-0">
+      <form class="" [formGroup]="addException" (ngSubmit)="submitFrom()">
+        <div class="exception-add mt-10">
+          <div class="col-md-12">
+            <div *ngFor="let item of exceptioData; let i = index">
+              <div *ngIf="item.Column_Datatype== 'Date'; ">
+                <div class="label-std control-label p-0 b-600 pl-0" id="datetimepicker1">
+                  <div class="form-group col-md-6">
+                    <label class=" label-std control-label p-0 b-600 pl-0" for="">{{item.Display_Name}}</label>
+                    <div class="input-group date col-md-12" id="datetimepicker1">
+                      <input type="" formControlName="{{item.Header_Name}}" (keydown)="BlockInput($event)"
+                        (keypress)="BlockInput($event)" [owlDateTime]="dt" class="form-control"
+                        [owlDateTimeTrigger]="dt">
+                      <span class="input-group-addon" [owlDateTimeTrigger]="dt" value="">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                      <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+
+                    </div>
+                    <label *ngIf="addException.get(item.Header_Name).hasError('required') && validated" class=" error"
+                      for="">This field is required</label>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="item.Display_Name =='Reference_File_Name'">
+                <div class="form-group col-md-6 mb-0">
+                  <label class=" label-std control-label p-0 b-600 pl-0 mb-10" for="">{{item.Display_Name}} <span
+                      class="asteric">*</span></label>
+                  <span class="col-md-3 p-0 form-group file-exception mt-1 mb-0">
+                    <div class="file-upload-wrapper" [attr.data-text]="Filename">
+                      <input name="file-upload-field" type="file"
+                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        (change)="changeListener($event)" class="file-upload-field" value=""><span
+                        class="asteric">*</span>
+                    </div>
+
+                  </span>
+                  <label *ngIf="Filename=='No File Selected' && validated" class=" error" for="">This field is
+                    required</label>
+                </div>
+              </div>
+
+              <div *ngIf="item.Display_Name !='Reference_File_Name' && item.Column_Datatype!= 'Date'">
+                <div class="form-group col-md-6">
+                  <label class=" label-std control-label p-0 b-600 pl-0" for="">{{item.Display_Name}}
+                    <span class="asteric">*</span></label>
+                  <input class="form-control" type="item.Column_Datatype" formControlName='{{item.Header_Name}}'
+                    [(ngModel)]="item.Header_Name" #i>
+                  <label *ngIf="item.Header_Name=='' && validated" class=" error" for="">This field is required</label>
+                  <label *ngIf=" item.Header_Name && item.Header_Name.length>item.Field_Limit && validated" class=" error" for="">Maximum
+                    {{item.Field_Limit}} character allowed</label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- [disabled]="uploadBtnDisable" -->
+          <div class="col-md-12">
+            <button type="submit" class="btn blue square-btn blue-hover btn-txt ml-15">Save</button>
+            <button type="button" class="btn blue square-btn blue-hover btn-txt " (click)="clearData()">Clear</button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- End container-fliud -->
+
+
+
+
+
+  <!--File-success popup-->
+  <div class="modal fade file-success in" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content" style="width: 100%;">
+        <div class="col-md-12 col-sm-12 p-0 text-center">
+          <div class="msg-box">
+            <div class="msg-content">
+              <span class="d-block mb-10">
+                <i class="fa fa-file-excel-o mr-10 file-up blue-text" aria-hidden="true"></i>
+                <span class="file-up-name">File Successfully upload</span>
+              </span>
+              <!-- <button class="btn blue square-btn blue-hover btn-txt" data-dismiss="modal">Skip and get new</button> -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>

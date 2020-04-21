@@ -1,0 +1,171 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position pop-w">
+    <div>
+        <div class="col-md-12 p-0 grey">
+            <span class="col-md-10 col-sm-10 p-0">
+                <div class="heading-panel pl-10">
+                    <span class="text-sm text-ellipsis heading-txt flex">Add Client Inventory </span>
+                </div>
+            </span>
+            <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="CloseModal()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </span>
+        </div>
+        <div class="col-md-12 p-0">
+            <form #f="ngForm" (ngSubmit)="f.form.valid && OnSubmit(f.form.value)" novalidate>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Header_Name" class="label-std  control-label p-0 b-600">Column Name</label>
+                        <input class="form-control" maxlength="200" required type="text" #Header_Name="ngModel"
+                            name="Header_Name" [(ngModel)]="HeaderModel.Header_Name">
+                        <div class="error" *ngIf="f.submitted && Header_Name.hasError('required') ">
+                            Header Name is required.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Display_Name" class="label-std  control-label p-0 b-600">Display Header</label>
+                        <input class="form-control" maxlength="200" required type="text" #Display_Name="ngModel"
+                            name="Display_Name" [(ngModel)]="HeaderModel.Display_Name">
+                        <div class="error" *ngIf="f.submitted && Display_Name.hasError('required') ">
+                            Display Name is required.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Column_Datatype" class="label-std  control-label p-0 b-600">Column Data Type</label>
+                        <select class="form-control" (change)="DatatypeOnChange()" required #Column_Datatype="ngModel"
+                            name="Column_Datatype" [(ngModel)]="HeaderModel.Column_Datatype">
+                            <option value="Text">Text</option>
+                            <option value="Date">Date</option>
+                            <option value="Formula">Formula</option>
+                        </select>
+                        <div class="error" *ngIf="f.submitted && Column_Datatype.hasError('required') ">
+                            Data type is required.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Field_Limit" class="label-std  control-label p-0 b-600">Field Limit</label>
+                        <input class="form-control" required type="text" maxlength="4" #Field_Limit="ngModel"
+                            name="Field_Limit" [(ngModel)]="HeaderModel.Field_Limit">
+                        <div class="error" *ngIf="f.submitted && Field_Limit.hasError('required') ">
+                            Field Limit is required.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Is_Dropdown_Field" class="label-std  control-label p-0 b-600">Dropdown Values
+                            Requried?</label>
+                        <select class="form-control" (change)="DropdownOnChange()" required #Is_Dropdown_Field="ngModel"
+                            name="Is_Dropdown_Field" [(ngModel)]="HeaderModel.Is_Dropdown_Field">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        <div class="error" *ngIf="f.submitted && Is_Dropdown_Field.hasError('required') ">
+                            Is Dropdown Field is required.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Is_Formula_Computable" class="label-std  control-label p-0 b-600">Formula Computing
+                            Column</label>
+                        <select class="form-control" (change)="FormulaOnChange()" required
+                            #Is_Formula_Computable="ngModel" name="Is_Formula_Computable"
+                            [(ngModel)]="HeaderModel.Is_Formula_Computable">
+                            <option value="Yes">Yes</option>
+                            <option value="No" [disabled]="HeaderModel.Column_Datatype == 'Formula'">No</option>
+                        </select>
+                        <div class="error" *ngIf="f.submitted && Is_Formula_Computable.hasError('required') ">
+                            Is Formula Computable required.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Is_Correspondence" class="label-std  control-label p-0 b-600">Correspondence</label>
+                        <select class="form-control"  required
+                            #Is_Correspondence="ngModel" name="Is_Correspondence"
+                            [(ngModel)]="HeaderModel.Is_Correspondence">
+                            <option value="Yes">Yes</option>
+                            <option value="No" >No</option>
+                        </select>
+                        <!-- <div class="error" *ngIf="f.submitted && Is_Formula_Computable.hasError('required') ">
+                            Is Formula Computable required.
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Is_Edit_Allowed_Agent" class="label-std  control-label p-0 b-600">Can Agent Edit
+                            This Field</label>
+                        <select class="form-control" required #Is_Edit_Allowed_Agent="ngModel"
+                            name="Is_Edit_Allowed_Agent" [(ngModel)]="HeaderModel.Is_Edit_Allowed_Agent">
+                            <option value="Yes" [disabled]="HeaderModel.Is_View_Allowed_Agent == 'No'">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        <div class="error" *ngIf="f.submitted && Is_Edit_Allowed_Agent.hasError('required') ">
+                            Is Edit Allowed Agent required.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Is_View_Allowed_Agent" class="label-std  control-label p-0 b-600">Can Agent View
+                            This Field</label>
+                        <select class="form-control" required #Is_View_Allowed_Agent="ngModel"
+                            name="Is_View_Allowed_Agent" [(ngModel)]="HeaderModel.Is_View_Allowed_Agent">
+                            <option value="Yes">Yes</option>
+                            <option value="No" [disabled]="HeaderModel.Is_Edit_Allowed_Agent == 'Yes'">No</option>
+                        </select>
+                        <div class="error" *ngIf="f.submitted && Is_View_Allowed_Agent.hasError('required') ">
+                            Is View Allowed Agent required
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Column_Display_Order" class="label-std  control-label p-0 b-600">Display Order Of
+                            Column</label>
+                        <input class="form-control" required type="text" maxlength="5" #Column_Display_Order="ngModel"
+                            name="Column_Display_Order" [(ngModel)]="HeaderModel.Column_Display_Order">
+                        <div class="error" *ngIf="f.submitted && Column_Display_Order.hasError('required') ">
+                            Column Display Order required
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Is_Standard_Field" class="label-std  control-label p-0 b-600">Standard Column
+                            Field</label>
+                        <select class="form-control" (change)="StandardFieldOnChange()" required
+                            #Is_Standard_Field="ngModel" name="Is_Standard_Field"
+                            [(ngModel)]="HeaderModel.Is_Standard_Field">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        <div class="error" *ngIf="f.submitted && Is_Standard_Field.hasError('required') ">
+                            Is Standard Field required
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Is_Unique_Field" class="label-std  control-label p-0 b-600">Unique Column
+                            Field</label>
+                        <select class="form-control" required #Is_Unique_Field="ngModel" name="Is_Unique_Field"
+                            [(ngModel)]="HeaderModel.Is_Unique_Field">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        <div class="error" *ngIf="f.submitted && Is_Unique_Field.hasError('required') ">
+                            Is Unique Field required
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Is_Appeal" class="label-std  control-label p-0 b-600">Is Appeal Field</label>
+                        <select class="form-control" (change)="AppealOnChange()" required #Is_Appeal="ngModel"
+                            name="Is_Appeal" [(ngModel)]="HeaderModel.Is_Appeal">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        <div class="error" *ngIf="f.submitted && Is_Appeal.hasError('required') ">
+                            Is Appeal required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" class="btn blue square-btn blue-hover btn-txt">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

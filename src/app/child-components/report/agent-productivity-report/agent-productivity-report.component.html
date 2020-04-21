@@ -1,0 +1,149 @@
+<div class="container-fluid">
+  <div id="reportSection">
+    <!-- <h1 id="noReport"> Report Will come here !</h1> -->
+    <h1 id="title">Productivity Report</h1>
+    <!-- Form Section start -->
+    <div id="formContainer">
+      <!-- form start -->
+      <form class="form-inline" [formGroup]="productivityForm">
+    
+        <!--End Date  -->
+        <div class="form-group">
+          <label>Select Month</label>
+          <div class='input-group date' id='selectedMonth'>
+              <input style="position: absolute;visibility:hidden;" autocomplete="off" [owlDateTime]="selectedMonth"
+              class="owl-dp form-control" name="selectedMonth" formControlName="selectedMonth"
+              (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [max]="maxDate">
+            <p class="monthFilter" [owlDateTimeTrigger]="selectedMonth">
+                {{productivityForm.value['selectedMonth'] | date:'MMMM, y'}}
+              <span class="trigger" >
+                <i class="fas fa-calendar-alt"></i>
+              </span>
+              <owl-date-time [pickerType]="'calendar'" [startView]="'year'"
+                (monthSelected)="chosenMonthHandler($event, selectedMonth)" #selectedMonth></owl-date-time>
+            </p>
+          </div>
+        </div>
+        <!-- Show Button -->
+        <button [disabled]="!productivityForm.valid" type="submit" class="btn btn-primary"
+          (click)="getAgents()">show</button>
+      </form>
+      <!-- form closed -->
+    </div>
+    <!-- Form Section closed -->
+    <div class="container-fluid">
+      <div class="row table-responsive-lg" id="tableContainer">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>agent name</th>
+              <th>count</th>
+              <th>$ value</th>
+              <th>callbacks</th>
+              <th>care gebbs</th>
+              <th>cash in bank</th>
+              <th>client assistance required</th>
+              <th>closed</th>
+              <th>collectible insurance</th>
+              <th>collectible insurance a</th>
+              <th>collectible patient</th>
+              <th>cex uncollectible</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="agentReport as agent">
+              <tr class="agentColor">
+                <td>
+                  <i (click)="toggleNodes(agent,'dateRangeList')" class="fa"
+                    [ngClass]="{'fa-plus' : !agent.showRow,'fa-minus' : agent.showRow==true}"></i>
+                  <!-- <p class="tdItem"> -->
+                  {{agent.AgentName || 'Agent'}}
+                  <!-- </p> -->
+                </td>
+                <td>{{agent.Total || 'N/A'}}</td>
+                <td>{{agent.Total_Balance || 'N/A'}}</td>
+                <td>{{agent.CALL_BACKS || 'N/A'}}</td>
+                <td>{{agent.CARE_GEBBS || 'N/A'}}</td>
+                <td>{{agent.CASH_IN_BANK || 'N/A'}}</td>
+                <td>{{agent.CLIENT_ASSISTANCE_REQUIRED || 'N/A'}}</td>
+                <td>{{agent.CLOSED || 'N/A'}}</td>
+                <td>{{agent.COLLECTIBLE_INSURANCE || 'N/A'}}</td>
+                <td>{{agent.COLLECTIBLE_INSURANCE_A || 'N/A'}}</td>
+                <td>{{agent.COLLECTIBLE_PATIENT || 'N/A'}}</td>
+                <td>{{agent.CEX_UNCOLLECTIBLE || 'N/A'}}</td>
+              </tr>
+              <ng-container *ngIf="agent.showRow==true">
+                <ng-container *ngFor="let dateObj of agent.dateRangeList">
+                  <tr class="agentColor">
+                    <td class="paddingLeft-1">
+                      <!-- <i (click)="toggleNodes(agent,'dateRangeList')" class="fa"
+                                  [ngClass]="{'fa-plus' : !agent.showRow,'fa-minus' : agent.showRow==true}"></i> -->
+                      <!-- <p class="tdItem"> -->
+                      {{dateObj.DateRange | date :'dd-MM-yyyy' }}
+                      <!-- </p> -->
+                    </td>
+                    <td>{{dateObj.Total || 'N/A'}}</td>
+                    <td>{{dateObj.Total_Balance || 'N/A'}}</td>
+                    <td>{{dateObj.CALL_BACKS || 'N/A'}}</td>
+                    <td>{{dateObj.CARE_GEBBS || 'N/A'}}</td>
+                    <td>{{dateObj.CASH_IN_BANK || 'N/A'}}</td>
+                    <td>{{dateObj.CLIENT_ASSISTANCE_REQUIRED || 'N/A'}}</td>
+                    <td>{{dateObj.CLOSED || 'N/A'}}</td>
+                    <td>{{dateObj.COLLECTIBLE_INSURANCE || 'N/A'}}</td>
+                    <td>{{dateObj.COLLECTIBLE_INSURANCE_A || 'N/A'}}</td>
+                    <td>{{dateObj.COLLECTIBLE_PATIENT || 'N/A'}}</td>
+                    <td>{{dateObj.CEX_UNCOLLECTIBLE || 'N/A'}}</td>
+                  </tr>
+                </ng-container>
+
+                <!-- show if agent has no agent report START-->
+                <ng-container class="noData" *ngIf="agent.dateRangeList.length==0">
+                  <tr class="noData">
+                    <td colspan="12">
+                      <!-- show if agent report is fetched by http request START-->
+                      <h3 class="fetchingMsg" *ngIf="agent.httpStatus==true">
+                        <i class="fa fa-refresh fa-spin fa-3x"></i>
+                      </h3>
+                      <!-- show if agent report is fetched by http request END-->
+
+                      <!-- show if agent report is not in agent START-->
+                      <h3 class="fetchingMsg" *ngIf="agent.httpStatus==false">
+                        <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i>
+                        No date wise report for agent
+                      </h3>
+                      <!-- show if agent report is not in agent END-->
+                    </td>
+                  </tr>
+                </ng-container>
+                <!-- show  if supervisor has no agent END-->
+              </ng-container>
+
+
+            </ng-container>
+
+            <ng-container *ngIf="httpStatus==true && agentReport==null">
+              <tr class="noData">
+                <td colspan="12">
+                  <h3 class="fetchingMsg">
+                    <i class="fa fa-refresh fa-spin fa-3x"></i>
+                    <!-- Fetching Agent Detail.. -->
+                  </h3>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="httpStatus==false && agentReport==null">
+              <tr class="noData">
+                <td colspan="12">
+                  <h3 class="fetchingMsg" *ngIf="httpStatus==false">
+                    <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i>
+                    No details found for agent
+                  </h3>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

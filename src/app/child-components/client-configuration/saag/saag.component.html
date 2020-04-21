@@ -1,0 +1,214 @@
+<div class="tab-content nav-tab-content">
+  <form>
+    <div role="tabpanel" class="tab-pane" id="step-2">
+
+      <div class="col-md-12 p-0">
+        <div class="provider-process">
+          <div class="col-md-9">
+            <span class="form-group file-provider mt-10">
+              <!-- <form class="form"> -->
+              <div class="file-upload-wrapper" [attr.data-text]="Filename">
+                <input name="file-upload-field" #filedata type="file" accept=".xlsx" class="file-upload-field"
+                  (change)="changeListener($event)" (onclick)="filedata.value = null">
+              </div>
+              <label class="error" *ngIf="validated && !fileSelected">Please select the file</label>
+              <!-- </form> -->
+            </span>
+            <span>
+              <!-- <label  class="mt-10 pr-upl label grey lg-text label-info square-btn cursor"><button class=" mr-10 fa fa-upload mr-5 lg-text"> Upload</button></label> -->
+              <button type="button" (click)="FileUpload()" [disabled]="uploadBtnDisable"
+                class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-10" style="border: none;">
+                <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</button>
+              <!-- <label class="mt-10 pr-upl label grey lg-text label-info square-btn cursor mr-10" (click)="FileUpload()" disabled>
+                <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</label> -->
+            </span>
+            <!-- <div hidden class="p-0 mt-10" onclick="x()">
+              <button  [disabled]="downloadTemplateDisable" class="export-btn btn label grey lg-text label-info square-btn cursor mt-0  mr-10"  style="border: none;">
+                <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
+            </div> -->
+            <div class="p-0 mt-10" (click)="downloadTemplate()">
+              <button type="button" [disabled]="downloadTemplateDisable"
+                class="export-btn btn label grey lg-text label-info square-btn cursor mt-0  mr-10"
+                style="border: none;">
+                <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
+            </div>
+            <span>
+              <button type="button" style="border: none;" [disabled]="exportBtnDisable"
+                class="export-btn btn label grey lg-text label-info square-btn cursor mr-10 mtb-10"
+                (click)="exportToExcel()">
+                <i class="fa fa-file-excel-o mr-5" aria-hidden="true"></i>Export To Excel </button>
+            </span>
+            <span>
+              <label class="export-btn label grey lg-text label-info square-btn cursor mtb-10" (click)="showPopup()"
+                data-target=".add-saag-master">
+                <i class="fa fa-plus mr-5 lg-text" aria-hidden="true"></i>Add</label>
+            </span>
+          </div>
+          <div class="col-md-3 p-0">
+            <span class="pull-right pt-8  w-auto" *ngIf="ClientData">
+              <b>Client Name :-
+
+                {{ClientData.Client_Name}}</b>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="right-most mr-5">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
+      <div class="col-md-12 p-0">
+        <div class="col-md-12">
+
+        </div>
+        <div class="col-md-12 p-0">
+          <div class="sagg-sticky-tbl sticky-table sticky-ltr-cells border-0 table-hight">
+            <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [enableFilter]="true" [pagination]="true"
+              [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
+              (cellClicked)='onCellClicked($event)' [suppressDragLeaveHidesColumns]="true"
+              [suppressDragLeaveHidesColumns]="true" [rowSelection]="rowSelection" (gridReady)="onGridReady($event)"
+              [suppressColumnVirtualisation]="true"></ag-grid-angular>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 text-right p-0">
+        <button type="button" id="step-2-next" class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5"
+          (click)="navigate()">Next</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div *ngIf="Popup">
+  <div class="pop-bg">
+  </div>
+  <div class="pop-position">
+    <div>
+      <div class="col-md-12 p-0 grey">
+        <span class="col-md-10 col-sm-10 p-0">
+          <div class="heading-panel pl-10">
+            <span class="text-sm text-ellipsis heading-txt flex">Add SAAG Master </span>
+          </div>
+        </span>
+        <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="CloseModal()">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </span>
+      </div>
+      <div class="col-md-12 p-0">
+
+
+        <div class=" mb-0 pb-0">
+          <div class="col-md-12 p-0 mt-10">
+            <form [formGroup]="addSaag" (ngSubmit)="submitFrom()">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="inputEmail3" class="label-std  control-label p-0 b-600">Status</label>
+                  <input type="text" class="form-control" formControlName="Status">
+                  <!-- <select class="form-control" formControlName="Status" (change)="changeStatus($event)">
+        
+                    <option [ngValue]="i" *ngFor='let i of Status'>{{i}}</option>
+
+                  </select> -->
+                  <label class=" error" *ngIf="validate && addSaag.get('Status').hasError('required') "> Status is
+                    required</label>
+                  <label class=" error" *ngIf=" addSaag.get('Status').hasError('maxlength') "> maximum 500 charcter
+                    allowed</label>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="label-std  control-label p-0 b-600">Sub Status</label>
+                  <!-- <select class="form-control" formControlName="Sub_Status" (change)="changeSubstatus($event)">
+                    <option [ngValue]="i" *ngFor='let i of SubStatus'>{{i}}</option>
+                  </select> -->
+                  <input type="text" class="form-control" formControlName="Sub_Status">
+                  <label class=" error" *ngIf="validate && addSaag.get('Sub_Status').hasError('required') "> Sub_Status
+                    is required</label>
+                  <label class=" error" *ngIf=" addSaag.get('Sub_Status').hasError('maxlength') "> maximum 500 charcter
+                    allowed</label>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="label-std  control-label p-0 b-600">Action Code</label>
+                  <!-- <select class="form-control" formControlName="Action_Code">
+                    <option [ngValue]="i" *ngFor='let i of ActionCode'>{{i}}</option>
+                  </select> -->
+                  <input type="text" class="form-control" formControlName="Action_Code">
+                  <label class=" error" *ngIf="validate && addSaag.get('Action_Code').hasError('required') ">
+                    Action_Code is required</label>
+                  <label class=" error" *ngIf=" addSaag.get('Action_Code').hasError('maxlength') "> maximum 500
+                    charcter
+                    allowed</label>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="label-std  control-label p-0 b-600">Effectiveness Matrix</label>
+                  <select class="form-control" formControlName="Effectiveness_Matrix">
+                    <option [selected]=" Effectiveness_Matrix.length>1 " disabled>select
+                    </option>
+                    <option [ngValue]="i" *ngFor='let i of Effectiveness_Matrix'>{{i}}</option>
+
+                  </select>
+                  <label class=" error" *ngIf="validate && addSaag.get('Effectiveness_Matrix').hasError('required') ">
+                    Effectiveness_Matrix is required</label>
+                  <label class=" error" *ngIf=" addSaag.get('Effectiveness_Matrix').hasError('maxlength') "> maximum
+                    100 charcter
+                    allowed</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="inputEmail3" class="label-std  control-label p-0 b-600">Client Production</label>
+                  <select class="form-control" formControlName="Client_Production">
+                    <option disabled>Select</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <div class="form-group">
+                    <label for="inputEmail3" class="label-std  control-label p-0 b-600">Follow Up</label>
+                    <select class="form-control" formControlName="Follow_Up">
+                      <option disabled>Select</option>
+                      <option value="true">Yes</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+                  <label for="inputEmail3" class="label-std  control-label p-0 b-600">Follow Up Days</label>
+                  <input class="form-control" max="365" type="text" formControlName="Follow_Up_Days"
+                    (focusout)="validFollowup()">
+                  <div class="error"
+                    *ngIf="addSaag.get('Follow_Up_Days').hasError('pattern')  || addSaag.get('Follow_Up_Days').hasError('max') ">
+                    Numbers only upto 365
+                  </div>
+                  <div class="error" *ngIf="!FollowupCondition && validate">
+                    Follow Up Days Required
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="label-std  control-label p-0 b-600">Finding/Insights</label>
+                  <input class="form-control" maxlength="100" type="text" formControlName="Findings_Insights">
+                  <label class=" error" *ngIf=" addSaag.get('Findings_Insights').hasError('maxlength') "> maximum 100
+                    charcter
+                    allowed</label>
+                  <label class=" error" *ngIf=" addSaag.get('Findings_Insights').hasError('required') && validate">
+                    Findings/Insights is required</label>
+                </div>
+
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="inputEmail3" class="label-std  control-label p-0 b-600">Canned Notes</label>
+                  <textarea maxlength="1000" class="form-control" formControlName="Canned_Notes"> </textarea>
+                  <label class=" error" *ngIf=" addSaag.get('Canned_Notes').hasError('maxlength') "> maximum 1000
+                    charcter
+                    allowed</label>
+                  <label class=" error" *ngIf=" addSaag.get('Canned_Notes').hasError('required') && validate"> Canned
+                    Notes is required</label>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <button type="submit" class="btn blue square-btn blue-hover btn-txt"
+                    [disabled]="disableSave">Add</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

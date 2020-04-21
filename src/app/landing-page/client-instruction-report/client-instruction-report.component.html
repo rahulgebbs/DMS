@@ -1,0 +1,26 @@
+<!-- Modal sidenavigation -->
+
+
+<!-- /********************************************************************************************************************************************************** -->
+
+<app-header [title]="Title"></app-header>
+<div>
+  <button (click)="export()" class="btn blue square-btn blue-hover btn-txt mt-4"
+    style="margin-left: 2em; margin-top: 1.5em">Export To Excel</button>
+</div>
+
+<div class="col-md-12 col-sm-12 col-sm-12 p-0">
+  <div class="col-md-12 col-sm-12 mt-10">
+    <div class="table-responcive">
+      <div class="client-ins-rep sticky-table sticky-ltr-cells border-0 table-hight">
+        <ag-grid-angular class="ag-theme-balham grid-w" (firstDataRendered)="AutoSizeGrid($event)"
+          (gridReady)="OnGridReady($event)" [rowSelection]="RowSelection" [rowData]="RowData"
+          (columnResized)="onColumnResized($event)" [columnDefs]="ColumnDefs" [pagination]="true"
+          [paginationAutoPageSize]="true" [enableColResize]="true" [enableSorting]="true" [enableFilter]="true"
+          (rowData)="OnGridReady($event)" [suppressColumnVirtualisation]="true">
+
+        </ag-grid-angular>
+      </div>
+    </div>
+  </div>
+</div>
