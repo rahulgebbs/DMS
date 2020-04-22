@@ -8,7 +8,7 @@
 
       <div class="col-md-12 p-0">
         <div class="col-md-4 blue-seprator1">
-          <img src="../../../assets/images/iAR.png" class="img-responsive">
+          <img src="../../../assets/images/logo.png" class="img-responsive">
         </div>
         <div class="col-md-8">
           <div class="middle-align1">
@@ -261,7 +261,7 @@
                 </div>
               </div>
 
-              <div *ngIf="checkMenu('upload-file') || checkMenu('view-file')" class="panel panel-default">
+              <!-- <div *ngIf="checkMenu('upload-file') || checkMenu('view-file')" class="panel panel-default">
                 <div class="acc-heading" role="tab" id="headingThree">
                   <h4 class="acc-title">
                     <a [ngClass]="[MenuName == '/upload-file' || MenuName == '/view-file' ? '' : 'collapsed']"
@@ -284,8 +284,8 @@
                     </ul>
                   </div>
                 </div>
-              </div>
-              <div *ngIf="checkMenu('client-instruction')" class="panel panel-default">
+              </div> -->
+              <!-- <div *ngIf="checkMenu('client-instruction')" class="panel panel-default">
                 <div class="acc-heading" role="tab" id="headingOne">
                   <h4 class="acc-title">
                     <a role="button" (click)="OpenMenu('client-instruction')"
@@ -294,7 +294,18 @@
                     </a>
                   </h4>
                 </div>
+              </div> -->
+              <div *ngIf="checkMenu('refernce-document-supervisor')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingOne">
+                  <h4 class="acc-title">
+                    <a role="button" (click)="OpenMenu('refernce-document-supervisor')"
+                      [ngClass]="[MenuName == '/refernce-document-supervisor' ? 'menu-active1': '']">
+                      refernce document upload
+                    </a>
+                  </h4>
+                </div>
               </div>
+              <!-- refernce-document-supervisor -->
 
               <!-- <div *ngIf="checkMenu('concluder-report') || checkMenu('concluder-report')" class="panel panel-default">
                 <div class="acc-heading" role="tab" id="headingThree">

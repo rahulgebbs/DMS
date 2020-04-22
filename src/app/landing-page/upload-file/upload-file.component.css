@@ -1,8 +1,12 @@
-.file-name{
-overflow: hidden;
-white-space: nowrap;
-text-overflow: ellipsis;
+.file-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
-.mt-3{
-    margin-top: 3px;
+.mt-3 {
+  margin-top: 3px;
+}
+.gd-w {
+    /* min-height: 300px; */
+  height: 70vh;
 }

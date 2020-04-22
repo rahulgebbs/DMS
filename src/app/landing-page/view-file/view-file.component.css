@@ -1,12 +1,16 @@
-.file-name{
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    }
-    .mt-3{
-        margin-top: 3px;
-    }
+.file-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.mt-3 {
+  margin-top: 3px;
+}
 
-    .hover{
-        cursor: pointer;
-    }
+.hover {
+  cursor: pointer;
+}
+.gd-w {
+  /* min-height: 300px; */
+  height: 70vh;
+}

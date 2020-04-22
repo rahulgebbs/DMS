@@ -24,7 +24,7 @@ export class RedirectHelper {
                 this.router.navigate(['/refernce-document-supervisor']);
                 break;
             case "Agent":
-                this.router.navigate(['/agent']);
+                this.router.navigate(['/view-file']);
                 break;
             // case "Client Supervisor": {
             //     this.getMenuListForUser();

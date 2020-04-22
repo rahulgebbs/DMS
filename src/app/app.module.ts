@@ -140,6 +140,7 @@ import { ConcluderReportComponent } from './concluder-report/concluder-report.co
 import { DeallocateConcluderComponent } from './deallocate-concluder/deallocate-concluder.component';
 import { UploadMiniInsuranceComponent } from './upload-mini-insurance/upload-mini-insurance.component';
 import { InventoryUploadComponent } from './inventory-upload/inventory-upload.component';
+import { ViewDocumentComponent } from './landing-page/view-document/view-document.component';
 
 
 @NgModule({
@@ -267,7 +268,9 @@ import { InventoryUploadComponent } from './inventory-upload/inventory-upload.co
 
     UploadMiniInsuranceComponent,
 
-    InventoryUploadComponent
+    InventoryUploadComponent,
+
+    ViewDocumentComponent
   ],
   imports: [
     BrowserModule,
@@ -284,11 +287,11 @@ import { InventoryUploadComponent } from './inventory-upload/inventory-upload.co
     RouterModule.forRoot([
       { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
-      { path: 'two-factor-auth', component: TwoFactorAuthComponent },
+      // { path: 'two-factor-auth', component: TwoFactorAuthComponent },
       { path: 'welcome-page', component: WelcomePageComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard], data: { route: ['change-password'] } },
-      { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard], data: { route: ['user-management'] } },
+      // { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard], data: { route: ['user-management'] } },
       // { path: 'client-configuration', component: ClientConfigurationComponent },
       // { path: 'bucket-mapping', component: BucketMappingComponent },
       // { path: 'change-password', component: ChangePasswordComponent },
@@ -299,7 +302,8 @@ import { InventoryUploadComponent } from './inventory-upload/inventory-upload.co
       // { path: 'global-insurance', component: GlobalInsuranceComponent, canActivate: [AuthGuard], data: { route: ['global-insurance'] } },
       // { path: 'global-mapping', component: GlobalMappingComponent, canActivate: [AuthGuard], data: { route: ['global-mapping'] } },
       { path: 'refernce-document-supervisor', component: UploadFileComponent, canActivate: [AuthGuard], data: { route: ['refernce-document-supervisor'] } },
-      // { path: 'view-file', component: ViewFileComponent, canActivate: [AuthGuard], data: { route: ['view-file'] } },
+      { path: 'view-file', component: ViewFileComponent, canActivate: [AuthGuard], data: { route: ['view-file'] } },
+      { path: 'document-view/:filename/:referencefile', component: ViewDocumentComponent, canActivate: [AuthGuard], data: { route: ['document-view'] } },
       // { path: 'auto-allocation', component: AutoAllocationComponent, canActivate: [AuthGuard], data: { route: ['auto-allocation'] } },
       // { path: 'de-allocation', component: DeAllocationComponent, canActivate: [AuthGuard], data: { route: ['de-allocation'] } },
       // { path: 'client-instruction', component: ClientInstructionComponent, canActivate: [AuthGuard], data: { route: ['client-instruction'] } },

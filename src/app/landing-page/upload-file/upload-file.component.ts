@@ -11,7 +11,7 @@ import { Token } from 'src/app/manager/token';
   styleUrls: ['./upload-file.component.css']
 })
 export class UploadFileComponent implements OnInit {
-  title: string = "Upload AR KMS";
+  title: string = "Referece Document Upload";
   Filename = "No File Chosen";
   Size;
   File;
@@ -20,7 +20,7 @@ export class UploadFileComponent implements OnInit {
   DisplaySizeError = false;
   ResponseHelper;
   UserId: number;
-  ClientList:any[] = [];
+  ClientList: any[] = [];
   selecterror: boolean = false;
   ClientId: number;
   checkRecords: boolean = false;
@@ -28,12 +28,24 @@ export class UploadFileComponent implements OnInit {
   searchBtnDisable: boolean = true;
   token: Token;
   referencefiles = [];
+  GridApi;
+  GridColumnApi;
+  ColumnDefs = []
+  RowData = [];
 
-  constructor( private service: UploadFileService, private router: Router, private notificationservice: NotificationService) { }
+  constructor(private service: UploadFileService, private router: Router, private notificationservice: NotificationService) { }
 
   ngOnInit() {
 
-    // this.GetReferenceFile();
+    this.ColumnDefs = [
+      { headerName: "Uploaded Date & Time", field: "Uploaded_On" },
+      { headerName: "Uploaded by", field: "Uploaded_By" },
+      { headerName: "Client Name", field: "Client_Id" },
+      { headerName: "Uploader Role", field: "Uploader_Role" },
+      { headerName: "File Name", field: "File_Name" },
+      { headerName: "Attachment", field: "File_Name" },
+      { headerName: "Read", field: "Read_By_Agent_Count" }
+    ]
 
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
 
@@ -42,16 +54,17 @@ export class UploadFileComponent implements OnInit {
     this.UserId = userdata.UserId;
     this.ClientList = userdata.Clients;
     this.selectedValue(this.ClientList);
+    this.GetSelectedReferenceFile();
   }
 
   selectedValue(data) {
-     
-    if (data.length == 1 && data.length) {       
+
+    if (data.length == 1 && data.length) {
       data[0].selected = true;
-      this.searchBtnDisable= false
+      this.searchBtnDisable = false
       this.ClientId = data[0].Client_Id
-      this.GetSelectedReferenceFile('')
-    }else{
+      this.GetSelectedReferenceFile()
+    } else {
 
     }
 
@@ -72,29 +85,32 @@ export class UploadFileComponent implements OnInit {
       this.ClientId = event.target.value;
       this.check()
     }
+    // this.GetSelectedReferenceFile()
   }
 
   setBtn() {
     this.searchBtnDisable = false
   }
 
-  GetSelectedReferenceFile(name: string) {
-    
-    if (this.ClientId == undefined || this.ClientId == 0) {
-      this.selecterror = true;
-    }
+  GetSelectedReferenceFile() {
 
-    else {
-      this.searchBtnDisable = true
-      this.selecterror = false;
-    }
+    // if (this.ClientId == undefined || this.ClientId == 0) {
+    //   this.selecterror = true;
+    // }
 
-    let fileobj = { Client_Id: this.ClientId, File_Name: name };
-    this.service.GetAllReferenceFile(fileobj).subscribe(data => {
+    // else {
+    //   this.searchBtnDisable = true
+    //   this.selecterror = false;
+    // }
+
+    // let fileobj = { Client_Id: this.ClientId };
+    this.service.GetAllReferenceFile().subscribe(data => {
       let res = data.json()
       this.referencefiles = data.json().Data;
+      this.RowData = data.json().Data;
       this.searchBtnDisable = false
       this.checkRecords = false;
+      this.ResponseHelper.GetSuccessResponse(data)
     }, err => {
       this.ResponseHelper.GetFaliureResponse(err)
 
@@ -103,6 +119,7 @@ export class UploadFileComponent implements OnInit {
         this.checkRecords = true;
         this.searchBtnDisable = true
       }
+      this.RowData = []
 
     });
 
@@ -123,28 +140,29 @@ export class UploadFileComponent implements OnInit {
 
 
   CheckFileFormat(format: string) {
-    if (format == 'xlsx') {
-      return 'fa-file-excel';
+    // if (format == 'xlsx') {
+    //   return 'fa-file-excel';
 
-    }
-    else if (format == 'pdf'|| format=='PDF') {
+    // }
+    // else
+    if (format == 'pdf' || format == 'PDF') {
       return 'fa-file-pdf';
     }
-    else if (format == "docx"|| format=='DOCX') {
-      return 'fa-file-word';
-    }
-    else if (format == "png"|| format=='PNG') {
-      return 'fa-file-powerpoint'
-    }
-    else if (format == "txt"|| format=='TXT') {
-      return 'fa fa-file-text'
-    }
-    else if (format == "jpeg" || format == "jpg"|| format=="JPG"|| format=="JPEG") {
-      return 'fa-file-powerpoint'
-    }
-    else {
-      return 'fa-file'
-    }
+    // else if (format == "docx"|| format=='DOCX') {
+    //   return 'fa-file-word';
+    // }
+    // else if (format == "png"|| format=='PNG') {
+    //   return 'fa-file-powerpoint'
+    // }
+    // else if (format == "txt"|| format=='TXT') {
+    //   return 'fa fa-file-text'
+    // }
+    // else if (format == "jpeg" || format == "jpg"|| format=="JPG"|| format=="JPEG") {
+    //   return 'fa-file-powerpoint'
+    // }
+    // else {
+    //   return 'fa-file'
+    // }
   }
 
 
@@ -155,15 +173,15 @@ export class UploadFileComponent implements OnInit {
       this.File = event.target.files[0];
       this.Filename = this.File.name;
       this.Size = this.File.size / 1024 / 1024;
-
+      console.log('this.Size : ', this.Size);
       if (this.Size > 5) {
 
         this.DisplaySizeError = true;
-          } else {
-            this.check();
-          // this.uploadBtnDisable = false
-          // this.DisplaySizeError = false;
-                 
+      } else {
+        this.check();
+        // this.uploadBtnDisable = false
+        // this.DisplaySizeError = false;
+
       }
       this.ConvertToBase64()
     }
@@ -174,13 +192,13 @@ export class UploadFileComponent implements OnInit {
     }
   }
 
-  check(){
-    if(this.ClientId && this.File){
-      this.uploadBtnDisable=false
+  check() {
+    if (this.ClientId && this.File) {
+      this.uploadBtnDisable = false
 
-    }else{
-      this.uploadBtnDisable=true
-  
+    } else {
+      this.uploadBtnDisable = true
+
     }
   }
 
@@ -200,20 +218,21 @@ export class UploadFileComponent implements OnInit {
     this.DisplayFileError = false;
 
     if (this.File != null) {
-      
-      this.uploadBtnDisable = true
+
+      this.uploadBtnDisable = true;
       let dataobj = { File: this.FileBase64, File_Name: this.Filename, Client_Id: this.ClientId };
       this.service.ReferenceFileUpload(dataobj).subscribe(
         res => {
+          this.uploadBtnDisable = false;
           this.ResponseHelper.GetSuccessResponse(res)
           this.File = null
           this.Filename = "No File Chosen";
           this.FileBase64 = null;
-          this.GetSelectedReferenceFile("");
+          this.GetSelectedReferenceFile();
 
         },
         err => {
-
+          this.uploadBtnDisable = false;
           this.ResponseHelper.GetFaliureResponse(err)
         }
       );
@@ -222,5 +241,52 @@ export class UploadFileComponent implements OnInit {
       this.DisplayFileError = true;
     }
   }
+  AutoSizeGrid(event) {
+    event.columnApi.autoSizeColumns(["Practice_Name", "Provider_Name", "Type", "GeBBS_Action"]);
+  }
+  OnGridReady(event) {
+    //event.api.sizeColumnsToFit()
+    //event.api.sizeColumnsToFit() 
+    this.GridApi = event.api;
+    this.GridColumnApi = event.columnApi;
+    setTimeout(function () {
+      event.api.resetRowHeights();
+    }, 500);
+  }
+
+  onColumnResized(event) {
+    if (event.finished) {
+      this.GridApi.resetRowHeights();
+    }
+  }
+
+  OnRowClicked(event) {
+    // this.selectedRecord = true
+    // this.ShowRoleError = false;
+    // this.InstructionId = event.data.Id;
+    // this.GetSingleClientInsurance();
+  }
+  onCellClicked(data) {
+
+    // switch (data.colDef.headerName) {
+    //   case "Count": {
+    //     this.instructionservice.getCountData(this.ClientId, data.data.Id).pipe(finalize(() => {
+    //       this.viewCountData = true
+    //     })).subscribe(res => {
+    //       this.ResponseHelper.GetSuccessResponse(res)
+    //       data = res.json()
+    //       this.readCountData = res.json()
+    //       //  this.ClientUpdateData = data.Data
+    //     }, err => {
+    //       this.ResponseHelper.GetFaliureResponse(err);
+
+    //     })
+    //     break;
+    //   }
+    //   default:
+    //     break;
+    // }
+  }
+
 
 }

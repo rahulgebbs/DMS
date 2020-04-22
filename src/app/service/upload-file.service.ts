@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Token } from 'src/app/manager/token';  
+import { Token } from 'src/app/manager/token';
 import { Http, Headers } from '@angular/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
@@ -13,14 +13,14 @@ export class UploadFileService {
 
   constructor(private http: Http, private router: Router) { }
 
- 
+
   ReferenceFileUpload(file: any): any {
-    return this.http.post(environment.FileApiUrl + '/api/reference-document-upload', file, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+    return this.http.post(environment.FileApiUrl + '/api/document-upload', file, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
 
-  GetAllReferenceFile(file:any):any {
- // return this.http.get(environment.ApiUrl + '/api/reference-document' ,{ headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
-  return this.http.post(environment.ApiUrl + '/api/reference-document/' , file , { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+  GetAllReferenceFile(): any {
+    // return this.http.get(environment.ApiUrl + '/api/reference-document' ,{ headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+    return this.http.get(environment.ApiUrl + '/api/get-document-upload/', { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
 
-}
+  }
 }

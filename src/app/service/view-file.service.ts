@@ -18,10 +18,8 @@ export class ViewFileService {
   constructor(private http: Http, private router: Router) { }
 
 
-  GetAllReferenceFile(file:any):any{
-
-    return this.http.post(environment.ApiUrl + '/api/reference-document/' , file , { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
-   
+  GetAllReferenceFile(body):any{
+    return this.http.get(environment.ApiUrl + '/api/get-document-by-agentid?client_id='+body.Client_Id+'&agent_id='+body.agent_id, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
 
   downloadDocument(data:any):any  {
