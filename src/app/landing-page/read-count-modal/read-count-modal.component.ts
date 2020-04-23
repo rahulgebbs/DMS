@@ -17,7 +17,8 @@ export class ReadCountModalComponent implements OnInit {
   rowSelection = "single";
   columnDefs = [
     { headerName: 'Name', field: 'Name', width: 250 },
-    { headerName: 'Status', field: 'Status', width: 120 }
+    { headerName: 'Status', field: 'Status', width: 120 },
+    { headerName: 'Date', field: 'Read_By_Agent_On' }
   ]
   private excelService = new ExcelService
   constructor(private uploadFileService: UploadFileService) { }

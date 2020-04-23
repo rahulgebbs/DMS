@@ -31,7 +31,7 @@ export class UploadFileComponent implements OnInit {
   GridApi;
   GridColumnApi;
   ColumnDefs = []
-  RowData = [];
+  RowData = null;
   activeDocument = null;
   openCountModal = false;
 
@@ -62,7 +62,7 @@ export class UploadFileComponent implements OnInit {
 
   AttachmentHandler(params) {
 
-    return '<button style="width: 70%;" class="btn label label-info square-btn cursor">Attachment <i class="fa fa-file-pdf"></i></button>';;
+    return '<button style="width: auto;" class="btn label label-info square-btn cursor"><i class="fa fa-file-pdf"></i></button>';
   }
 
   ReadtHandler(params) {
@@ -109,7 +109,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   GetSelectedReferenceFile() {
-
+    this.RowData = null;
     this.service.GetAllReferenceFile().subscribe(data => {
       let res = data.json()
       this.referencefiles = data.json().Data;
@@ -273,7 +273,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   OnRowClicked(event) {
-   
+
   }
   onCellClicked(event) {
     console.log('onCellClicked(event) : ', event.data)

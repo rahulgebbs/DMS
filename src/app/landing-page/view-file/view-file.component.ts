@@ -43,17 +43,12 @@ export class ViewFileComponent implements OnInit {
   RowData = [];
 
   constructor(public fb: FormBuilder, private service: ViewFileService, private router: Router, private commonservice: CommonService, private notificationservice: NotificationService) {
-
     this.token = new Token(this.router);
-    // this.userData = this.token.GetUserData();
     this.submit = this.fb.group({
       "ClientId": [this.data],
     })
 
 
-  }
-
-  submitFrom() {
   }
 
   ngOnInit() {
@@ -72,49 +67,31 @@ export class ViewFileComponent implements OnInit {
     this.UserId = userdata.UserId;
     this.ClientList = userdata.Clients;
     console.log('this.ClientList : ', this.ClientList);
-    this.data = this.ClientList[0].Client_Id;
-    // this.selectValue(this.ClientList)
-    this.submitFrom();
+    // this.data = this.ClientList[0].Client_Id;
+    this.submit.patchValue({ ClientId: this.ClientList[0].Client_Id });
+    this.GetAllReferenceFile();
+
   }
   AttachmentHandler(params) {
-
-    return '<button style="width: 70%;" class="btn label label-info square-btn cursor">Attachment <i class="fa fa-file-pdf"></i></button>';;
+    return '<button style="width: auto;" class="btn label label-info square-btn cursor"><i class="fa fa-file-pdf"></i></button>';
   }
 
   ReadtHandler(params) {
     console.log('ReadtHandler : ', params);
-    if(params.data.Read_By_Agent==true)
-    {
-
+    if (params.data.Read_By_Agent == true) {
       return '<button style="width: 70%;" class="btn label label-info square-btn cursor">Read</button>';;
     }
     return '<button style="width: 70%;" class="btn label label-info square-btn cursor">Unread</button>';;
   }
 
-  // selectValue(data) {     
-  //   if (data.length == 1 && data.length) {       
-  //     data[0].selected = true;
-  //     this.ClientId = data[0].Client_Id
-  //     this.submit.value.ClientId=this.ClientId
-  //     this.GetAllReferenceFile(null)
-  //   }else{
-
-  //   }
-
-  // }
-
   ClientListOnChange(event) {
     this.checkRecords = false;
-
     this.ClientId = event.target.value;
-
     if (!event.target.value || event.target.value == "") {
-
       this.selecterror = true;
     }
     else {
       this.selecterror = false;
-
       this.ClientId = event.target.value;
     }
   }
@@ -124,35 +101,27 @@ export class ViewFileComponent implements OnInit {
 
     console.log('this.submit : ', this.submit.value)
     if (this.submit.value.ClientId == undefined || this.submit.value.ClientId == 0) {
-
       this.selecterror = true;
     }
     else {
-
       this.selecterror = false;
     }
 
 
-    let fileobj = { Client_Id: this.ClientId, agent_id: this.UserId };
-
+    let fileobj = { Client_Id: this.submit.value.ClientId, agent_id: this.UserId };
+    this.RowData = null;
     this.service.GetAllReferenceFile(fileobj).subscribe(data => {
       this.checkRecords = false;
       this.searchBtnDisable = false
-      // this.referencefileList = data.json().Data;
       this.RowData = data.json().Data;
-      // this.referencefileList = data.json().Data;
       this.checkRecords = false;
     }, err => {
-
       this.ResponseHelper.GetFaliureResponse(err)
       if (this.submit.value.ClientId != undefined) {
-
         this.RowData = null;
         this.searchBtnDisable = true
         this.checkRecords = true;
-
       }
-
     });
   }
 
@@ -160,30 +129,10 @@ export class ViewFileComponent implements OnInit {
     this.searchBtnDisable = false
   }
   CheckFormat(format: string) {
-
-    // if (format == 'xlsx') {
-    //   return 'fa-file-excel';
-
-    // }
-    // else
     if (format == 'pdf' || format == 'PDF') {
       return 'fa-file-pdf';
     }
-    // else if (format == "docx"|| format=='DOCX') {
-    //   return 'fa-file-word';
-    // }
-    // else if (format == "png"|| format=='PNG') {
-    //   return 'fa-file-powerpoint'
-    // }
-    // else if (format == "txt"|| format=='TXT') {
-    //   return 'fa-file-alt'
-    // }
-    // else if (format == "jpeg" || format == "jpg"|| format=="JPG"|| format=="JPEG") {
-    //   return 'fa-file-powerpoint'
-    // }
-    // else {
-    //   return 'fa-file'
-    // }
+
   }
 
 
@@ -254,22 +203,7 @@ export class ViewFileComponent implements OnInit {
     console.log('onCellClicked : ', event);
     switch (event.colDef.headerName) {
       case "Attachment": {
-        // const url = this.router.serializeUrl(
-        //   );
         this.router.navigate([`/document-view/${event.data.Id}/${event.data.Client_Id}/${event.data.File_Name}/${event.data.Reference_File_Name}`])
-
-        // window.open(url, '_blank');
-        // this.instructionservice.getCountData(this.ClientId, data.data.Id).pipe(finalize(() => {
-        //   this.viewCountData = true
-        // })).subscribe(res => {
-        //   this.ResponseHelper.GetSuccessResponse(res)
-        //   data = res.json()
-        //   this.readCountData = res.json()
-        //   //  this.ClientUpdateData = data.Data
-        // }, err => {
-        //   this.ResponseHelper.GetFaliureResponse(err);
-
-        // })
         break;
       }
       default:

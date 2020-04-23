@@ -11,7 +11,7 @@ import * as jwt_decode from "jwt-decode";
 @Component({
   selector: 'app-view-document',
   templateUrl: './view-document.component.html',
-  styleUrls: ['./view-document.component.css']
+  styleUrls: ['./view-document.component.scss']
 })
 export class ViewDocumentComponent implements OnInit {
   title = "View Document Page"
@@ -76,4 +76,8 @@ export class ViewDocumentComponent implements OnInit {
     this.numberOfPages = event.pagesCount;
   }
 
+  goBack() {
+    window.history.back();
+
+  }
 }
