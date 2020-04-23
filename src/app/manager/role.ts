@@ -14,7 +14,7 @@ export const Access = {
   // "de-allocation": ["Supervisor"],
   "refernce-document-supervisor": ["Supervisor"],
   "view-file": ["Agent"],
-  "document-view": ["Agent"],
+  "document-view": ["Supervisor","Agent"],
   // "agent": ["Agent"],
   // "supervisor-agent": ["Supervisor"],
   // "denial-code": ["Supervisor"],

@@ -141,7 +141,10 @@ import { DeallocateConcluderComponent } from './deallocate-concluder/deallocate-
 import { UploadMiniInsuranceComponent } from './upload-mini-insurance/upload-mini-insurance.component';
 import { InventoryUploadComponent } from './inventory-upload/inventory-upload.component';
 import { ViewDocumentComponent } from './landing-page/view-document/view-document.component';
+import { ReadCountModalComponent } from './landing-page/read-count-modal/read-count-modal.component';
+// import { PdfViewerModule } from 'ng2-pdf-viewer';
 
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -270,9 +273,13 @@ import { ViewDocumentComponent } from './landing-page/view-document/view-documen
 
     InventoryUploadComponent,
 
-    ViewDocumentComponent
+    ViewDocumentComponent,
+
+    ReadCountModalComponent
   ],
   imports: [
+    // PdfViewerModule,
+    NgxExtendedPdfViewerModule,
     BrowserModule,
     BrowserAnimationsModule,
     NgxPaginationModule,
@@ -303,7 +310,7 @@ import { ViewDocumentComponent } from './landing-page/view-document/view-documen
       // { path: 'global-mapping', component: GlobalMappingComponent, canActivate: [AuthGuard], data: { route: ['global-mapping'] } },
       { path: 'refernce-document-supervisor', component: UploadFileComponent, canActivate: [AuthGuard], data: { route: ['refernce-document-supervisor'] } },
       { path: 'view-file', component: ViewFileComponent, canActivate: [AuthGuard], data: { route: ['view-file'] } },
-      { path: 'document-view/:filename/:referencefile', component: ViewDocumentComponent, canActivate: [AuthGuard], data: { route: ['document-view'] } },
+      { path: 'document-view/:Id/:Client_Id/:filename/:referencefile', component: ViewDocumentComponent, canActivate: [AuthGuard], data: { route: ['document-view'] } },
       // { path: 'auto-allocation', component: AutoAllocationComponent, canActivate: [AuthGuard], data: { route: ['auto-allocation'] } },
       // { path: 'de-allocation', component: DeAllocationComponent, canActivate: [AuthGuard], data: { route: ['de-allocation'] } },
       // { path: 'client-instruction', component: ClientInstructionComponent, canActivate: [AuthGuard], data: { route: ['client-instruction'] } },

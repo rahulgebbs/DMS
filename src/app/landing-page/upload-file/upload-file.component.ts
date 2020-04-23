@@ -32,7 +32,10 @@ export class UploadFileComponent implements OnInit {
   GridColumnApi;
   ColumnDefs = []
   RowData = [];
+  activeDocument = null;
+  openCountModal = false;
 
+  DisplayTypeError = false;
   constructor(private service: UploadFileService, private router: Router, private notificationservice: NotificationService) { }
 
   ngOnInit() {
@@ -40,11 +43,11 @@ export class UploadFileComponent implements OnInit {
     this.ColumnDefs = [
       { headerName: "Uploaded Date & Time", field: "Uploaded_On" },
       { headerName: "Uploaded by", field: "Uploaded_By" },
-      { headerName: "Client Name", field: "Client_Id" },
+      { headerName: "Client Name", field: "Client_Name" },
       { headerName: "Uploader Role", field: "Uploader_Role" },
       { headerName: "File Name", field: "File_Name" },
-      { headerName: "Attachment", field: "File_Name" },
-      { headerName: "Read", field: "Read_By_Agent_Count" }
+      { headerName: "Attachment", cellRenderer: this.AttachmentHandler },
+      { headerName: "Read", cellRenderer: this.ReadtHandler }
     ]
 
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
@@ -57,6 +60,20 @@ export class UploadFileComponent implements OnInit {
     this.GetSelectedReferenceFile();
   }
 
+  AttachmentHandler(params) {
+
+    return '<button style="width: 70%;" class="btn label label-info square-btn cursor">Attachment <i class="fa fa-file-pdf"></i></button>';;
+  }
+
+  ReadtHandler(params) {
+    console.log('ReadtHandler : ', params);
+    // if(params.data.Read_By_Agent==true)
+    // {
+
+    //   return '<button style="width: 70%;" class="btn label label-info square-btn cursor">Read</button>';;
+    // }
+    return '<span style="cursor:pointer;text-decoration:underline;">' + params.data.Read_By_Agent_Count + '</span>';
+  }
   selectedValue(data) {
 
     if (data.length == 1 && data.length) {
@@ -75,7 +92,6 @@ export class UploadFileComponent implements OnInit {
     this.ClientId = event.target.value;
 
     if (!event.target.value || event.target.value == "") {
-
       this.selecterror = true;
     }
     else {
@@ -94,16 +110,6 @@ export class UploadFileComponent implements OnInit {
 
   GetSelectedReferenceFile() {
 
-    // if (this.ClientId == undefined || this.ClientId == 0) {
-    //   this.selecterror = true;
-    // }
-
-    // else {
-    //   this.searchBtnDisable = true
-    //   this.selecterror = false;
-    // }
-
-    // let fileobj = { Client_Id: this.ClientId };
     this.service.GetAllReferenceFile().subscribe(data => {
       let res = data.json()
       this.referencefiles = data.json().Data;
@@ -167,17 +173,23 @@ export class UploadFileComponent implements OnInit {
 
 
   GetUploadFileData(event) {
-
+    this.DisplayTypeError = false;
     if (event.target.files && event.target.files.length > 0) {
 
       this.File = event.target.files[0];
       this.Filename = this.File.name;
+      console.log('')
       this.Size = this.File.size / 1024 / 1024;
-      console.log('this.Size : ', this.Size);
+      console.log('this.Size ,this.File : ', this.File);
       if (this.Size > 5) {
 
         this.DisplaySizeError = true;
-      } else {
+      }
+      if (this.File.type != "application/pdf") {
+        this.DisplayTypeError = true;
+        this.uploadBtnDisable = true;
+      }
+      else {
         this.check();
         // this.uploadBtnDisable = false
         // this.DisplaySizeError = false;
@@ -261,32 +273,30 @@ export class UploadFileComponent implements OnInit {
   }
 
   OnRowClicked(event) {
-    // this.selectedRecord = true
-    // this.ShowRoleError = false;
-    // this.InstructionId = event.data.Id;
-    // this.GetSingleClientInsurance();
+   
   }
-  onCellClicked(data) {
-
-    // switch (data.colDef.headerName) {
-    //   case "Count": {
-    //     this.instructionservice.getCountData(this.ClientId, data.data.Id).pipe(finalize(() => {
-    //       this.viewCountData = true
-    //     })).subscribe(res => {
-    //       this.ResponseHelper.GetSuccessResponse(res)
-    //       data = res.json()
-    //       this.readCountData = res.json()
-    //       //  this.ClientUpdateData = data.Data
-    //     }, err => {
-    //       this.ResponseHelper.GetFaliureResponse(err);
-
-    //     })
-    //     break;
-    //   }
-    //   default:
-    //     break;
-    // }
+  onCellClicked(event) {
+    console.log('onCellClicked(event) : ', event.data)
+    switch (event.colDef.headerName) {
+      case "Attachment": {
+        this.router.navigate([`/document-view/${event.data.Id}/${event.data.Client_Id}/${event.data.File_Name}/${event.data.Reference_File_Name}`])
+        break;
+      }
+      case "Read": {
+        this.getCountForDocument(event.data);
+        this.activeDocument = event.data;
+        this.openCountModal = true;
+        break;
+      }
+      default:
+        break;
+    }
   }
-
+  getCountForDocument(params) {
+    this.openCountModal = true;
+  }
+  closeModal(event) {
+    this.openCountModal = false;
+  }
 
 }

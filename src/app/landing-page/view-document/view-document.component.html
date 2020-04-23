@@ -3,4 +3,7 @@
 
   <app-header [title]="title"></app-header>
 
+  <ngx-extended-pdf-viewer [base64Src]="base64" backgroundColor="#ffffff" [height]="'90vh'" [useBrowserLocale]="true"
+    [handTool]="false" [showHandToolButton]="true" (pageChange)="scrollPage($event)" (pagesLoaded)="pageCount($event)">
+  </ngx-extended-pdf-viewer>
 </div>

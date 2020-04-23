@@ -34,6 +34,7 @@
     "ng-multiselect-dropdown": "0.2.3",
     "ng-pick-datetime": "^6.0.16",
     "ng4-loading-spinner": "^1.2.3",
+    "ngx-extended-pdf-viewer": "^3.2.3",
     "ngx-pagination": "^5.0.0",
     "rxjs": "6.0.0",
     "rxjs-compat": "6.3.3",

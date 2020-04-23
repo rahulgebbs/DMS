@@ -65,7 +65,7 @@ export class ViewFileComponent implements OnInit {
       { headerName: "Uploader Role", field: "Uploader_Role" },
       { headerName: "File Name", field: "File_Name" },
       { headerName: "Attachment", cellRenderer: this.AttachmentHandler },
-      { headerName: "Read", field: "Read_By_Agent" }
+      { headerName: "Read", field: "Read_By_Agent", cellRenderer: this.ReadtHandler }
     ]
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
     var userdata = token.GetUserData();
@@ -77,17 +77,18 @@ export class ViewFileComponent implements OnInit {
     this.submitFrom();
   }
   AttachmentHandler(params) {
-    // let val
-    let eDiv = document.createElement('div');
-    // if (!params.value) {
-    //   val = 'Accept'
-    //   eDiv.innerHTML = '<i class="fa-file-pdf">' + val + '</i>';
-    // } else {
-    //   val = "Accepted"
-    //   eDiv.innerHTML = '<button  class="btn label gray label-info square-btn cursor"  disabled="" >' + val + '</button>';
-    // }
-    // eDiv.innerHTML = '<button class="btn label label-info square-btn cursor">Attachment <i class="fa fa-file-pdf"></i></button>';
+
     return '<button style="width: 70%;" class="btn label label-info square-btn cursor">Attachment <i class="fa fa-file-pdf"></i></button>';;
+  }
+
+  ReadtHandler(params) {
+    console.log('ReadtHandler : ', params);
+    if(params.data.Read_By_Agent==true)
+    {
+
+      return '<button style="width: 70%;" class="btn label label-info square-btn cursor">Read</button>';;
+    }
+    return '<button style="width: 70%;" class="btn label label-info square-btn cursor">Unread</button>';;
   }
 
   // selectValue(data) {     
@@ -255,7 +256,7 @@ export class ViewFileComponent implements OnInit {
       case "Attachment": {
         // const url = this.router.serializeUrl(
         //   );
-        this.router.navigate([`/document-view/${event.data.File_Name}/${event.data.Reference_File_Name}`])
+        this.router.navigate([`/document-view/${event.data.Id}/${event.data.Client_Id}/${event.data.File_Name}/${event.data.Reference_File_Name}`])
 
         // window.open(url, '_blank');
         // this.instructionservice.getCountData(this.ClientId, data.data.Id).pipe(finalize(() => {

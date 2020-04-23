@@ -16,10 +16,7 @@ export class CountModelComponent implements OnInit {
   rowSelection = "single";
   columnDefs = [
     { headerName: 'Name', field: 'Name', width:250 },
-    { headerName: 'Status', field: 'Status', width:120 },
-
-
-
+    { headerName: 'Status', field: 'Status', width:120 }
   ]
   private excelService= new ExcelService
   constructor() { }

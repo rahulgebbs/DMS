@@ -19,7 +19,7 @@ export const environment = {
   FileApiUrl: "http://172.30.52.25:1011/",
   ApiUrl: "http://172.30.52.25:1011/",
   linkUsed: '172.30.52.25:1011'
-  
+
   // LIVE Server
   // ApiUrl: "http://172.18.7.2:1001/", // LIVE Server,
   // FileApiUrl: "http://172.18.7.2:1007/",// LIVE Server,

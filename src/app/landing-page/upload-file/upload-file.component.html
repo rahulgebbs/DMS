@@ -27,6 +27,9 @@
           <div class="error" *ngIf="DisplaySizeError">
             Please select the file less than 5MB
           </div>
+          <div class="error" *ngIf="DisplayTypeError">
+              Please Select PDF file only
+            </div>
         </span>
         <span class="pull-left mr-10 pt-3">
           <button (click)="ReferenceFileUpload()" [disabled]="uploadBtnDisable" style="border: none;height: 24px;"
@@ -49,3 +52,7 @@
     </div>
 
   </div>
+
+  <!-- Count modal -->
+
+  <app-read-count-modal [document]="activeDocument" *ngIf="openCountModal==true" (Toggle)="closeModal($event)"></app-read-count-modal>

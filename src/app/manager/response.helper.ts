@@ -28,7 +28,7 @@ export class ResponseHelper {
         }
         switch (httpres.status) {
             case 400:
-                notifydata[0].Type != null ? this.notification.ChangeNotification(notifydata) : this.notification.ChangeNotification([{ Message: "Bad Request", Type: "ERROR" }])
+                notifydata != null ? this.notification.ChangeNotification(notifydata) : this.notification.ChangeNotification([{ Message: "Bad Request", Type: "ERROR" }])
                 break;
             case 401:
                 notifydata != null ? this.notification.ChangeNotification(notifydata) : this.notification.ChangeNotification([{ Message: "Unauthorized", Type: "ERROR" }])

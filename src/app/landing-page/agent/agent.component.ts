@@ -691,6 +691,7 @@ export class AgentComponent implements OnInit {
       this.ActiveBucket = bucket;
       if (bucket.Name.includes("Appeal") || bucket.Name == "Private_To_Call" || bucket.Name == "TL_Deny") {
         this.GetAccountList(bucket, false);
+        this.DisplayAppeal = true;
       }
       else {
         if (!this.CheckPendingAccount(bucket.Name)) {

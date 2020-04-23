@@ -1,0 +1,9 @@
+
+.pdf-h{
+    /* min-height: auto;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    max-height:70vh */
+    height:80vh;
+    width: 100%;
+}
