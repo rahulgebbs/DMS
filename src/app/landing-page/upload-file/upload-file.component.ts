@@ -31,7 +31,7 @@ export class UploadFileComponent implements OnInit {
   GridApi;
   GridColumnApi;
   ColumnDefs = []
-  RowData = null;
+  RowData = [];
   activeDocument = null;
   openCountModal = false;
 
@@ -118,14 +118,14 @@ export class UploadFileComponent implements OnInit {
       this.checkRecords = false;
       this.ResponseHelper.GetSuccessResponse(data)
     }, err => {
+      this.RowData = []
       this.ResponseHelper.GetFaliureResponse(err)
-
       if (this.ClientId != undefined) {
         this.referencefiles = null;
         this.checkRecords = true;
         this.searchBtnDisable = true
       }
-      this.RowData = []
+      // this.RowData = []
 
     });
 

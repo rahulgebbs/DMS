@@ -116,10 +116,12 @@ export class ViewFileComponent implements OnInit {
       this.RowData = data.json().Data;
       this.checkRecords = false;
     }, err => {
-      this.ResponseHelper.GetFaliureResponse(err)
+      this.RowData = [];
+      this.ResponseHelper.GetFaliureResponse(err);
+      this.searchBtnDisable = false;
       if (this.submit.value.ClientId != undefined) {
-        this.RowData = null;
-        this.searchBtnDisable = true
+        // this.RowData = null;
+        // this.searchBtnDisable = true;
         this.checkRecords = true;
       }
     });
