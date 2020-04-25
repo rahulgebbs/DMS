@@ -53,18 +53,18 @@ export class LoginComponent implements OnInit {
           data => {
             if (data.json().Data.Token != null) {
               this.ResponseHelper.GetSuccessResponse(data);
-              setTimeout(() => {
-                const response = data.json().Data;
-                console.log('response : ', response)
+              // setTimeout(() => {
+              const response = data.json().Data;
+              console.log('response : ', response)
 
-                this.Token.SetLoginToken(data.json().Data.Token);
-                if (data.json().Data.First_Login == true) {
-                  this.router.navigate(['/change-password']);
-                }
-                else {
-                  this.RedirectHelper.redirectByRole()
-                }
-              }, 100);
+              this.Token.SetLoginToken(data.json().Data.Token);
+              if (data.json().Data.First_Login == true) {
+                this.router.navigate(['/change-password']);
+              }
+              else {
+                this.RedirectHelper.redirectByRole()
+              }
+              // }, 100);
 
             }
             else {
