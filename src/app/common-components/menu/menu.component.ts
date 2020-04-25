@@ -2,16 +2,11 @@ import { Component, OnInit, ElementRef, Input, Output, EventEmitter } from '@ang
 import { Token } from '../../manager/token';
 import { Router } from "@angular/router"
 import * as RoleHelper from 'src/app/manager/role';
-import { defaultGroupComparator } from 'ag-grid-community';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { LogoutService } from './../../service/logout.service';
-import { finalize } from 'rxjs/operators';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { NotificationService } from 'src/app/service/notification.service';
-import { AgentService } from 'src/app/service/agent.service';
-import { BireportService } from 'src/app/service/bireport.service';
 import { AnalyticsService } from 'src/app/analytics.service';
-import { MenuMappingService } from 'src/app/menu-mapping.service';
 
 
 
@@ -51,12 +46,7 @@ export class MenuComponent implements OnInit {
   clientUserMenuList = [];
   constructor(private notificationservice: NotificationService,
     private route: Router,
-    private analyticsService: AnalyticsService,
-    private elementRef: ElementRef,
-    private menuService: MenuMappingService,
-    private bireportService: BireportService,
-    private logoutService: LogoutService,
-    private agentservice: AgentService) {
+    private logoutService: LogoutService) {
     this.Token = new Token(this.route)
     this.UserData = this.Token.GetUserData();
     this.role = this.UserData.Role;
@@ -69,7 +59,6 @@ export class MenuComponent implements OnInit {
     this.MenuList = [];
     this.CheckRole();
     this.initClient();
-    // this.getBIReportMenu();
     this.UserData = this.Token.GetUserData();
     console.log('this.UserData : ', this.UserData);
 
@@ -94,70 +83,12 @@ export class MenuComponent implements OnInit {
   }
 
   Logout() {
-    this.analyticsService.logOutEvent('Login/Logout').subscribe((response) => {
-      console.log('logEvent : ', response);
-    }, (error) => {
-      console.log('logEvent : ', error);
-    });
-    this.btndis = true
-    if (this.route.url == '/agent') {
-      var logId = 0;
-      if (sessionStorage.length > 1) {
-        var acc = JSON.parse(sessionStorage.getItem('Accounts'))
-        if (acc && acc.length != 0) {
-          acc.forEach(e => {
-            if (e.Processed == 'Working') {
-              logId = e.Inventory_Log_Id;
-            }
-          });
-        }
-        if (logId != 0) {
-          this.EndCurrentAccount(logId);
-        }
-        else {
-          this.LogoutFromSystem();
-        }
-      }
-      else {
-        this.LogoutFromSystem();
-      }
 
-    }
-    else if (this.route.url == '/supervisor-agent') {
-      var LogDetails;
-      if (sessionStorage.length > 1) {
-        LogDetails = JSON.parse(sessionStorage.getItem('WorkingLog'));
-        this.ClientId = LogDetails.Client_Id;
-        var Inventory_Log_Id = LogDetails.Inventory_Log_Id;
-        this.EndCurrentAccount(Inventory_Log_Id);
-      }
-      else {
-        this.LogoutFromSystem();
-      }
-    }
-    else {
-      this.LogoutFromSystem();
-    }
+    this.LogoutFromSystem();
 
-
-    this.btndis = false
+    this.btndis = false;
   }
 
-  EndCurrentAccount(logId) {
-    var formobj = {
-      Client_Id: this.ClientId,
-      Inventory_Log_Id: logId
-    }
-    this.agentservice.InsertEndTimeOfInventory(formobj).subscribe(
-      res => {
-        sessionStorage.removeItem("Accounts");
-        this.LogoutFromSystem();
-      },
-      err => {
-        this.ResponseHelper.GetFaliureResponse(err);
-      }
-    );
-  }
 
   LogoutFromSystem() {
     var objs = new Object();
@@ -200,37 +131,6 @@ export class MenuComponent implements OnInit {
     this.route.navigate(['/' + subMenu.Route]);
   }
 
-  getBIReportMenu() {
-    console.log('this.biReportMenu : ', this.biReportMenu);
-    let formbody = { "Client_Id": this.ClientId, "Client_Name": this.Client_Name };
-    console.log('formbody : ', formbody, this.Client_Name, this.ClientId);
-    this.bireportService.GetBiReport(formbody).subscribe((response) => {
-      const json = response.json();
-      this.biReportMenu = json.Data;
-      console.log('biReportMenu json : ', this.biReportMenu, this.clientUserMenuList);
-      if (this.biReportMenu) {
-        this.clientUserMenuList.forEach((element) => {
-          if (element.Menu_Name == "BI reports") {
-            let obj = {};
-            // {Id: 5, Submenu_Name: "client instruction report", Route: "client-instruction-report"}
-            this.biReportMenu.forEach((biMenu) => {
-              obj = { Id: Math.random() * 1000, Report_Name: biMenu.Menu_Name, Submenu_Name: biMenu.Menu_Name, Route: "bi-report" };
-              element.subMenus.push(obj)
-            });
-            // const obj = {
-            //   Client_Id: 9,
-            //   Report_Name: "KYI",
-            //   Menu_Name: "KYI"
-            // }
-            console.log('obj : ', obj);
-          }
-        });
-      }
-    }, (error) => {
-      console.log('error : ', error);
-    });
-  }
-
   openBIReport(reportObj) {
     this.RouteName = 'bi-report';
     this.Toggle.emit(false);
@@ -255,14 +155,14 @@ export class MenuComponent implements OnInit {
   }
 
   getMenuForUser() {
-    this.menuService.getMenuForUser().subscribe((response) => {
-      // console.log('getMenuForUser response : ', response);
-      this.clientUserMenuList = response.Data;
-      this.getBIReportMenu();
-    }, (error) => {
-      console.log('error : ', error);
-      this.getBIReportMenu();
-    })
+    // this.menuService.getMenuForUser().subscribe((response) => {
+    //   // console.log('getMenuForUser response : ', response);
+    //   this.clientUserMenuList = response.Data;
+    //   this.getBIReportMenu();
+    // }, (error) => {
+    //   console.log('error : ', error);
+    //   this.getBIReportMenu();
+    // })
   }
 
   matchedMenu(subMenus) {

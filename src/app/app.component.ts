@@ -2,7 +2,6 @@ import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Token } from 'src/app/manager/token';
-import { AgentService } from 'src/app/service/agent.service';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { NotificationService } from 'src/app/service/notification.service';
 import { AnalyticsService } from './analytics.service';
@@ -43,7 +42,6 @@ export class AppComponent implements OnInit {
   resumeBreak;
   constructor(private router: Router,
     private ts: Title,
-    private agentService: AgentService,
     private analyticsService: AnalyticsService,
     private notificationservice: NotificationService,
   ) {

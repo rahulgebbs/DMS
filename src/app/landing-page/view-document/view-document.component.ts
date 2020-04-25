@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from "@angular/router"
 import { CommonService } from 'src/app/service/common-service';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { NotificationService } from 'src/app/service/notification.service';
-import { Token } from 'src/app/manager/token';
 import { ViewFileService } from 'src/app/service/view-file.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as jwt_decode from "jwt-decode";
@@ -14,8 +13,7 @@ import * as jwt_decode from "jwt-decode";
   styleUrls: ['./view-document.component.scss']
 })
 export class ViewDocumentComponent implements OnInit {
-  title = "View Document Page"
-  inputURL = 'file://172.30.52.25/c/Reference_Document/Akshay_Super_02.pdf';
+  title = "View Document Page";
   base64 = null;
   ResponseHelper;
 

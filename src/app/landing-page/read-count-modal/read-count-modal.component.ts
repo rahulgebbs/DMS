@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ExcelService } from 'src/app/service/client-configuration/excel.service';
+// import { ExcelService } from 'src/app/service/client-configuration/excel.service';
 import { UploadFileService } from 'src/app/service/upload-file.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class ReadCountModalComponent implements OnInit {
     { headerName: 'Status', field: 'Status', width: 120 },
     { headerName: 'Date', field: 'Read_By_Agent_On' }
   ]
-  private excelService = new ExcelService
+  // private excelService = new ExcelService
   constructor(private uploadFileService: UploadFileService) { }
 
   ngOnInit() {

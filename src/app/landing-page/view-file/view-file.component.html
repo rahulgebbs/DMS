@@ -5,7 +5,7 @@
 
   <div class="col-md-12 col-sm-12 col-sm-12 p-0 mb-10">
 
-    <form [formGroup]="submit" (ngSubmit)="submitFrom()">
+    <form [formGroup]="submit">
       <div class="col-md-12 mt-10">
         <div class="search-grid">
           <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
@@ -35,7 +35,7 @@
   <div class="col-md-12 col-sm-12 p-0 insrt-tbl">
     <div class="sticky-table sticky-ltr-cells border-0 table-hight">
       <ag-grid-angular class="ag-theme-balham gd-w" (firstDataRendered)="AutoSizeGrid($event)"
-        (gridReady)="OnGridReady($event)" [rowSelection]="RowSelection" [rowData]="RowData"
+        (gridReady)="OnGridReady($event)" [rowData]="RowData"
         (columnResized)="onColumnResized($event)" [columnDefs]="ColumnDefs" [pagination]="true"
         [paginationAutoPageSize]="true" [enableColResize]="true" [enableSorting]="true" [enableFilter]="true"
         (rowData)="OnGridReady($event)" [suppressColumnVirtualisation]="true" (rowClicked)="OnRowClicked($event)"
