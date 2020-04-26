@@ -178,6 +178,12 @@ export class UploadFileComponent implements OnInit {
 
       this.File = event.target.files[0];
       this.Filename = this.File.name;
+      var regexp=/^[\w,\s-]+\.[A-Za-z]{3}$/
+      if(regexp.test(this.Filename)==true)
+      {
+        this.DisplayTypeError = true;
+        return false;
+      }
       console.log('')
       this.Size = this.File.size / 1024 / 1024;
       console.log('this.Size ,this.File : ', this.File);
