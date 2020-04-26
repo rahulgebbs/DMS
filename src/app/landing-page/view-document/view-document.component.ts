@@ -29,6 +29,8 @@ export class ViewDocumentComponent implements OnInit {
     this.route.params.subscribe(params => {
       console.log('params : ', params);
       this.paramObj = params;
+      if(this.paramObj && this.paramObj.filename)
+      this.title = this.title+` - (${this.paramObj.filename})`
       this.getFile();
     });
     this.userData = jwt_decode(sessionStorage.getItem('access_token'));
@@ -72,6 +74,10 @@ export class ViewDocumentComponent implements OnInit {
   pageCount(event) {
     console.log('pageCount($vent) : ', event);
     this.numberOfPages = event.pagesCount;
+    if(this.numberOfPages)
+    {
+      this.scrollPage(event.pagesCount)
+    }
   }
 
   goBack() {

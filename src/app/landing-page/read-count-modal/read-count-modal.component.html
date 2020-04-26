@@ -10,7 +10,7 @@
           <div class="col-md-12 p-0 grey">
             <span class="col-md-10 col-sm-10 p-0">
               <div class="heading-panel sT-hight pl-10">
-                <span class="text-sm text-ellipsis heading-txt flex">Read Count List</span>
+                <span class="text-sm text-ellipsis heading-txt flex">Read Count List <span *ngIf="document"> - ({{document.File_Name}})</span> </span>
               </div>
             </span>
             <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="toggleModel()">

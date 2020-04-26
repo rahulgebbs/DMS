@@ -54,10 +54,15 @@ export class ViewFileComponent implements OnInit {
   ngOnInit() {
     let token = new Token(this.router)
     this.ColumnDefs = [
-      { headerName: "Uploaded Date & Time", field: "Uploaded_On" },
-      { headerName: "Uploaded by", field: "Uploaded_By" },
+      // { headerName: "Uploaded Date & Time", field: "Uploaded_On" },
+      // { headerName: "Uploaded by", field: "Uploaded_By" },
+      // { headerName: "Client Name", field: "Client_Name" },
+      // { headerName: "Uploader Role", field: "Uploader_Role" },
+      // { headerName: "File Name", field: "File_Name" },
       { headerName: "Client Name", field: "Client_Name" },
+      { headerName: "Uploaded by", field: "Uploaded_Name" },
       { headerName: "Uploader Role", field: "Uploader_Role" },
+      { headerName: "Uploaded Date & Time", field: "Uploaded_On" },
       { headerName: "File Name", field: "File_Name" },
       { headerName: "Attachment", cellRenderer: this.AttachmentHandler },
       { headerName: "Read", field: "Read_By_Agent", cellRenderer: this.ReadtHandler }

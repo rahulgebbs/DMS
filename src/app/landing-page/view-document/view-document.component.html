@@ -3,7 +3,7 @@
 
   <app-header [title]="title"></app-header>
 
-  <ngx-extended-pdf-viewer *ngIf="base64" [base64Src]="base64" backgroundColor="#ffffff" [height]="'90vh'" [showSidebarButton]="true"
+  <ngx-extended-pdf-viewer *ngIf="base64" [base64Src]="base64" backgroundColor="#ffffff" [zoom]="'page-width'" [height]="'90vh'" [showSidebarButton]="false"
     [showFindButton]="true" [showPagingButtons]="true" [showZoomButtons]="true" [showPresentationModeButton]="false"
     [showOpenFileButton]="false" [showPrintButton]="false" [showDownloadButton]="true" [showBookmarkButton]="false"
     [showSecondaryToolbarButton]="true" [showRotateButton]="false" [showHandToolButton]="false"

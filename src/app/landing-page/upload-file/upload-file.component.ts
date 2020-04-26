@@ -41,10 +41,10 @@ export class UploadFileComponent implements OnInit {
   ngOnInit() {
 
     this.ColumnDefs = [
-      { headerName: "Uploaded Date & Time", field: "Uploaded_On" },
-      { headerName: "Uploaded by", field: "Uploaded_By" },
       { headerName: "Client Name", field: "Client_Name" },
+      { headerName: "Uploaded by", field: "Uploaded_Name" },
       { headerName: "Uploader Role", field: "Uploader_Role" },
+      { headerName: "Uploaded Date & Time", field: "Uploaded_On" },
       { headerName: "File Name", field: "File_Name" },
       { headerName: "Attachment", cellRenderer: this.AttachmentHandler },
       { headerName: "Read", cellRenderer: this.ReadtHandler }
@@ -66,7 +66,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   ReadtHandler(params) {
-    console.log('ReadtHandler : ', params);
+    // console.log('ReadtHandler : ', params);
     // if(params.data.Read_By_Agent==true)
     // {
 

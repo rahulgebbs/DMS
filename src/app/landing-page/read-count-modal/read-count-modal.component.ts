@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 // import { ExcelService } from 'src/app/service/client-configuration/excel.service';
 import { UploadFileService } from 'src/app/service/upload-file.service';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-read-count-modal',
   templateUrl: './read-count-modal.component.html',
@@ -18,7 +18,7 @@ export class ReadCountModalComponent implements OnInit {
   columnDefs = [
     { headerName: 'Name', field: 'Name', width: 250 },
     { headerName: 'Status', field: 'Status', width: 120 },
-    { headerName: 'Date', field: 'Read_By_Agent_On' }
+    { headerName: 'Date', cellRenderer: this.datecheck, }
   ]
   // private excelService = new ExcelService
   constructor(private uploadFileService: UploadFileService) { }
@@ -32,6 +32,9 @@ export class ReadCountModalComponent implements OnInit {
       console.log('error : ', error);
       this.rowData = [];
     })
+  }
+  datecheck(params) {
+    return moment(params.value).format('MM-DD-YYYY HH:mm:ss a');
   }
   getDocumentCOunt() {
     // this.
