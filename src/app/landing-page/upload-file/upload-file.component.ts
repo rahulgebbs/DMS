@@ -4,6 +4,7 @@ import { ResponseHelper } from 'src/app/manager/response.helper';
 import { NotificationService } from 'src/app/service/notification.service';
 import { UploadFileService } from 'src/app/service/upload-file.service';
 import { Token } from 'src/app/manager/token';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-upload-file',
@@ -34,7 +35,8 @@ export class UploadFileComponent implements OnInit {
   RowData = [];
   activeDocument = null;
   openCountModal = false;
-
+  validFileType = null;
+  validFileSize = 0;
   DisplayTypeError = false;
   constructor(private service: UploadFileService, private router: Router, private notificationservice: NotificationService) { }
 
@@ -57,21 +59,15 @@ export class UploadFileComponent implements OnInit {
     this.UserId = userdata.UserId;
     this.ClientList = userdata.Clients;
     this.selectedValue(this.ClientList);
+    this.getValidFileType();
     this.GetSelectedReferenceFile();
   }
 
   AttachmentHandler(params) {
-
     return '<button style="width: auto;" class="btn label label-info square-btn cursor"><i class="fa fa-file-pdf"></i></button>';
   }
 
   ReadtHandler(params) {
-    // console.log('ReadtHandler : ', params);
-    // if(params.data.Read_By_Agent==true)
-    // {
-
-    //   return '<button style="width: 70%;" class="btn label label-info square-btn cursor">Read</button>';;
-    // }
     return '<span style="cursor:pointer;text-decoration:underline;">' + params.data.Read_By_Agent_Count + '</span>';
   }
   selectedValue(data) {
@@ -81,8 +77,32 @@ export class UploadFileComponent implements OnInit {
       this.searchBtnDisable = false
       this.ClientId = data[0].Client_Id
       this.GetSelectedReferenceFile()
-    } else {
+    }
+  }
 
+  getValidFileType() {
+    this.service.getValidFileTye().subscribe((response) => {
+      this.validFileType = _.map(response.Data, (ele) => {
+        return ele.File_Type.toLowerCase();
+      });
+      this.validFileType.push('xlsx')
+      console.log('getValidFileTye response : ', this.validFileType);
+    }, (error) => {
+      console.log('getValidFileTye response : ', error);
+      this.validFileType = []
+    })
+  }
+
+  acceptFileType() {
+    var fileTypeList = '';
+    // console.log('this.validFileType : ', this.validFileType)
+    if (this.validFileType) {
+
+      this.validFileType.forEach(element => {
+        fileTypeList = fileTypeList + '.' + element + ',';
+      });
+      // console.log('fileTypeList : ', fileTypeList);
+      return fileTypeList;
     }
 
   }
@@ -178,28 +198,27 @@ export class UploadFileComponent implements OnInit {
 
       this.File = event.target.files[0];
       this.Filename = this.File.name;
-      var regexp=/^[\w,\s-]+\.[A-Za-z]{3}$/
-      if(regexp.test(this.Filename)==true)
-      {
+      var regexp = /^[\w,\s-]+\.[A-Za-z]{3}$/
+      if (regexp.test(this.Filename) == false) {
         this.DisplayTypeError = true;
         return false;
       }
-      console.log('')
       this.Size = this.File.size / 1024 / 1024;
       console.log('this.Size ,this.File : ', this.File);
       if (this.Size > 5) {
 
         this.DisplaySizeError = true;
       }
-      if (this.File.type != "application/pdf") {
-        this.DisplayTypeError = true;
-        this.uploadBtnDisable = true;
-      }
-      else {
+      const fileType = this.File.type.split('/');
+      console.log('this.validFileType.includes(fileType) : ', fileType, this.validFileType.includes(fileType[1]))
+      if (fileType && fileType.length > 0 && this.validFileType.includes(fileType[1]) == true) {
         this.check();
         // this.uploadBtnDisable = false
         // this.DisplaySizeError = false;
-
+      }
+      else {
+        this.DisplayTypeError = true;
+        this.uploadBtnDisable = true;
       }
       this.ConvertToBase64()
     }

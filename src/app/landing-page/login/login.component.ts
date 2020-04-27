@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit {
         .subscribe(
           data => {
             if (data.json().Data.Token != null) {
-              this.ResponseHelper.GetSuccessResponse(data);
               // setTimeout(() => {
               const response = data.json().Data;
               console.log('response : ', response)
@@ -62,7 +61,17 @@ export class LoginComponent implements OnInit {
                 this.router.navigate(['/change-password']);
               }
               else {
-                this.RedirectHelper.redirectByRole()
+                console.log('ELSE')
+                if (response.Role == 'Supervisor' || response.Role == 'Agent') {
+                  this.ResponseHelper.GetSuccessResponse(data);
+                  this.RedirectHelper.redirectByRole()
+                }
+                else {
+                  let notify: Notification[] = [
+                    { Message: "This User Role Not allowed", Type: "ERROR" }
+                  ];
+                  this.notificationservice.ChangeNotification(notify);
+                }
               }
               // }, 100);
 
@@ -72,9 +81,8 @@ export class LoginComponent implements OnInit {
                 { Message: "Token Not Found", Type: "ERROR" }
               ];
               this.notificationservice.ChangeNotification(notify);
-              this.DisableSubmit = false;
             }
-
+            this.DisableSubmit = false;
           }, err => {
             this.ResponseHelper.GetFaliureResponse(err)
             this.DisableSubmit = false;

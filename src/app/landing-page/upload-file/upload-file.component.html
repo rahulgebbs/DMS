@@ -18,7 +18,7 @@
         <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Upload File</span>
         <span class="form-group referance-up pt-3">
           <div class="file-upload-wrapper" [attr.data-text]="Filename">
-            <input (change)="GetUploadFileData($event)" name="file-upload-field" type="file" accept=".pdf"
+            <input (change)="GetUploadFileData($event)" name="file-upload-field" type="file" accept="{{acceptFileType()}}"
               class="file-upload-field" value="" onclick="this.value = null">
           </div>
           <div class="error" *ngIf="DisplayFileError">
@@ -28,7 +28,7 @@
             Please select the file less than 5MB
           </div>
           <div class="error" *ngIf="DisplayTypeError">
-              Please Select PDF file only
+              Please Select {{acceptFileType()}} file only
             </div>
         </span>
         <span class="pull-left mr-10 pt-3">
