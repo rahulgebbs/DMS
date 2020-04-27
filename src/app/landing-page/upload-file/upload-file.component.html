@@ -25,7 +25,7 @@
             Please select the file
           </div>
           <div class="error" *ngIf="DisplaySizeError">
-            Please select the file less than 5MB
+            Please select the file less than {{validFileSize}}
           </div>
           <div class="error" *ngIf="DisplayTypeError">
               Please Select {{acceptFileType()}} file only

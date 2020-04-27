@@ -26,7 +26,10 @@ export class UploadFileService {
   getreadCount(id) {
     return this.http.get(environment.ApiUrl + '/api/get-read-status-document?reference_document_id=' + id, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
-  getValidFileTye() {
-    return this.http.get(environment.ApiUrl + '/api/get-valid-file-type ', { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  getValidFileType() {
+    return this.http.get(environment.ApiUrl + '/api/get-valid-file-type', { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+  getValidFileSize() {
+    return this.http.get(environment.ApiUrl + '/api/get-valid-file-size', { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
 }

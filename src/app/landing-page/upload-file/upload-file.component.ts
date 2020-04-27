@@ -60,6 +60,7 @@ export class UploadFileComponent implements OnInit {
     this.ClientList = userdata.Clients;
     this.selectedValue(this.ClientList);
     this.getValidFileType();
+    this.getValidFileSize();
     this.GetSelectedReferenceFile();
   }
 
@@ -81,11 +82,11 @@ export class UploadFileComponent implements OnInit {
   }
 
   getValidFileType() {
-    this.service.getValidFileTye().subscribe((response) => {
+    this.service.getValidFileType().subscribe((response) => {
       this.validFileType = _.map(response.Data, (ele) => {
         return ele.File_Type.toLowerCase();
       });
-      this.validFileType.push('xlsx')
+      // this.validFileType.push('xlsx')
       console.log('getValidFileTye response : ', this.validFileType);
     }, (error) => {
       console.log('getValidFileTye response : ', error);
@@ -93,6 +94,14 @@ export class UploadFileComponent implements OnInit {
     })
   }
 
+  getValidFileSize() {
+    this.service.getValidFileSize().subscribe((response) => {
+      this.validFileSize = response.Data ? response.Data.File_size : null;
+      console.log('getValidFileSize response : ', response);
+    }, (error) => {
+      console.log('error : ', error)
+    })
+  }
   acceptFileType() {
     var fileTypeList = '';
     // console.log('this.validFileType : ', this.validFileType)
@@ -194,31 +203,34 @@ export class UploadFileComponent implements OnInit {
 
   GetUploadFileData(event) {
     this.DisplayTypeError = false;
+    this.DisplaySizeError = false;
     if (event.target.files && event.target.files.length > 0) {
 
       this.File = event.target.files[0];
       this.Filename = this.File.name;
-      var regexp = /^[\w,\s-]+\.[A-Za-z]{3}$/
+      var regexp = /^[\w,\s-()]+\.[A-Za-z]{3}$/
       if (regexp.test(this.Filename) == false) {
         this.DisplayTypeError = true;
         return false;
       }
       this.Size = this.File.size / 1024 / 1024;
-      console.log('this.Size ,this.File : ', this.File);
-      if (this.Size > 5) {
+      console.log('this.Size ,this.File : ', this.File, this.Size, this.validFileSize);
+      if (this.Size > this.validFileSize) {
 
         this.DisplaySizeError = true;
+        return true
       }
       const fileType = this.File.type.split('/');
       console.log('this.validFileType.includes(fileType) : ', fileType, this.validFileType.includes(fileType[1]))
       if (fileType && fileType.length > 0 && this.validFileType.includes(fileType[1]) == true) {
+        this.uploadBtnDisable = false
+        this.DisplaySizeError = false;
         this.check();
-        // this.uploadBtnDisable = false
-        // this.DisplaySizeError = false;
       }
       else {
         this.DisplayTypeError = true;
         this.uploadBtnDisable = true;
+        return true;
       }
       this.ConvertToBase64()
     }
