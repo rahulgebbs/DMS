@@ -60,7 +60,7 @@ export class ViewFileComponent implements OnInit {
       // { headerName: "Uploader Role", field: "Uploader_Role" },
       // { headerName: "File Name", field: "File_Name" },
       { headerName: "Client Name", field: "Client_Name" },
-      { headerName: "Uploaded by", field: "Uploaded_Name" },
+      { headerName: "Uploaded by", field: "Uploader_Name" },
       { headerName: "Uploader Role", field: "Uploader_Role" },
       { headerName: "Uploaded Date & Time", field: "Uploaded_On" },
       { headerName: "File Name", field: "File_Name" },

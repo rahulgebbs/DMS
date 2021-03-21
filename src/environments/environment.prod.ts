@@ -19,9 +19,9 @@ export const environment = {
   // linkUsed: '172.18.7.2:1002' 
   
   // NEW UAT
-  FileApiUrl: "http://172.30.52.25:1011/",
-  ApiUrl: "http://172.30.52.25:1011/",
-  linkUsed: '172.30.52.25:1011'
+  FileApiUrl: "http://172.30.52.25:1007/",
+  ApiUrl: "http://172.30.52.25:1001/",
+  linkUsed: '172.30.52.25:1001'
   
   // Local
 

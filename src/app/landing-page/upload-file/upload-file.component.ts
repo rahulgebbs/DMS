@@ -44,7 +44,7 @@ export class UploadFileComponent implements OnInit {
 
     this.ColumnDefs = [
       { headerName: "Client Name", field: "Client_Name" },
-      { headerName: "Uploaded by", field: "Uploaded_Name" },
+      { headerName: "Uploaded by", field: "Uploader_Name" },
       { headerName: "Uploader Role", field: "Uploader_Role" },
       { headerName: "Uploaded Date & Time", field: "Uploaded_On" },
       { headerName: "File Name", field: "File_Name" },
@@ -211,26 +211,24 @@ export class UploadFileComponent implements OnInit {
       var regexp = /^[\w,\s-()]+\.[A-Za-z]{3}$/
       if (regexp.test(this.Filename) == false) {
         this.DisplayTypeError = true;
-        return false;
+        this.check();
+        
+        return true;
       }
       this.Size = this.File.size / 1024 / 1024;
       console.log('this.Size ,this.File : ', this.File, this.Size, this.validFileSize);
-      if (this.Size > this.validFileSize) {
-
-        this.DisplaySizeError = true;
-        return true
-      }
       const fileType = this.File.type.split('/');
       console.log('this.validFileType.includes(fileType) : ', fileType, this.validFileType.includes(fileType[1]))
-      if (fileType && fileType.length > 0 && this.validFileType.includes(fileType[1]) == true) {
+      if (this.Size > this.validFileSize) {
+        this.DisplaySizeError = true;
+      }
+      else if (fileType && fileType.length > 0 && this.validFileType.includes(fileType[1]) == true) {
         this.uploadBtnDisable = false
         this.DisplaySizeError = false;
-        this.check();
       }
       else {
         this.DisplayTypeError = true;
         this.uploadBtnDisable = true;
-        return true;
       }
       this.ConvertToBase64()
     }
@@ -239,15 +237,15 @@ export class UploadFileComponent implements OnInit {
       this.FileBase64 = null;
       this.Filename = "No File chosen"
     }
+    this.check();
   }
 
   check() {
-    if (this.ClientId && this.File) {
+    if (this.ClientId && this.File && this.DisplaySizeError == false && this.DisplayTypeError == false) {
       this.uploadBtnDisable = false
 
     } else {
       this.uploadBtnDisable = true
-
     }
   }
 

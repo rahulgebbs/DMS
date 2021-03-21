@@ -23,17 +23,13 @@ import { ViewFileComponent } from './landing-page//view-file/view-file.component
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-
 import { LoadingPageComponent } from './common-components/loading-page/loading-page.component';
 import { MultipleTabComponent } from './common-components/multiple-tab/multiple-tab.component';
 import { HttpClientModule } from '@angular/common/http';
 
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+// import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
-
-
-import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
+// import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
 
 
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
@@ -64,7 +60,7 @@ import { ReadCountModalComponent } from './landing-page/read-count-modal/read-co
     NgxExtendedPdfViewerModule,
     BrowserModule,
     BrowserAnimationsModule,
-    NgxPaginationModule,
+    // NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
@@ -86,8 +82,8 @@ import { ReadCountModalComponent } from './landing-page/read-count-modal/read-co
       { path: 'multiple-tab', component: MultipleTabComponent },
       { path: '**', component: NotFoundComponent }
 
-    ]),
-    NgMultiSelectDropDownModule.forRoot(),
+    ], { useHash: true }),
+    // NgMultiSelectDropDownModule.forRoot(),
     HttpClientModule
   ],
   providers: [NotificationService, CommonService],
@@ -96,3 +92,9 @@ import { ReadCountModalComponent } from './landing-page/read-count-modal/read-co
 })
 export class AppModule { }
 //
+
+
+// 
+// "ngx-extended-pdf-viewer": "^3.2.3",
+// "ngx-pagination": "^5.0.0",
+// "ng-multiselect-dropdown": "0.2.3",
